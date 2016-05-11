@@ -4,9 +4,72 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatchGenerator"
+        xmlns:local_core="clr-namespace:MatchGenerator.Core"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="403.594" Width="939.007">
+    <Window.Resources>
+        <DataTemplate x:Key="memberViewCheckBoxTemplate" DataType="{x:Type local_core:Person}">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="memberViewNameTemplate" DataType="{x:Type local_core:Person}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="memberViewGroupTemplate" DataType="{x:Type local_core:Person}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Group}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="memberViewGScoreTemplate" DataType="{x:Type local_core:Person}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding GScore}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="memberViewDescriptionTemplate" DataType="{x:Type local_core:Person}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Description}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        
+        <ListView x:Name="allMembersListView" Margin="10,57,0,54" HorizontalAlignment="Left" Width="334">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
+                    <GridViewColumn Header="名前" CellTemplate="{StaticResource memberViewNameTemplate}"/>
+                    <GridViewColumn Header="グループ" CellTemplate="{StaticResource memberViewGroupTemplate}"/>
+                    <GridViewColumn Header="Gスコア" CellTemplate="{StaticResource memberViewGScoreTemplate}"/>
+                    <GridViewColumn Header="コメント" CellTemplate="{StaticResource memberViewDescriptionTemplate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Menu x:Name="menu" Height="24" VerticalAlignment="Top">
+            <MenuItem Header="データ(_D)">
+                <MenuItem Header="読み込み(_R)"/>
+            </MenuItem>
+        </Menu>
+        <Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,54" Width="359">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
+                    <GridViewColumn Header="名前" CellTemplate="{StaticResource memberViewNameTemplate}"/>
+                    <GridViewColumn Header="グループ" CellTemplate="{StaticResource memberViewGroupTemplate}"/>
+                    <GridViewColumn Header="Gスコア" CellTemplate="{StaticResource memberViewGScoreTemplate}"/>
+                    <GridViewColumn Header="コメント" CellTemplate="{StaticResource memberViewDescriptionTemplate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="entrantsTitle" Content="参加者" HorizontalAlignment="Left" Margin="453,29,0,0" VerticalAlignment="Top"/>
+        <StatusBar Height="35" VerticalAlignment="Bottom">
+            <Label x:Name="mainStatusBar" Content="Status"/>
+        </StatusBar>
+        <Button x:Name="buttonAttend" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="361,167,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="buttonAbsent" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="361,227,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="buttonStart" Content="試合開始" Margin="0,0,23,54" HorizontalAlignment="Right" Width="74" Height="24" VerticalAlignment="Bottom"/>
+
     </Grid>
 </Window>
