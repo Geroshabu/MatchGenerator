@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MatchGenerator"
         xmlns:local_core="clr-namespace:MatchGenerator.Core"
         mc:Ignorable="d"
-        Title="MainWindow" Height="403.594" Width="939.007">
+        Title="MainWindow" Height="403.594" Width="939.007" Loaded="Window_Loaded">
     <Window.Resources>
         <DataTemplate x:Key="memberViewCheckBoxTemplate" DataType="{x:Type local_core:Person}">
             <StackPanel Orientation="Horizontal">
@@ -35,7 +35,7 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ListView x:Name="allMembersListView" Margin="10,57,0,54" HorizontalAlignment="Left" Width="334">
+        <ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334">
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
@@ -52,7 +52,7 @@
             </MenuItem>
         </Menu>
         <Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,54" Width="359">
+        <ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359">
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
