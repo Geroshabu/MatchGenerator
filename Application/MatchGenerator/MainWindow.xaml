@@ -35,7 +35,7 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334">
+        <ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334" ItemsSource="{Binding}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>

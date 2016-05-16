@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using MatchGenerator.Core;
 
 namespace MatchGenerator
@@ -22,7 +23,7 @@ namespace MatchGenerator
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private List<Person> AllMemberData;
+		private ObservableCollection<Person> AllMemberData;
 
 		public MainWindow()
 		{
@@ -75,11 +76,8 @@ namespace MatchGenerator
 				return;
 			}
 			#endregion
-
-			foreach(Person person in AllMemberData)
-			{
-				allMembersListView.Items.Add(person);
-			}
+			
+			allMembersListView.DataContext = AllMemberData;
 
 			mainStatusBar.Content = "Importing success (" + AllMemberData.Count.ToString() + " members)";
 		}
