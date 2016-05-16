@@ -46,7 +46,7 @@ namespace MatchGenerator
 
 			try
 			{
-				AllMemberData = importer.importAllData(file_name);
+				AllMemberData = new ObservableCollection<Person>(importer.importAllData(file_name));
 			}
 			#region 例外処理 (returnあり)
 			catch (FileNotFoundException)

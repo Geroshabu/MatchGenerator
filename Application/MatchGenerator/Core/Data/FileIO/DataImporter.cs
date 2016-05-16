@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MatchGenerator.Core
 {
@@ -17,9 +17,9 @@ namespace MatchGenerator.Core
 		/// <exception cref="System.IO.FileFormatException">1行の項目数が多い, または少ない.</exception>
 		/// <exception cref="System.FormatException">GScoreの形式が<see cref="System.Int32"/>で表せない形式.</exception>
 		/// <exception cref="System.OverflowException">GScoreの値が<see cref="System.Int32"/>の上限, または下限を超えている.</exception>"
-		public ObservableCollection<Person> importAllData(string filePath)
+		public List<Person> importAllData(string filePath)
 		{
-			ObservableCollection<Person> all_data = new ObservableCollection<Person>();
+			List<Person> all_data = new List<Person>();
 
 			// いったん全行をファイルから読み込んでしまう
 			string[] all_data_raw = File.ReadAllLines(filePath);
