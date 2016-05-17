@@ -13,36 +13,16 @@
                 <CheckBox/>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Key="memberViewNameTemplate" DataType="{x:Type local_core:Person}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}"/>
-            </StackPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="memberViewGroupTemplate" DataType="{x:Type local_core:Person}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Group}"/>
-            </StackPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="memberViewGScoreTemplate" DataType="{x:Type local_core:Person}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding GScore}"/>
-            </StackPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="memberViewDescriptionTemplate" DataType="{x:Type local_core:Person}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Description}"/>
-            </StackPanel>
-        </DataTemplate>
     </Window.Resources>
     <Grid>
         <ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334" ItemsSource="{Binding}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
-                    <GridViewColumn Header="名前" CellTemplate="{StaticResource memberViewNameTemplate}"/>
-                    <GridViewColumn Header="グループ" CellTemplate="{StaticResource memberViewGroupTemplate}"/>
-                    <GridViewColumn Header="Gスコア" CellTemplate="{StaticResource memberViewGScoreTemplate}"/>
-                    <GridViewColumn Header="コメント" CellTemplate="{StaticResource memberViewDescriptionTemplate}"/>
+                    <GridViewColumn Header="名前" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="グループ" DisplayMemberBinding="{Binding Path=Group}"/>
+                    <GridViewColumn Header="Gスコア" DisplayMemberBinding="{Binding Path=GScore}"/>
+                    <GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Path=Discription}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -56,10 +36,10 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
-                    <GridViewColumn Header="名前" CellTemplate="{StaticResource memberViewNameTemplate}"/>
-                    <GridViewColumn Header="グループ" CellTemplate="{StaticResource memberViewGroupTemplate}"/>
-                    <GridViewColumn Header="Gスコア" CellTemplate="{StaticResource memberViewGScoreTemplate}"/>
-                    <GridViewColumn Header="コメント" CellTemplate="{StaticResource memberViewDescriptionTemplate}"/>
+                    <GridViewColumn Header="名前" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="グループ" DisplayMemberBinding="{Binding Path=Group}"/>
+                    <GridViewColumn Header="Gスコア" DisplayMemberBinding="{Binding Path=GScore}"/>
+                    <GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Path=Discription}"/>
                 </GridView>
             </ListView.View>
         </ListView>
