@@ -62,7 +62,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Data\FileIO\DataImporter.cs" />
+    <Compile Include="Core\Data\DataImporter.cs" />
     <Compile Include="Core\Data\Person.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
