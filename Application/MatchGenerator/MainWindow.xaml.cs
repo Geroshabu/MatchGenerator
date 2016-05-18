@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using MatchGenerator.Core;
+using MatchGenerator.Core.UI;
 
 namespace MatchGenerator
 {
@@ -23,7 +25,8 @@ namespace MatchGenerator
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private ObservableCollection<Person> AllMemberData;
+		private ObservableCollection<MemberListViewItem> AllMemberViewData;
+		private ObservableCollection<MemberListViewItem> EntrantViewData;
 
 		public MainWindow()
 		{
@@ -33,6 +36,13 @@ namespace MatchGenerator
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			InitializeMemberData();
+			InitializeEntrantData();
+		}
+
+
+		private void buttonAttend_Click(object sender, RoutedEventArgs e)
+		{
+			MoveToEntrantList();
 		}
 
 		/// <summary>
@@ -43,10 +53,11 @@ namespace MatchGenerator
 		{
 			string file_name = "MemberData.csv";
 			DataImporter importer = new DataImporter();
+			List<Person> personData;
 
 			try
 			{
-				AllMemberData = new ObservableCollection<Person>(importer.importAllData(file_name));
+				personData = importer.importAllData(file_name);
 			}
 			#region 例外処理 (returnあり)
 			catch (FileNotFoundException)
@@ -76,10 +87,53 @@ namespace MatchGenerator
 				return;
 			}
 			#endregion
-			
-			allMembersListView.DataContext = AllMemberData;
 
-			mainStatusBar.Content = "Importing success (" + AllMemberData.Count.ToString() + " members)";
+			AllMemberViewData = new ObservableCollection<MemberListViewItem>();
+			foreach (Person p in personData)
+			{
+				AllMemberViewData.Add(new MemberListViewItem(p));
+			}
+
+			ICollectionView view = CollectionViewSource.GetDefaultView(AllMemberViewData);
+			view.SortDescriptions.Add(
+				new SortDescription(
+					"Id",
+					ListSortDirection.Ascending));
+			allMembersListView.DataContext = view;
+
+			mainStatusBar.Content = "Importing success (" + AllMemberViewData.Count.ToString() + " members)";
+		}
+
+		/// <summary>
+		/// 参加者データの初期化
+		/// 参加者リストを空っぽにする
+		/// </summary>
+		private void InitializeEntrantData()
+		{
+			EntrantViewData = new ObservableCollection<MemberListViewItem>();
+			ICollectionView view = CollectionViewSource.GetDefaultView(EntrantViewData);
+			view.SortDescriptions.Add(
+				new SortDescription(
+					"Id",
+					ListSortDirection.Ascending));
+			entrantsListView.DataContext = view;
+		}
+
+		/// <summary>
+		/// チェックされているメンバーを参加者リストに移動.
+		/// </summary>
+		private void MoveToEntrantList()
+		{
+			foreach(MemberListViewItem item in AllMemberViewData)
+			{
+				if (item.IsChecked)
+				{
+					if (!EntrantViewData.Contains(item))
+					{
+						EntrantViewData.Add(item);
+					}
+				}
+			}
 		}
 	}
 }
