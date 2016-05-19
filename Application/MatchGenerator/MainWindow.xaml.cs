@@ -45,6 +45,11 @@ namespace MatchGenerator
 			MoveToEntrantList();
 		}
 
+		private void buttonAbsent_Click(object sender, RoutedEventArgs e)
+		{
+			RemoveFromEntrantList();
+		}
+
 		/// <summary>
 		/// 起動時にメンバー情報を読み込む.
 		/// 読み込めんかったらなにもしない.
@@ -133,6 +138,25 @@ namespace MatchGenerator
 						EntrantViewData.Add(item);
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// チェックされているメンバーを参加者リストから除去.
+		/// </summary>
+		private void RemoveFromEntrantList()
+		{
+			List<MemberListViewItem> removeItems = new List<MemberListViewItem>();
+			foreach(MemberListViewItem item in EntrantViewData)
+			{
+				if (item.IsChecked)
+				{
+					removeItems.Add(item);
+				}
+			}
+			foreach(MemberListViewItem item in removeItems)
+			{
+				EntrantViewData.Remove(item);
 			}
 		}
 	}
