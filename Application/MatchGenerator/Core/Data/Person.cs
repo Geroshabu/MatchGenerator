@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.Core
 {
-	class Person
+	public class Person
 	{
 		/// <summary>このパーソンの情報の数</summary>
 		/// <remarks>

@@ -50,6 +50,19 @@ namespace MatchGenerator
 			RemoveFromEntrantList();
 		}
 
+		private void buttonStart_Click(object sender, RoutedEventArgs e)
+		{
+			List<Person> entrants = new List<Person>();
+			foreach(MemberListViewItem item in EntrantViewData)
+			{
+				entrants.Add(item.Person);
+			}
+
+			MatchDecider decider = new MatchDecider();
+			decider.NumberOfCourt = 3;
+			List<MatchInformation> matches = decider.generateMatches(entrants);
+		}
+
 		/// <summary>
 		/// 起動時にメンバー情報を読み込む.
 		/// 読み込めんかったらなにもしない.

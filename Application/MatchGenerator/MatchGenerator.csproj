@@ -67,7 +67,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Data\DataImporter.cs" />
+    <Compile Include="Core\Data\MatchInformation.cs" />
+    <Compile Include="Core\Data\Pair.cs" />
     <Compile Include="Core\Data\Person.cs" />
+    <Compile Include="Core\MatchDecider.cs" />
     <Compile Include="Core\UI\CourtView.xaml.cs">
       <DependentUpon>CourtView.xaml</DependentUpon>
     </Compile>
