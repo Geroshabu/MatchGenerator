@@ -40,14 +40,28 @@ namespace MatchGenerator.Core.UI
 			Court2LayoutGrid.Children.Add(Court2FieldRect);
 
 			// Labels
-			Court1Player1NameLabel.Content = matchInfomation.Team1.player1.Name;
-			Court1Player1DescriptionLabel.Content = matchInfomation.Team1.player1.Description;
-			Court1Player2NameLabel.Content = matchInfomation.Team1.player2.Name;
-			Court1Player2DescriptionLabel.Content = matchInfomation.Team1.player2.Description;
-			Court2Player1NameLabel.Content = matchInfomation.Team2.player1.Name;
-			Court2Player1DescriptionLabel.Content = matchInfomation.Team2.player1.Description;
-			Court2Player2NameLabel.Content = matchInfomation.Team2.player2.Name;
-			Court2Player2DescriptionLabel.Content = matchInfomation.Team2.player2.Description;
+			if (matchInfomation == null)
+			{
+				Court1Player1NameLabel.Content = "";
+				Court1Player1DescriptionLabel.Content = "";
+				Court1Player2NameLabel.Content = "";
+				Court1Player2DescriptionLabel.Content = "";
+				Court2Player1NameLabel.Content = "";
+				Court2Player1DescriptionLabel.Content = "";
+				Court2Player2NameLabel.Content = "";
+				Court2Player2DescriptionLabel.Content = "";
+			}
+			else
+			{
+				Court1Player1NameLabel.Content = matchInfomation.Team1.player1.Name;
+				Court1Player1DescriptionLabel.Content = matchInfomation.Team1.player1.Description;
+				Court1Player2NameLabel.Content = matchInfomation.Team1.player2.Name;
+				Court1Player2DescriptionLabel.Content = matchInfomation.Team1.player2.Description;
+				Court2Player1NameLabel.Content = matchInfomation.Team2.player1.Name;
+				Court2Player1DescriptionLabel.Content = matchInfomation.Team2.player1.Description;
+				Court2Player2NameLabel.Content = matchInfomation.Team2.player2.Name;
+				Court2Player2DescriptionLabel.Content = matchInfomation.Team2.player2.Description;
+			}
 		}
 
 		private void CourtLayoutGrid_SizeChanged(object sender, SizeChangedEventArgs e)

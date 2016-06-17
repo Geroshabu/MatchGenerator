@@ -59,12 +59,13 @@ namespace MatchGenerator
 			}
 
 			MatchDecider decider = new MatchDecider();
-			decider.NumberOfCourt = 3;
+			decider.NumberOfMatches = 4;
 			List<MatchInformation> matches = decider.generateMatches(entrants);
 
 			LayoutInformation layout = new LayoutInformation();
-			layout.Row = 1;
+			layout.Row = 2;
 			layout.Column = 3;
+			layout.CourtCount = 4;
 
 			LayoutWindow layout_window = new LayoutWindow(matches, layout);
 			layout_window.Show();

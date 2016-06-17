@@ -30,15 +30,15 @@ namespace MatchGenerator
 		{
 			InitializeComponent();
 
-			if (matches.Count != layout.CourtCount)
+			if (matches.Count > layout.CourtCount)
 			{
-				throw new ArgumentOutOfRangeException("matches", "試合の数と, レイアウトのコート数が一致しませんです. ハイ.");
+				throw new ArgumentOutOfRangeException("matches", "コート数より試合数のほうが多いです.");
 			}
 
 			Matches = matches;
 			Layout = layout;
 			ViewBoxes = new List<Viewbox>();
-			for (int i = 0; i < Layout.CourtCount; i++)
+			for (int i = 0; i < Layout.Row * Layout.Column; i++)
 			{
 				ViewBoxes.Add(new Viewbox());
 			}
@@ -50,8 +50,9 @@ namespace MatchGenerator
 			{
 				for (int c = 0; c < Layout.Column; c++)
 				{
-					CourtView court = new CourtView(Matches[r * Layout.Column + c]);
-					Viewbox viewBox = ViewBoxes[r * Layout.Column + c];
+					int index = r * Layout.Column + c;
+					CourtView court = new CourtView(index < Layout.CourtCount ? Matches[index] : null);
+					Viewbox viewBox = ViewBoxes[index];
 					viewBox.Child = court;
 
 					layoutGrid.Children.Add(viewBox);

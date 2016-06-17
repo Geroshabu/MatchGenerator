@@ -9,11 +9,11 @@ namespace MatchGenerator.Core
 {
 	class MatchDecider
 	{
-		public int NumberOfCourt { get; set; }
+		public int NumberOfMatches { get; set; }
 
 		public List<MatchInformation> generateMatches(List<Person> entrants)
 		{
-			if (entrants.Count < 4 * NumberOfCourt)
+			if (entrants.Count < 4 * NumberOfMatches)
 			{
 				throw new ArgumentException("試合を組めるほどの人数がいません.");
 			}
@@ -23,7 +23,7 @@ namespace MatchGenerator.Core
 			// この部分は後で作る.
 			// とりあえず3つの試合にただリストの先頭の人から割り当てていくだけ.
 
-			for (int i_court = 0; i_court < NumberOfCourt; i_court++)
+			for (int i_court = 0; i_court < NumberOfMatches; i_court++)
 			{
 				MatchInformation match = new MatchInformation();
 
