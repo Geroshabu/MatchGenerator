@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="LayoutWindow" Height="475" Width="720" Loaded="Window_Loaded">
     <Grid x:Name="layoutGrid">
-        <Canvas x:Name="layoutCanvas">
+        <Canvas x:Name="layoutCanvas" SizeChanged="layoutCanvas_SizeChanged">
         </Canvas>
     </Grid>
 </Window>
