@@ -22,12 +22,19 @@ namespace MatchGenerator
 	public partial class LayoutWindow : Window
 	{
 		private List<MatchInformation> Matches;
+		private LayoutInformation Layout;
 
-		public LayoutWindow(List<MatchInformation> matches)
+		public LayoutWindow(List<MatchInformation> matches, LayoutInformation layout)
 		{
 			InitializeComponent();
 
 			Matches = matches;
+			Layout = layout;
+
+			if (matches.Count != Layout.CourtCount)
+			{
+				throw new ArgumentOutOfRangeException("試合の数と, レイアウトのコート数が一致しませんです. ハイ.");
+			}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)

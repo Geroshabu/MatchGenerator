@@ -71,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Data\DataImporter.cs" />
+    <Compile Include="Core\Data\LayoutInformation.cs" />
     <Compile Include="Core\Data\MatchInformation.cs" />
     <Compile Include="Core\Data\Pair.cs" />
     <Compile Include="Core\Data\Person.cs" />

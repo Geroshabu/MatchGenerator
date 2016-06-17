@@ -62,7 +62,11 @@ namespace MatchGenerator
 			decider.NumberOfCourt = 3;
 			List<MatchInformation> matches = decider.generateMatches(entrants);
 
-			LayoutWindow layout_window = new LayoutWindow(matches);
+			LayoutInformation layout = new LayoutInformation();
+			layout.Row = 1;
+			layout.Column = 3;
+
+			LayoutWindow layout_window = new LayoutWindow(matches, layout);
 			layout_window.Show();
 		}
 
