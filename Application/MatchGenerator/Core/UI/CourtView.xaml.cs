@@ -64,8 +64,11 @@ namespace MatchGenerator.Core.UI
 
 		private void CreatePlayerLabel(Label nameLabel, Label descriptionLabel, Person player)
 		{
+			Brush brush = player.Sex == Sex.Male ? Brushes.Black : Brushes.Red;
 			nameLabel.Content = player.Name;
+			nameLabel.Foreground = brush;
 			descriptionLabel.Content = player.Description;
+			descriptionLabel.Foreground = brush;
 		}
 
 		private void CourtLayoutGrid_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.Core
 {
+	public enum Sex
+	{
+		Male,
+		Female
+	}
+
 	public class Person
 	{
 		/// <summary>このパーソンの情報の数</summary>
@@ -13,7 +19,7 @@ namespace MatchGenerator.Core
 		/// ファイルから読み込むときに,
 		/// 全データをちゃんと読み込めたかどうかの判定に使われる.
 		/// </remarks>
-		public static int PropertyCount { get; } = 4;   // Need C# 6.0 or newer
+		public static int PropertyCount { get; } = 5;   // Need C# 6.0 or newer
 
 		/// <summary>
 		/// 名前
@@ -29,6 +35,11 @@ namespace MatchGenerator.Core
 		/// Geroshabuスコア
 		/// </summary>
 		public int GScore { get; set; }
+
+		/// <summary>
+		/// 性別
+		/// </summary>
+		public Sex Sex { get; set; }
 
 		/// <summary>
 		/// 自由記述のコメント
@@ -57,8 +68,19 @@ namespace MatchGenerator.Core
 
 			Name = info[0];
 			Group = info[1];
-			GScore = int.Parse(info[2]);
-			Description = info[3];
+			switch (info[2])
+			{
+				case "M":
+					Sex = Sex.Male;
+					break;
+				case "F":
+					Sex = Sex.Female;
+					break;
+				default:
+					throw new FormatException("性別は\"M\"か\"F\"で指定してね.");
+			}
+			GScore = int.Parse(info[3]);
+			Description = info[4];
 		}
 	}
 }
