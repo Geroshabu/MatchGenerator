@@ -9,7 +9,7 @@
         <Grid x:Name="Court1LayoutGrid" SizeChanged="Court1LayoutGrid_SizeChanged" Height="100" VerticalAlignment="Top">
             <Grid x:Name="Court1Player1LayoutGrid" Margin="0,0,0,50">
                 <Viewbox MaxHeight="26" Margin="0,7,0,17">
-                    <Label x:Name="Court1Player1NameLabel" Content="Court1 Name1" FontSize="16"/>
+                    <Label x:Name="Court1Player1NameLabel" Content="Court1 Name1" FontSize="16" FontWeight="Bold"/>
                 </Viewbox>
                 <Viewbox MaxHeight="20" Margin="0,26,0,4">
                     <Label x:Name="Court1Player1DescriptionLabel" Content="Court1 Description1"/>
@@ -17,7 +17,7 @@
             </Grid>
             <Grid x:Name="Court1Player2LayoutGrid" Margin="0,50,0,0">
                 <Viewbox MaxHeight="26" Margin="0,0,0,24">
-                    <Label x:Name="Court1Player2NameLabel" Content="Court1 Name2" FontSize="16"/>
+                    <Label x:Name="Court1Player2NameLabel" Content="Court1 Name2" FontSize="16" FontWeight="Bold"/>
                 </Viewbox>
                 <Viewbox MaxHeight="20" Margin="0,19,0,11">
                     <Label x:Name="Court1Player2DescriptionLabel" Content="Court1 Description2"/>
@@ -27,7 +27,7 @@
         <Grid x:Name="Court2LayoutGrid" SizeChanged="Court2LayoutGrid_SizeChanged" Height="100" VerticalAlignment="Bottom">
             <Grid x:Name="Court2Player1LayoutGrid" Margin="0,0,0,50">
                 <Viewbox MaxHeight="26" Margin="0,7,0,17">
-                    <Label x:Name="Court2Player1NameLabel" Content="Court2 Name1" FontSize="16"/>
+                    <Label x:Name="Court2Player1NameLabel" Content="Court2 Name1" FontSize="16" FontWeight="Bold"/>
                 </Viewbox>
                 <Viewbox MaxHeight="20" Margin="0,26,0,4">
                     <Label x:Name="Court2Player1DescriptionLabel" Content="Court2 Description1"/>
@@ -35,7 +35,7 @@
             </Grid>
             <Grid x:Name="Court2Player2LayoutGrid" Margin="0,50,0,0">
                 <Viewbox MaxHeight="26" Margin="0,0,0,24">
-                    <Label x:Name="Court2Player2NameLabel" Content="Court2 Name2" FontSize="16"/>
+                    <Label x:Name="Court2Player2NameLabel" Content="Court2 Name2" FontSize="16" FontWeight="Bold"/>
                 </Viewbox>
                 <Viewbox MaxHeight="20" Margin="0,19,0,11">
                     <Label x:Name="Court2Player2DescriptionLabel" Content="Court2 Description2"/>
