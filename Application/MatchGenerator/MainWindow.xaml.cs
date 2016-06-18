@@ -180,5 +180,11 @@ namespace MatchGenerator
 				EntrantViewData.Remove(item);
 			}
 		}
+
+		private void layoutConfigureMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			LayoutConfigureWindow windoow = new LayoutConfigureWindow();
+			windoow.Show();
+		}
 	}
 }

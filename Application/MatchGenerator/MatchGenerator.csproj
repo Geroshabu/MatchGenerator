@@ -58,6 +58,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LayoutConfigureWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LayoutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +84,9 @@
       <DependentUpon>CourtView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\UI\MemberListViewItem.cs" />
+    <Compile Include="LayoutConfigureWindow.xaml.cs">
+      <DependentUpon>LayoutConfigureWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LayoutWindow.xaml.cs">
       <DependentUpon>LayoutWindow.xaml</DependentUpon>
     </Compile>

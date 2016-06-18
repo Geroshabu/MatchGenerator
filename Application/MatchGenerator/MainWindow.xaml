@@ -30,6 +30,9 @@
             <MenuItem Header="データ(_D)">
                 <MenuItem Header="読み込み(_R)"/>
             </MenuItem>
+            <MenuItem Header="設定(_S)">
+                <MenuItem x:Name="layoutConfigureMenuItem" Header="レイアウト(_L)" Click="layoutConfigureMenuItem_Click"/>
+            </MenuItem>
         </Menu>
         <Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
         <ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359" ItemsSource="{Binding}">
