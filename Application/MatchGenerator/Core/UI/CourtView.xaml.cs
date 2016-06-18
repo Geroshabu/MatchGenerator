@@ -42,26 +42,30 @@ namespace MatchGenerator.Core.UI
 			// Labels
 			if (matchInfomation == null)
 			{
-				Court1Player1NameLabel.Content = "";
-				Court1Player1DescriptionLabel.Content = "";
-				Court1Player2NameLabel.Content = "";
-				Court1Player2DescriptionLabel.Content = "";
-				Court2Player1NameLabel.Content = "";
-				Court2Player1DescriptionLabel.Content = "";
-				Court2Player2NameLabel.Content = "";
-				Court2Player2DescriptionLabel.Content = "";
+				CreatePlayerLabel(Court1Player1NameLabel, Court1Player1DescriptionLabel);
+				CreatePlayerLabel(Court1Player2NameLabel, Court1Player2DescriptionLabel);
+				CreatePlayerLabel(Court2Player1NameLabel, Court2Player1DescriptionLabel);
+				CreatePlayerLabel(Court2Player2NameLabel, Court2Player2DescriptionLabel);
 			}
 			else
 			{
-				Court1Player1NameLabel.Content = matchInfomation.Team1.player1.Name;
-				Court1Player1DescriptionLabel.Content = matchInfomation.Team1.player1.Description;
-				Court1Player2NameLabel.Content = matchInfomation.Team1.player2.Name;
-				Court1Player2DescriptionLabel.Content = matchInfomation.Team1.player2.Description;
-				Court2Player1NameLabel.Content = matchInfomation.Team2.player1.Name;
-				Court2Player1DescriptionLabel.Content = matchInfomation.Team2.player1.Description;
-				Court2Player2NameLabel.Content = matchInfomation.Team2.player2.Name;
-				Court2Player2DescriptionLabel.Content = matchInfomation.Team2.player2.Description;
+				CreatePlayerLabel(Court1Player1NameLabel, Court1Player1DescriptionLabel, matchInfomation.Team1.player1);
+				CreatePlayerLabel(Court1Player2NameLabel, Court1Player2DescriptionLabel, matchInfomation.Team1.player2);
+				CreatePlayerLabel(Court2Player1NameLabel, Court2Player1DescriptionLabel, matchInfomation.Team2.player1);
+				CreatePlayerLabel(Court2Player2NameLabel, Court2Player2DescriptionLabel, matchInfomation.Team2.player2);
 			}
+		}
+
+		private void CreatePlayerLabel(Label nameLabel, Label descriptionLabel)
+		{
+			nameLabel.Content = "";
+			descriptionLabel.Content = "";
+		}
+
+		private void CreatePlayerLabel(Label nameLabel, Label descriptionLabel, Person player)
+		{
+			nameLabel.Content = player.Name;
+			descriptionLabel.Content = player.Description;
 		}
 
 		private void CourtLayoutGrid_SizeChanged(object sender, SizeChangedEventArgs e)
