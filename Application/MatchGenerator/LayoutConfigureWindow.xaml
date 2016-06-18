@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatchGenerator"
         mc:Ignorable="d"
-        Title="LayoutConfigureWindow" Height="300" Width="300">
+        Title="LayoutConfigureWindow" Height="200" Width="250">
     <Grid>
-        
+        <Grid.Background>
+            <SolidColorBrush Color="#FFE3E3E3"/>
+        </Grid.Background>
+        <Label Content="縦のコート数 :" HorizontalAlignment="Left" Margin="18,21,0,0" VerticalAlignment="Top"/>
+        <Label Content="横のコート数 :" HorizontalAlignment="Left" Margin="18,54,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="courtCountRowTextBox" HorizontalAlignment="Left" Height="23" Margin="114,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52"/>
+        <TextBox x:Name="courtCountColumnTextBox" HorizontalAlignment="Left" Height="23" Margin="114,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52"/>
+        <Label Content="試合数 :" HorizontalAlignment="Left" Margin="18,87,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="MatchCountTextBox" HorizontalAlignment="Left" Height="23" Margin="78,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52"/>
+        <Button x:Name="okButton" Content="OK" HorizontalAlignment="Right" Margin="0,0,101,20" VerticalAlignment="Bottom" Width="75"/>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,10,20" VerticalAlignment="Bottom" Width="75"/>
     </Grid>
 </Window>
