@@ -20,19 +20,39 @@ namespace MatchGenerator
 	/// </summary>
 	public partial class LayoutConfigureWindow : Window
 	{
-		public LayoutConfigureWindow()
+		LayoutInformation CourtLayout;
+		LayoutInformation NewCourtLayout;
+
+		public LayoutConfigureWindow(LayoutInformation courtLayout)
 		{
 			InitializeComponent();
+
+			CourtLayout = courtLayout;
+			NewCourtLayout = new LayoutInformation();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			SettingImporter importer = new SettingImporter();
-			LayoutInformation info = importer.Import("Setting.ini");
+			NewCourtLayout = importer.Import("Setting.ini");
 
-			courtCountRowTextBox.Text = info.Row.ToString();
-			courtCountColumnTextBox.Text = info.Column.ToString();
-			MatchCountTextBox.Text = info.CourtCount.ToString();
+			courtCountRowTextBox.Text = NewCourtLayout.Row.ToString();
+			courtCountColumnTextBox.Text = NewCourtLayout.Column.ToString();
+			MatchCountTextBox.Text = NewCourtLayout.CourtCount.ToString();
+		}
+
+		private void okButton_Click(object sender, RoutedEventArgs e)
+		{
+			CourtLayout.Row = NewCourtLayout.Row;
+			CourtLayout.Column = NewCourtLayout.Column;
+			CourtLayout.CourtCount = NewCourtLayout.CourtCount;
+
+			this.Close();
+		}
+
+		private void cancelButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

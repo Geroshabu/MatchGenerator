@@ -28,6 +28,8 @@ namespace MatchGenerator
 		private ObservableCollection<MemberListViewItem> AllMemberViewData;
 		private ObservableCollection<MemberListViewItem> EntrantViewData;
 
+		private LayoutInformation CourtLayout;
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -35,6 +37,9 @@ namespace MatchGenerator
 		
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			SettingImporter setting_importer = new SettingImporter();
+			CourtLayout = setting_importer.Import("Setting.ini");
+
 			InitializeMemberData();
 			InitializeEntrantData();
 		}
@@ -183,7 +188,7 @@ namespace MatchGenerator
 
 		private void layoutConfigureMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			LayoutConfigureWindow windoow = new LayoutConfigureWindow();
+			LayoutConfigureWindow windoow = new LayoutConfigureWindow(CourtLayout);
 			windoow.Show();
 		}
 	}
