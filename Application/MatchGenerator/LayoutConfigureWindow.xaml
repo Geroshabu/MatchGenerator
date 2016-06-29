@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatchGenerator"
         mc:Ignorable="d"
-        Title="LayoutConfigureWindow" Height="200" Width="250">
+        Title="LayoutConfigureWindow" Height="200" Width="250" Loaded="Window_Loaded">
     <Grid>
         <Grid.Background>
             <SolidColorBrush Color="#FFE3E3E3"/>

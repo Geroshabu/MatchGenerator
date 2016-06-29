@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MatchGenerator.Core;
 
 namespace MatchGenerator
 {
@@ -22,6 +23,16 @@ namespace MatchGenerator
 		public LayoutConfigureWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			SettingImporter importer = new SettingImporter();
+			LayoutInformation info = importer.Import("Setting.ini");
+
+			courtCountRowTextBox.Text = info.Row.ToString();
+			courtCountColumnTextBox.Text = info.Column.ToString();
+			MatchCountTextBox.Text = info.CourtCount.ToString();
 		}
 	}
 }
