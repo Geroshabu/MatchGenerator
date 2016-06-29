@@ -21,31 +21,30 @@ namespace MatchGenerator
 	public partial class LayoutConfigureWindow : Window
 	{
 		LayoutInformation CourtLayout;
-		LayoutInformation NewCourtLayout;
 
 		public LayoutConfigureWindow(LayoutInformation courtLayout)
 		{
 			InitializeComponent();
 
 			CourtLayout = courtLayout;
-			NewCourtLayout = new LayoutInformation();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			SettingImporter importer = new SettingImporter();
-			NewCourtLayout = importer.Import("Setting.ini");
+			LayoutInformation court_layout = importer.Import("Setting.ini");
 
-			courtCountRowTextBox.Text = NewCourtLayout.Row.ToString();
-			courtCountColumnTextBox.Text = NewCourtLayout.Column.ToString();
-			MatchCountTextBox.Text = NewCourtLayout.CourtCount.ToString();
+			courtCountRowTextBox.Text = court_layout.Row.ToString();
+			courtCountColumnTextBox.Text = court_layout.Column.ToString();
+			MatchCountTextBox.Text = court_layout.CourtCount.ToString();
 		}
 
 		private void okButton_Click(object sender, RoutedEventArgs e)
 		{
-			CourtLayout.Row = NewCourtLayout.Row;
-			CourtLayout.Column = NewCourtLayout.Column;
-			CourtLayout.CourtCount = NewCourtLayout.CourtCount;
+			int parsed_value;
+			CourtLayout.Row = int.TryParse(courtCountRowTextBox.Text, out parsed_value) ? parsed_value : CourtLayout.Row;
+			CourtLayout.Column = int.TryParse(courtCountColumnTextBox.Text, out parsed_value) ? parsed_value : CourtLayout.Column;
+			CourtLayout.CourtCount = int.TryParse(MatchCountTextBox.Text, out parsed_value) ? parsed_value : CourtLayout.CourtCount;
 
 			this.Close();
 		}
