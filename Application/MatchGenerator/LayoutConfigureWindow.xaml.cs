@@ -46,6 +46,9 @@ namespace MatchGenerator
 			CourtLayout.Column = int.TryParse(courtCountColumnTextBox.Text, out parsed_value) ? parsed_value : CourtLayout.Column;
 			CourtLayout.CourtCount = int.TryParse(MatchCountTextBox.Text, out parsed_value) ? parsed_value : CourtLayout.CourtCount;
 
+			SettingImporter exporter = new SettingImporter();
+			exporter.Export("Setting.ini", CourtLayout);
+
 			this.Close();
 		}
 

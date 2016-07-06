@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MatchGenerator.Core
@@ -97,6 +97,42 @@ namespace MatchGenerator.Core
 			}
 
 			return setting_str;
+		}
+
+		/// <summary>
+		/// コートの配置などの設定情報を読み込む.
+		/// 設定ファイルが既にあったら上書き.
+		/// </summary>
+		/// <param name="filePath">ファイルパス</param>
+		/// <param name="layout_info">保存するコート配置設定</param>
+		/// <exception cref="ArgumentNullException">引数<see cref="filePath"/>または<see cref="layout_info"/>がnull</exception>
+		/// <exception cref="ArgumentException"><see cref="filePath"/>が空文字やったり, 無効な文字が含まれている.</exception>
+		/// <exception cref="DirectoryNotFoundException"><see cref="filePath"/>が有効でないパス.例えばマップされていないドライブにあるなど.</exception>
+		/// <exception cref="PathTooLongException">パス長すぎ.</exception>
+		/// <exception cref="NotSupportedException"><see cref="filePath"/>の形式が無効. どういうのが無効なのかはよく分からん.</exception>
+		/// <exception cref="System.Security.SecurityException">プログラムにファイルアクセス許可がない.</exception>
+		/// <exception cref="UnauthorizedAccessException">ファイルが読み込み専用やったり, ディレクトリやったり, いろいろ.</exception>
+		/// <exception cref="IOException">ファイルを開くときにエラー発生. なんかよく分からない.</exception>
+		public void Export(string filePath, LayoutInformation layout_info)
+		{
+			#region 引数チェック
+			if (filePath == null)
+			{
+				throw new ArgumentNullException(nameof(filePath));
+			}
+			if (layout_info == null)
+			{
+				throw new ArgumentNullException(nameof(layout_info));
+			}
+			#endregion
+
+			Dictionary<string, string> setting_str = new Dictionary<string, string>();
+
+			setting_str["Row"] = layout_info.Row.ToString();
+			setting_str["Column"] = layout_info.Column.ToString();
+			setting_str["CourtCount"] = layout_info.CourtCount.ToString();
+
+			File.WriteAllLines(filePath, setting_str.Select(pair => pair.Key + ":" + pair.Value));
 		}
 	}
 }
