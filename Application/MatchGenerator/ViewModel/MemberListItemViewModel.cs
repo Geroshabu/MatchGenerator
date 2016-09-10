@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MatchGenerator.Core;
 
 namespace MatchGenerator.ViewModel
 {
@@ -11,5 +12,9 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase
 	{
+		/// <summary>
+		/// このViewModelで扱うModel
+		/// </summary>
+		private Person Model;
 	}
 }
