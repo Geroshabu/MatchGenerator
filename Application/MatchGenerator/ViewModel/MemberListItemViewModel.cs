@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
-	class MemberListItemViewModel
+	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase
 	{
 	}
 }
