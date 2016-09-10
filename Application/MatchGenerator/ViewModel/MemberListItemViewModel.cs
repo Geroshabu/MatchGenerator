@@ -16,5 +16,14 @@ namespace MatchGenerator.ViewModel
 		/// このViewModelで扱うModel
 		/// </summary>
 		private Person Model;
+
+		/// <summary>
+		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを生成する.
+		/// </summary>
+		/// <param name="model">ViewModelの表示対象となるModel</param>
+		public MemberListItemViewModel(Person model)
+		{
+			Model = model;
+		}
 	}
 }
