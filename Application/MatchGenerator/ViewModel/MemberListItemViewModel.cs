@@ -25,5 +25,21 @@ namespace MatchGenerator.ViewModel
 		{
 			Model = model;
 		}
+
+		/// <summary>
+		/// "名前"欄に表示する文字列を取得
+		/// </summary>
+		public string Name
+		{
+			get { return Model.Name; }
+		}
+
+		/// <summary>
+		/// "コメント"欄に表示する文字列を取得
+		/// </summary>
+		public string Description
+		{
+			get { return Model.Description; }
+		}
 	}
 }
