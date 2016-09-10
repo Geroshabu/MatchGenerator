@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
+	/// <summary>
+	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModel
+	/// </summary>
 	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase
 	{
 	}
