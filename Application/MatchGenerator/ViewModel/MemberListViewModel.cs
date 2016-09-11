@@ -9,7 +9,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// メンバーのリストのViewModel
 	/// </summary>
-	internal class MemberListViewModel : IMemberListViewModel
+	internal class MemberListViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
 	{
 		/// <summary>
 		/// リストに表示するすべてのメンバー
