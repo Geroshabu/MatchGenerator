@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
-	interface IMemberListItemViewModel
+	public interface IMemberListItemViewModel
 	{
 	}
 }
