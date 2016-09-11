@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace MatchGeneratorTest
+namespace MatchGeneratorTest.ViewModel
 {
-	public class UnitTest1
+	public class MemberListItemViewModelTest
 	{
 		[Fact]
 		public void TestMethod1()
