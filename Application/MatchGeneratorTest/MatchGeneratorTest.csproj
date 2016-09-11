@@ -98,6 +98,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\PersonTest.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ViewModel\MemberListItemViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
