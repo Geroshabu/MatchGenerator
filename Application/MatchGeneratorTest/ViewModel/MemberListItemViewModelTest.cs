@@ -22,10 +22,7 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			// 影響するフィールドの確認
-			FieldInfo fieldInfo = typeof(MemberListItemViewModel).GetField("Model",
-				BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
-			Person actualModel = (Person)fieldInfo.GetValue(actualReturn);
-			Assert.Same(expectedModel, actualModel);
+			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
 		}
 	}
 
@@ -38,6 +35,7 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			ModelField = new Person(new string[] { "foo", "bar", "M", "0", "foobar" });
 			Instance = new MemberListItemViewModel(ModelField);
+			Instance.SetPrivateField("Model", ModelField);
 		}
 
 		[Fact(DisplayName = "Nameプロパティ : 正常系")]
