@@ -53,6 +53,13 @@
         <Button x:Name="buttonAttend" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="361,167,0,0" VerticalAlignment="Top" Width="75" Click="buttonAttend_Click"/>
         <Button x:Name="buttonAbsent" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="361,227,0,0" VerticalAlignment="Top" Width="75" Click="buttonAbsent_Click"/>
         <Button x:Name="buttonStart" Content="試合開始" Margin="0,0,23,54" HorizontalAlignment="Right" Width="74" Height="24" VerticalAlignment="Bottom" Click="buttonStart_Click"/>
-
+		<ListView x:Name="testListView" HorizontalAlignment="Left" Height="100" Margin="821,57,0,0" VerticalAlignment="Top" Width="100" ItemsSource="{Binding}">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="名前" DisplayMemberBinding="{Binding Name}" />
+					<GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Description}"/>
+				</GridView>
+			</ListView.View>
+		</ListView>
     </Grid>
 </Window>
