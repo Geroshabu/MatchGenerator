@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
-	class MemberListViewModel
+	internal class MemberListViewModel
 	{
 	}
 }
