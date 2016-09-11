@@ -11,7 +11,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModel
 	/// </summary>
-	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase
+	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
 	{
 		/// <summary>
 		/// このViewModelで扱うModel

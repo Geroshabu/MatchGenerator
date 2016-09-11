@@ -33,7 +33,7 @@ namespace MatchGenerator
 		public MainWindow()
 		{
 			InitializeComponent();
-			testListView.DataContext = new List<ViewModel.MemberListItemViewModel>
+			testListView.DataContext = new List<ViewModel.IMemberListItemViewModel>
 			{
 				new ViewModel.MemberListItemViewModel(new Person(new string[] { "花中島", "セクシーコマンドー部", "M", "0", "ウォンチュッ" })),
 				new ViewModel.MemberListItemViewModel(new Person(new string[] { "藤山", "セクシーコマンドー部", "M", "0", "メソくんかわいいなぁ"}))
