@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\IPerson.cs" />
     <Compile Include="ViewModel\MemberListItemViewModel.cs" />
     <Page Include="Core\UI\CourtView.xaml">
       <SubType>Designer</SubType>
