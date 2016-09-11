@@ -2,7 +2,9 @@ using System;
 using System.Reflection;
 using Xunit;
 using MatchGenerator.Core;
+using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
+using MatchGeneratorTest.Model;
 
 namespace MatchGeneratorTest.ViewModel
 {
@@ -14,8 +16,8 @@ namespace MatchGeneratorTest.ViewModel
 		public void ConstructorTest()
 		{
 			// Arrange
-			Person inputModel = new Person();
-			Person expectedModel = inputModel;
+			IPerson inputModel = new PersonMock();
+			IPerson expectedModel = inputModel;
 
 			// Act
 			MemberListItemViewModel actualReturn = new MemberListItemViewModel(inputModel);
@@ -29,11 +31,11 @@ namespace MatchGeneratorTest.ViewModel
 	public class MemberListItemViewModelInstanceTest
 	{
 		private MemberListItemViewModel Instance;
-		private Person ModelField;
+		private IPerson ModelField;
 
 		public MemberListItemViewModelInstanceTest()
 		{
-			ModelField = new Person(new string[] { "foo", "bar", "M", "0", "foobar" });
+			ModelField = new PersonMock();
 			Instance = new MemberListItemViewModel(ModelField);
 			Instance.SetPrivateField("Model", ModelField);
 		}
@@ -44,13 +46,17 @@ namespace MatchGeneratorTest.ViewModel
 		public void NameTest()
 		{
 			// Arrange
-			string expectedName = ModelField.Name;
+			string expectedName = "foobar";
+			((PersonMock)ModelField).NameFunc = () => "foobar";
 
 			// Act
 			string actualName = Instance.Name;
 
 			// Assert
+			// 戻り値
 			Assert.Equal(expectedName, actualName);
+			// 内部でメソッドが呼ばれた回数
+			Assert.Equal(1, ((PersonMock)ModelField).NameCount);
 		}
 
 		[Fact(DisplayName = "Descriptionプロパティ : 正常系")]
@@ -59,13 +65,17 @@ namespace MatchGeneratorTest.ViewModel
 		public void DescriptionTest()
 		{
 			// Arrange
-			string expectedDescription = ModelField.Description;
+			string expectedDescription = "foobar";
+			((PersonMock)ModelField).DescriptionFunc = () => "foobar";
 
 			// Act
 			string actualDescription = Instance.Description;
 
 			// Assert
+			// 戻り値
 			Assert.Equal(expectedDescription, actualDescription);
+			// 内部でメソッドが呼ばれた回数
+			Assert.Equal(1, ((PersonMock)ModelField).DescriptionCount);
 		}
 	}
 }
