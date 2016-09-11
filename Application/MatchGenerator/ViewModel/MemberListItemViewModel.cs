@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MatchGenerator.Core;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
@@ -15,13 +16,13 @@ namespace MatchGenerator.ViewModel
 		/// <summary>
 		/// このViewModelで扱うModel
 		/// </summary>
-		private Person Model;
+		private IPerson Model;
 
 		/// <summary>
 		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを生成する.
 		/// </summary>
 		/// <param name="model">ViewModelの表示対象となるModel</param>
-		public MemberListItemViewModel(Person model)
+		public MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
 		}
