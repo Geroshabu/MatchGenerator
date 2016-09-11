@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
-	interface IMemberListViewModel
+	/// <summary>
+	/// メンバーのリストのViewModel
+	/// </summary>
+	public interface IMemberListViewModel
 	{
+		/// <summary>
+		/// リストに表示するすべてのメンバー
+		/// </summary>
+		IList<IMemberListItemViewModel> Members { get; set; }
+
+		/// <summary>
+		/// 現在選択されているメンバー
+		/// </summary>
+		IList<IMemberListItemViewModel> SelectedMembers { get; set; }
 	}
 }
