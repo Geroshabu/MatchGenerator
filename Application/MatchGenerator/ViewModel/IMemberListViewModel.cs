@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MatchGenerator.ViewModel
 {
 	/// <summary>
-	/// メンバーのリストのViewModel
+	/// メンバーのリストのViewModelのインタフェース
 	/// </summary>
 	public interface IMemberListViewModel
 	{
