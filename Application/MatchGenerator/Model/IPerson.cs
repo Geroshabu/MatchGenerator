@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.Model
 {
-	interface IPerson
+	public interface IPerson
 	{
 	}
 }
