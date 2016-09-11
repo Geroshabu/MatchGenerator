@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.Core
 {
@@ -12,7 +13,7 @@ namespace MatchGenerator.Core
 		Female
 	}
 
-	public class Person
+	public class Person : IPerson
 	{
 		/// <summary>このパーソンの情報の数</summary>
 		/// <remarks>
