@@ -44,5 +44,15 @@ namespace MatchGenerator.ViewModel
 				SetProperty(ref SelectedMembersField, value);
 			}
 		}
+
+		public MemberListViewModel()
+		{
+			Members = new List<IMemberListItemViewModel>
+			{
+				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"真田", "い", "M", "0", "う" })),
+				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
+				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
+			};
+		}
 	}
 }
