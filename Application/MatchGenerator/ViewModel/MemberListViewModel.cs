@@ -11,6 +11,7 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MemberListViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
 	{
+		private IList<IMemberListItemViewModel> MembersField;
 		/// <summary>
 		/// リストに表示するすべてのメンバー
 		/// </summary>
@@ -18,15 +19,16 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return MembersField;
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				SetProperty(ref MembersField, value);
 			}
 		}
 
+		private IList<IMemberListItemViewModel> SelectedMembersField;
 		/// <summary>
 		/// 現在選択されているメンバー
 		/// </summary>
@@ -34,12 +36,12 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return SelectedMembersField;
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				SetProperty(ref SelectedMembersField, value);
 			}
 		}
 	}
