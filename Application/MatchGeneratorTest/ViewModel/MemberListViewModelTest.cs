@@ -24,7 +24,7 @@ namespace MatchGeneratorTest.ViewModel
 			Instance = new MemberListViewModel();
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系", Skip = "未実装")]
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void MembersGetTest()
@@ -44,7 +44,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Same(expectedReturn, actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系", Skip = "未実装")]
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void MembersSetTest()
@@ -64,7 +64,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Same(expectedMembersField, actualMembersField);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系", Skip = "未実装")]
+		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void SelectedMembersGetTest()
@@ -84,7 +84,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Same(expectedReturn, actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Setterプロパティ : 正常系", Skip = "未実装")]
+		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Setterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void SelectedMembersSetTest()
