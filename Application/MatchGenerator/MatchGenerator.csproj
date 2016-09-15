@@ -85,7 +85,9 @@
     </ApplicationDefinition>
     <Compile Include="Model\IPerson.cs" />
     <Compile Include="ViewModel\IMemberListItemViewModel.cs" />
+    <Compile Include="ViewModel\IMemberListViewModel.cs" />
     <Compile Include="ViewModel\MemberListItemViewModel.cs" />
+    <Compile Include="ViewModel\MemberListViewModel.cs" />
     <Page Include="Core\UI\CourtView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

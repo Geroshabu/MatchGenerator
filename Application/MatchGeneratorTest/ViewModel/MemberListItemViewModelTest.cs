@@ -5,9 +5,40 @@ using MatchGenerator.Core;
 using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
 using MatchGeneratorTest.Model;
+using System.Collections.Generic;
 
 namespace MatchGeneratorTest.ViewModel
 {
+	/// <summary>
+	/// <see cref="MemberListItemViewModel"/>のMock
+	/// </summary>
+	internal class MemberListItemViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
+	{
+		public IPerson ModelField = null;
+
+		public Func<string> DescriptionGetter = () => null;
+		public int DescriptionGetterCount = 0;
+		public string Description
+		{
+			get
+			{
+				DescriptionGetterCount++;
+				return DescriptionGetter();
+			}
+		}
+
+		public Func<string> NameGetter = () => null;
+		public int NameGetterCount = 0;
+		public string Name
+		{
+			get
+			{
+				NameGetterCount++;
+				return NameGetter();
+			}
+		}
+	}
+
 	public class MemberListItemViewModelTest
 	{
 		[Fact(DisplayName = "MemberListItemViewModelコンストラクタ : 正常系")]
