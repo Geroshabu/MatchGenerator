@@ -51,12 +51,12 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return IsCheckedField;
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				SetProperty(ref IsCheckedField, value);
 			}
 		}
 	}
