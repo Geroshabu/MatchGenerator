@@ -42,5 +42,22 @@ namespace MatchGenerator.ViewModel
 		{
 			get { return Model.Description; }
 		}
+
+		private bool IsCheckedField;
+		/// <summary>
+		/// この項目がチェックされているかどうかを取得・設定
+		/// </summary>
+		public bool IsChecked
+		{
+			get
+			{
+				return IsCheckedField;
+			}
+
+			set
+			{
+				SetProperty(ref IsCheckedField, value);
+			}
+		}
 	}
 }
