@@ -37,6 +37,19 @@ namespace MatchGeneratorTest.ViewModel
 				return NameGetter();
 			}
 		}
+
+		public bool IsChecked
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 
 	public class MemberListItemViewModelTest

@@ -42,5 +42,21 @@ namespace MatchGenerator.ViewModel
 		{
 			get { return Model.Description; }
 		}
+
+		/// <summary>
+		/// この項目がチェックされているかどうかを取得・設定
+		/// </summary>
+		public bool IsChecked
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 }

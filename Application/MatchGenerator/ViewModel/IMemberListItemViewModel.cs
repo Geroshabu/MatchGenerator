@@ -20,5 +20,10 @@ namespace MatchGenerator.ViewModel
 		/// "コメント"欄に表示する文字列を取得
 		/// </summary>
 		string Description { get; }
+
+		/// <summary>
+		/// この項目がチェックされているかどうかを取得・設定
+		/// </summary>
+		bool IsChecked { get; set; }
 	}
 }
