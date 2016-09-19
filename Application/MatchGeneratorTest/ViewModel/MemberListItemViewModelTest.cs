@@ -38,16 +38,22 @@ namespace MatchGeneratorTest.ViewModel
 			}
 		}
 
+		public Func<bool> IsCheckedGetter = () => false;
+		public int IsCheckedGetterCount = 0;
+		public Action<bool> IsCheckedSetter = _ => { };
+		public int IsCheckedSetterCount = 0;
 		public bool IsChecked
 		{
 			get
 			{
-				throw new NotImplementedException();
+				IsCheckedGetterCount++;
+				return IsCheckedGetter();
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				IsCheckedSetterCount++;
+				IsCheckedSetter(value);
 			}
 		}
 	}
@@ -120,6 +126,41 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedDescription, actualDescription);
 			// 内部でメソッドが呼ばれた回数
 			Assert.Equal(1, ((PersonMock)ModelField).DescriptionCount);
+		}
+
+		[Fact(DisplayName ="IsChecked.Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void IsCheckedGetterTest()
+		{
+			// Arrange
+			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
+			bool expectedIsChecked = !beforeIsChecked;
+			Instance.SetPrivateField("IsCheckedField", !beforeIsChecked);
+
+			// Act
+			bool actualIsChecked = Instance.IsChecked;
+
+			// Assert
+			Assert.Equal(expectedIsChecked, actualIsChecked);
+		}
+
+		[Fact(DisplayName = "IsChecked.Setterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void IsCheckedSetterTest()
+		{
+			// Arrange
+			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
+			bool inputIsChecked = !beforeIsChecked;
+			bool expectedIsChecked = !beforeIsChecked;
+
+			// Act
+			Instance.IsChecked = inputIsChecked;
+
+			// Assert
+			bool actualIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
+			Assert.Equal(expectedIsChecked, actualIsChecked);
 		}
 	}
 }
