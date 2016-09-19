@@ -38,16 +38,22 @@ namespace MatchGeneratorTest.ViewModel
 			}
 		}
 
+		public Func<bool> IsCheckedGetter = () => false;
+		public int IsCheckedGetterCount = 0;
+		public Action<bool> IsCheckedSetter = _ => { };
+		public int IsCheckedSetterCount = 0;
 		public bool IsChecked
 		{
 			get
 			{
-				throw new NotImplementedException();
+				IsCheckedGetterCount++;
+				return IsCheckedGetter();
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				IsCheckedSetterCount++;
+				IsCheckedSetter(value);
 			}
 		}
 	}
