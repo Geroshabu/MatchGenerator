@@ -45,6 +45,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		private IMemberListItemViewModel LastClickedMemberField;
 		/// <summary>
 		/// 最後にチェックボックスがクリックされたメンバー
 		/// </summary>
