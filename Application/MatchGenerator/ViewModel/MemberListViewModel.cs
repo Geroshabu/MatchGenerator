@@ -45,6 +45,22 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// 最後にチェックボックスがクリックされたメンバー
+		/// </summary>
+		public IMemberListItemViewModel LastClickedMember
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
+
 		public MemberListViewModel()
 		{
 			Members = new List<IMemberListItemViewModel>
