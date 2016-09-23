@@ -141,7 +141,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(1, ((PersonMock)ModelField).DescriptionCount);
 		}
 
-		[Fact(DisplayName ="IsChecked.Getterプロパティ : 正常系")]
+		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void IsCheckedGetterTest()
@@ -176,12 +176,34 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedIsChecked, actualIsChecked);
 		}
 
-		[Fact(DisplayName = "MemberClickメソッド : 正常系")]
+		[Theory(DisplayName = "MemberClickメソッド : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void ClickMemberTest()
+		[InlineData(true)]
+		[InlineData(false)]
+		public void ClickMemberTest(bool isCheckedValue)
 		{
+			// Arrange
+			IList<object> actualMemberClickSenderParams = new List<object>();
+			IList<MemberClickEventArgs> actualMemberClickEParams = new List<MemberClickEventArgs>();
+			Instance.MemberClick += (s, e) =>
+			{
+				actualMemberClickSenderParams.Add(s);
+				actualMemberClickEParams.Add(e);
+			};
+			Instance.SetPrivateField("IsCheckedField", isCheckedValue);
+			// Expected
+			object expectedMemberClickSenderParam = Instance;
+			bool expectedIsChecked = isCheckedValue;
 
+			// Act
+			Instance.InvokePrivateMethod("ClickMember");
+
+			// Assert
+			Assert.Single(actualMemberClickSenderParams);
+			Assert.Single(actualMemberClickEParams);
+			Assert.Same(expectedMemberClickSenderParam, actualMemberClickSenderParams[0]);
+			Assert.Equal(expectedIsChecked, actualMemberClickEParams[0].IsChecked);
 		}
 
 		[Fact(DisplayName = "MemberClickメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
@@ -189,7 +211,8 @@ namespace MatchGeneratorTest.ViewModel
 		[Trait("type", "異常系")]
 		public void ClickMemberTest_NoEventHandler()
 		{
-
+			// Act
+			Instance.InvokePrivateMethod("ClickMember");
 		}
 	}
 }
