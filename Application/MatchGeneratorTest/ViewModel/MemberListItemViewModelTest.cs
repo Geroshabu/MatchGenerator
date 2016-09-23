@@ -175,5 +175,21 @@ namespace MatchGeneratorTest.ViewModel
 			bool actualIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
 			Assert.Equal(expectedIsChecked, actualIsChecked);
 		}
+
+		[Fact(DisplayName = "MemberClickメソッド : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void ClickMemberTest()
+		{
+
+		}
+
+		[Fact(DisplayName = "MemberClickメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void ClickMemberTest_NoEventHandler()
+		{
+
+		}
 	}
 }
