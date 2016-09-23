@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using MatchGenerator.Core;
 using MatchGenerator.Model;
 
@@ -25,6 +27,7 @@ namespace MatchGenerator.ViewModel
 		public MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
+			MemberClickCommand = new DelegateCommand(ClickMember);
 		}
 
 		/// <summary>
@@ -58,6 +61,26 @@ namespace MatchGenerator.ViewModel
 			{
 				SetProperty(ref IsCheckedField, value);
 			}
+		}
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// クリックされたときに発生する.
+		/// </summary>
+		public event EventHandler<MemberClickEventArgs> MemberClick;
+
+		/// <summary>
+		/// このメンバーをクリックしたときの処理をするコマンド
+		/// </summary>
+		public ICommand MemberClickCommand { get; }
+		/// <summary>
+		/// <see cref="MemberClickCommand"/>の<see cref="ICommand.Execute"/>の処理
+		/// </summary>
+		private void ClickMember()
+		{
+			MemberClickEventArgs e = new MemberClickEventArgs();
+			e.IsChecked = this.IsChecked;
+			MemberClick?.Invoke(this, e);
 		}
 	}
 }

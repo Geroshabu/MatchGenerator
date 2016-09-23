@@ -45,14 +45,47 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		private IMemberListItemViewModel LastClickedMemberField;
+		/// <summary>
+		/// 最後にチェックボックスがクリックされたメンバー
+		/// </summary>
+		public IMemberListItemViewModel LastClickedMember
+		{
+			get
+			{
+				return LastClickedMemberField;
+			}
+
+			set
+			{
+				SetProperty(ref LastClickedMemberField, value);
+			}
+		}
+
 		public MemberListViewModel()
 		{
-			Members = new List<IMemberListItemViewModel>
+			Members = new List<MemberListItemViewModel>
 			{
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"真田", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
-			};
+			}
+			.Select(item => { item.MemberClick += Item_MemberClick; return item; })
+			.Cast<IMemberListItemViewModel>()
+			.ToList();
+		}
+
+		/// <summary>
+		/// メンバーリストのメンバーがクリックされたときのイベントハンドラ
+		/// </summary>
+		/// <param name="sender">クリックされたメンバーのViewModel (<see cref="IMemberListItemViewModel"/>)</param>
+		/// <param name="e">イベントデータ</param>
+		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
+		private void Item_MemberClick(object sender, MemberClickEventArgs e)
+		{
+			if (!(sender is IMemberListItemViewModel)) { throw new ArgumentException(); }
+
+			LastClickedMember = sender as IMemberListItemViewModel;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MatchGeneratorTest
 {
@@ -38,6 +39,15 @@ namespace MatchGeneratorTest
 		public static object GetBackingField(this object instance, string propertyName)
 		{
 			return instance.GetPrivateField($"<{propertyName}>k__BackingField");
+		}
+
+		/// <summary>
+		/// インスタンスのプライベートなメソッドを実行する
+		/// </summary>
+		public static object InvokePrivateMethod(this object instance, string methodName, params object[] args)
+		{
+			PrivateObject po = new PrivateObject(instance);
+			return po.Invoke(methodName, args);
 		}
 	}
 }
