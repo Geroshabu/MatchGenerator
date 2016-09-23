@@ -25,5 +25,11 @@ namespace MatchGenerator.ViewModel
 		/// この項目がチェックされているかどうかを取得・設定
 		/// </summary>
 		bool IsChecked { get; set; }
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// クリックされたときに発生する.
+		/// </summary>
+		event EventHandler<MemberClickEventArgs> MemberClick;
 	}
 }

@@ -56,6 +56,8 @@ namespace MatchGeneratorTest.ViewModel
 				IsCheckedSetter(value);
 			}
 		}
+
+		public event EventHandler<MemberClickEventArgs> MemberClick;
 	}
 
 	public class MemberListItemViewModelTest

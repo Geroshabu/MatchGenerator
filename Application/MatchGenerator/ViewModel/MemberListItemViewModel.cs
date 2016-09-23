@@ -59,5 +59,11 @@ namespace MatchGenerator.ViewModel
 				SetProperty(ref IsCheckedField, value);
 			}
 		}
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// クリックされたときに発生する.
+		/// </summary>
+		public event EventHandler<MemberClickEventArgs> MemberClick;
 	}
 }
