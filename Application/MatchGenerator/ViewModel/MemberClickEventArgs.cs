@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
-	class MemberClickEventArgs
+	class MemberClickEventArgs : EventArgs
 	{
 	}
 }
