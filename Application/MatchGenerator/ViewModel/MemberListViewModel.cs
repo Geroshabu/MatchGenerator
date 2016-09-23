@@ -71,5 +71,15 @@ namespace MatchGenerator.ViewModel
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
 			};
 		}
+
+		/// <summary>
+		/// メンバーリストのメンバーがクリックされたときのイベントハンドラ
+		/// </summary>
+		/// <param name="sender">クリックされたメンバーのViewModel (<see cref="IMemberListItemViewModel"/>)</param>
+		/// <param name="e">イベントデータ</param>
+		private void Item_MemberClick(object sender, MemberClickEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
