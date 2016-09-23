@@ -64,12 +64,15 @@ namespace MatchGenerator.ViewModel
 
 		public MemberListViewModel()
 		{
-			Members = new List<IMemberListItemViewModel>
+			Members = new List<MemberListItemViewModel>
 			{
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"真田", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
-			};
+			}
+			.Select(item => { item.MemberClick += Item_MemberClick; return item; })
+			.Cast<IMemberListItemViewModel>()
+			.ToList();
 		}
 
 		/// <summary>
