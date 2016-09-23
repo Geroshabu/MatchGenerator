@@ -11,5 +11,9 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	class MemberClickEventArgs : EventArgs
 	{
+		/// <summary>
+		/// クリック後のメンバーの選択状態
+		/// </summary>
+		public bool IsChecked;
 	}
 }
