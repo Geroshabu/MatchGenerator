@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
+	/// <summary>
+	/// リスト中のメンバーがクリックされた時のイベントデータを格納する.
+	/// </summary>
 	class MemberClickEventArgs : EventArgs
 	{
 	}
