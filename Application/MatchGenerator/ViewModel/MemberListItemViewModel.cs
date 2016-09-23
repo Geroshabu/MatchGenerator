@@ -73,5 +73,12 @@ namespace MatchGenerator.ViewModel
 		/// このメンバーをクリックしたときの処理をするコマンド
 		/// </summary>
 		public ICommand MemberClickCommand { get; }
+		/// <summary>
+		/// <see cref="MemberClickCommand"/>の<see cref="ICommand.Execute"/>の処理
+		/// </summary>
+		private void ClickMember()
+		{
+
+		}
 	}
 }
