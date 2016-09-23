@@ -53,12 +53,12 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return LastClickedMemberField;
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				SetProperty(ref LastClickedMemberField, value);
 			}
 		}
 
