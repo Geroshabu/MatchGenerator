@@ -78,7 +78,9 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		private void ClickMember()
 		{
-
+			MemberClickEventArgs e = new MemberClickEventArgs();
+			e.IsChecked = this.IsChecked;
+			MemberClick?.Invoke(this, e);
 		}
 	}
 }
