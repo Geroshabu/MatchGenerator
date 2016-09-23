@@ -84,6 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\IPerson.cs" />
+    <Compile Include="ViewModel\MemberClickEventArgs.cs" />
     <Compile Include="ViewModel\IMemberListItemViewModel.cs" />
     <Compile Include="ViewModel\IMemberListViewModel.cs" />
     <Compile Include="ViewModel\MemberListItemViewModel.cs" />
