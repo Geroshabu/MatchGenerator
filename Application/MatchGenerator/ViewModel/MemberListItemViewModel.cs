@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using MatchGenerator.Core;
 using MatchGenerator.Model;
 
@@ -65,5 +66,16 @@ namespace MatchGenerator.ViewModel
 		/// クリックされたときに発生する.
 		/// </summary>
 		public event EventHandler<MemberClickEventArgs> MemberClick;
+
+		/// <summary>
+		/// このメンバーをクリックしたときの処理をするコマンド
+		/// </summary>
+		public ICommand MemberClickCommand
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 }

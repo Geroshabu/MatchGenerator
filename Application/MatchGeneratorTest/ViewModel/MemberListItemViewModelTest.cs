@@ -6,6 +6,7 @@ using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
 using MatchGeneratorTest.Model;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace MatchGeneratorTest.ViewModel
 {
@@ -58,6 +59,14 @@ namespace MatchGeneratorTest.ViewModel
 		}
 
 		public event EventHandler<MemberClickEventArgs> MemberClick;
+
+		public ICommand MemberClickCommand
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 
 	public class MemberListItemViewModelTest
