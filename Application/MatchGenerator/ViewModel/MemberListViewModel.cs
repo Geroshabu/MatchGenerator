@@ -80,7 +80,9 @@ namespace MatchGenerator.ViewModel
 		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
 		private void Item_MemberClick(object sender, MemberClickEventArgs e)
 		{
-			throw new NotImplementedException();
+			if (!(sender is IMemberListItemViewModel)) { throw new ArgumentException(); }
+
+			LastClickedMember = sender as IMemberListItemViewModel;
 		}
 	}
 }
