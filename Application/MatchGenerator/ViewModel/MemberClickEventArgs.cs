@@ -5,7 +5,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// リスト中のメンバーがクリックされた時のイベントデータを格納する.
 	/// </summary>
-	class MemberClickEventArgs : EventArgs
+	public class MemberClickEventArgs : EventArgs
 	{
 		/// <summary>
 		/// クリック後のメンバーの選択状態
