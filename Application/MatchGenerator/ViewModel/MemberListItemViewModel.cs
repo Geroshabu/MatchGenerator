@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using MatchGenerator.Core;
 using MatchGenerator.Model;
 
@@ -26,6 +27,7 @@ namespace MatchGenerator.ViewModel
 		public MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
+			MemberClickCommand = new DelegateCommand(() => { MemberClick?.Invoke(this, new MemberClickEventArgs()); });
 		}
 
 		/// <summary>
