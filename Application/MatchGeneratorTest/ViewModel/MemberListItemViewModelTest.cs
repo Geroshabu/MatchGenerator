@@ -86,6 +86,8 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			// 影響するフィールドの確認
 			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
+			Assert.NotNull(actualReturn.MemberClickCommand);
+			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
 		}
 	}
 
