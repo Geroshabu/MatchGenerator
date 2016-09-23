@@ -27,7 +27,7 @@ namespace MatchGenerator.ViewModel
 		public MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
-			MemberClickCommand = new DelegateCommand(() => { MemberClick?.Invoke(this, new MemberClickEventArgs()); });
+			MemberClickCommand = new DelegateCommand(ClickMember);
 		}
 
 		/// <summary>
