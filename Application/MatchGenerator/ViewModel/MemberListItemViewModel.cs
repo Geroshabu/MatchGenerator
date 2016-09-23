@@ -70,12 +70,6 @@ namespace MatchGenerator.ViewModel
 		/// <summary>
 		/// このメンバーをクリックしたときの処理をするコマンド
 		/// </summary>
-		public ICommand MemberClickCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		public ICommand MemberClickCommand { get; }
 	}
 }
