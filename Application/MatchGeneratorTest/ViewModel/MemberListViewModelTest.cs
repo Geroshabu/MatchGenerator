@@ -103,5 +103,37 @@ namespace MatchGeneratorTest.ViewModel
 			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("MembersField");
 			Assert.Same(expectedSelectedMembersField, actualSelectedMembersField);
 		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.LastClickedMember) + ".Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void LastClickedMemberGetTest()
+		{
+
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.LastClickedMember) + ".Setterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void LastClickedMemberSetTest()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberClickメソッド : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberClickTest()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberClickメソッド : 異常系 : senderが期待したものではない(使い方間違ってる)")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void Item_MemberClickTest_SenderTypeError()
+		{
+
+		}
 	}
 }
