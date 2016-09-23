@@ -77,6 +77,7 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		/// <param name="sender">クリックされたメンバーのViewModel (<see cref="IMemberListItemViewModel"/>)</param>
 		/// <param name="e">イベントデータ</param>
+		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
 		private void Item_MemberClick(object sender, MemberClickEventArgs e)
 		{
 			throw new NotImplementedException();
