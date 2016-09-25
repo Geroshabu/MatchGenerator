@@ -93,5 +93,12 @@ namespace MatchGenerator.ViewModel
 		/// このメンバーを連続選択クリックしたときの処理をするコマンド
 		/// </summary>
 		public ICommand MemberExtendedClickCommand { get; }
+		/// <summary>
+		/// <see cref="MemberExtendedClickCommand"/>の<see cref="ICommand.Execute"/>の処理
+		/// </summary>
+		private void ExtendClickMember()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
