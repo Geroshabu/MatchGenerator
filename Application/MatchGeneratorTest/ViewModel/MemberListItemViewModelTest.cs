@@ -69,6 +69,14 @@ namespace MatchGeneratorTest.ViewModel
 		}
 
 		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
+
+		public ICommand MemberExtendedClickCommand
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 
 	public class MemberListItemViewModelTest

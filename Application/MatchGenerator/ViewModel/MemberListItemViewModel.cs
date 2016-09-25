@@ -88,5 +88,10 @@ namespace MatchGenerator.ViewModel
 		/// 連続選択クリックされたときに発生する.
 		/// </summary>
 		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
+
+		/// <summary>
+		/// このメンバーを連続選択クリックしたときの処理をするコマンド
+		/// </summary>
+		public ICommand MemberExtendedClickCommand { get; }
 	}
 }
