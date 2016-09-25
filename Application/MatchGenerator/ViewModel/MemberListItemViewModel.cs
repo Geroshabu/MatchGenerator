@@ -82,5 +82,11 @@ namespace MatchGenerator.ViewModel
 			e.IsChecked = this.IsChecked;
 			MemberClick?.Invoke(this, e);
 		}
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// 連続選択クリックされたときに発生する.
+		/// </summary>
+		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
 	}
 }

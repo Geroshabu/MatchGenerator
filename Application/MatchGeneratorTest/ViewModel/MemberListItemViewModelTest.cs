@@ -67,6 +67,8 @@ namespace MatchGeneratorTest.ViewModel
 				throw new NotImplementedException();
 			}
 		}
+
+		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
 	}
 
 	public class MemberListItemViewModelTest
