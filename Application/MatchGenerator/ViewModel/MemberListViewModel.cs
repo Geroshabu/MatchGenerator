@@ -87,5 +87,16 @@ namespace MatchGenerator.ViewModel
 
 			LastClickedMember = sender as IMemberListItemViewModel;
 		}
+
+		/// <summary>
+		/// メンバーリストのメンバーが連続選択クリックされたときのイベントハンドラ
+		/// </summary>
+		/// <param name="sender">クリックされたメンバーのViewModel (<see cref="IMemberListItemViewModel"/>)</param>
+		/// <param name="e">イベントデータ</param>
+		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
+		private void Item_MemberExtendedClick(object sender, MemberClickEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
