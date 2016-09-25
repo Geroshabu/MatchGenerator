@@ -173,5 +173,45 @@ namespace MatchGeneratorTest.ViewModel
 					Instance.InvokePrivateMethod("Item_MemberClick", inputSender, inputE);
 				});
 		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの上から下へ連続選択")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_Down()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの下から上へ連続選択")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_Up()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 連続選択した項目が前回選択した項目と同じ")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_SameItem()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 一度も選択していない状態で連続選択クリック")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_FirstClick()
+		{
+
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 異常系 : senderが期待したものではない(使い方間違ってる)")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void Item_MemberExtendedClickTest_SenderTypeError()
+		{
+
+		}
 	}
 }

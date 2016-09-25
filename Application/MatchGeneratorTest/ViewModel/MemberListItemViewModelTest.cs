@@ -224,5 +224,23 @@ namespace MatchGeneratorTest.ViewModel
 			// Act
 			Instance.InvokePrivateMethod("ClickMember");
 		}
+
+		[Theory(DisplayName = "ExtendClickMemberメソッド : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		[InlineData(true)]
+		[InlineData(false)]
+		public void ExtendClickMemberTest(bool isCheckedValue)
+		{
+
+		}
+
+		[Fact(DisplayName = "ExtendClickMemberメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void ExtendClickMemberTest_NoEventHandler()
+		{
+
+		}
 	}
 }
