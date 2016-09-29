@@ -96,6 +96,11 @@ namespace MatchGenerator.ViewModel
 		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
 		private void Item_MemberExtendedClick(object sender, MemberClickEventArgs e)
 		{
+			if (!(sender is IMemberListItemViewModel))
+			{
+				throw new ArgumentException();
+			}
+
 			int clickedIndex = Members.IndexOf((IMemberListItemViewModel)sender);
 			int lastClickedIndex = Members.IndexOf(LastClickedMember);
 
