@@ -101,18 +101,21 @@ namespace MatchGenerator.ViewModel
 				throw new ArgumentException();
 			}
 
-			int clickedIndex = Members.IndexOf((IMemberListItemViewModel)sender);
-			int lastClickedIndex = Members.IndexOf(LastClickedMember);
-
-			int firstIndex = Math.Min(clickedIndex, lastClickedIndex);
-			int selectCount = Math.Abs(clickedIndex - lastClickedIndex) + 1;
-			bool nextIsCheckedState = LastClickedMember.IsChecked;
-
-			IEnumerable<IMemberListItemViewModel> targetMembers =
-				Members.Skip(firstIndex).Take(selectCount);
-			foreach (IMemberListItemViewModel member in targetMembers)
+			if (LastClickedMember != null)
 			{
-				member.IsChecked = nextIsCheckedState;
+				int clickedIndex = Members.IndexOf((IMemberListItemViewModel)sender);
+				int lastClickedIndex = Members.IndexOf(LastClickedMember);
+
+				int firstIndex = Math.Min(clickedIndex, lastClickedIndex);
+				int selectCount = Math.Abs(clickedIndex - lastClickedIndex) + 1;
+				bool nextIsCheckedState = LastClickedMember.IsChecked;
+
+				IEnumerable<IMemberListItemViewModel> targetMembers =
+					Members.Skip(firstIndex).Take(selectCount);
+				foreach (IMemberListItemViewModel member in targetMembers)
+				{
+					member.IsChecked = nextIsCheckedState;
+				}
 			}
 
 			LastClickedMember = sender as IMemberListItemViewModel;
