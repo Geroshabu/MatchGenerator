@@ -96,7 +96,21 @@ namespace MatchGenerator.ViewModel
 		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
 		private void Item_MemberExtendedClick(object sender, MemberClickEventArgs e)
 		{
-			throw new NotImplementedException();
+			int clickedIndex = Members.IndexOf((IMemberListItemViewModel)sender);
+			int lastClickedIndex = Members.IndexOf(LastClickedMember);
+
+			int firstIndex = Math.Min(clickedIndex, lastClickedIndex);
+			int selectCount = Math.Abs(clickedIndex - lastClickedIndex) + 1;
+			bool nextIsCheckedState = LastClickedMember.IsChecked;
+
+			IEnumerable<IMemberListItemViewModel> targetMembers =
+				Members.Skip(firstIndex).Take(selectCount);
+			foreach (IMemberListItemViewModel member in targetMembers)
+			{
+				member.IsChecked = nextIsCheckedState;
+			}
+
+			LastClickedMember = sender as IMemberListItemViewModel;
 		}
 	}
 }
