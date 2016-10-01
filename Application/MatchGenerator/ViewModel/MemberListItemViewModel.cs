@@ -98,7 +98,11 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		private void ExtendClickMember()
 		{
-			throw new NotImplementedException();
+			this.IsChecked = !this.IsChecked; // MouseBindingなのでチェック状態は自動で変わらない
+
+			MemberClickEventArgs e = new MemberClickEventArgs();
+			e.IsChecked = this.IsChecked;
+			MemberExtendedClick?.Invoke(this, e);
 		}
 	}
 }
