@@ -70,7 +70,7 @@ namespace MatchGenerator.ViewModel
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
 			}
-			.Select(item => { item.MemberClick += Item_MemberClick; return item; })
+			.Select(item => { item.MemberClick += Item_MemberClick; item.MemberExtendedClick += Item_MemberExtendedClick; return item; })
 			.Cast<IMemberListItemViewModel>()
 			.ToList();
 		}
