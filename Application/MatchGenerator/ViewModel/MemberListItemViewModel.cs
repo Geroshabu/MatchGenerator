@@ -28,6 +28,7 @@ namespace MatchGenerator.ViewModel
 		{
 			Model = model;
 			MemberClickCommand = new DelegateCommand(ClickMember);
+			MemberExtendedClickCommand = new DelegateCommand(ExtendClickMember);
 		}
 
 		/// <summary>
