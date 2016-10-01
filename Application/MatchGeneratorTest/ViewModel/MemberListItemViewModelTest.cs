@@ -98,6 +98,8 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
 			Assert.NotNull(actualReturn.MemberClickCommand);
 			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
+			Assert.NotNull(actualReturn.MemberExtendedClickCommand);
+			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberExtendedClickCommand);
 		}
 	}
 
