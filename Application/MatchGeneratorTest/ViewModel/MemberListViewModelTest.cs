@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using MatchGenerator.ViewModel;
 
@@ -20,9 +21,21 @@ namespace MatchGeneratorTest.ViewModel
 	{
 		private MemberListViewModel Instance;
 
+		private IList<IMemberListItemViewModel> MembersFieldValue;
+
 		public MemberListViewModelInstanceTest()
 		{
 			Instance = new MemberListViewModel();
+			MembersFieldValue = new List<IMemberListItemViewModel>
+			{
+				new MemberListItemViewModelMock(),
+				new MemberListItemViewModelMock(),
+				new MemberListItemViewModelMock(),
+				new MemberListItemViewModelMock(),
+				new MemberListItemViewModelMock()
+			};
+
+			Instance.SetPrivateField("MembersField", MembersFieldValue);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系")]
@@ -171,6 +184,172 @@ namespace MatchGeneratorTest.ViewModel
 				() =>
 				{
 					Instance.InvokePrivateMethod("Item_MemberClick", inputSender, inputE);
+				});
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの上から下へ連続選択")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_Down()
+		{
+			// Arrange
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedGetter = () => true;
+			((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedGetter = () => true;
+			IMemberListItemViewModel valueLastClickedMember = MembersFieldValue[1];
+			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
+			// Input data
+			object inputSender = MembersFieldValue[3];
+			MemberClickEventArgs inputE = new MemberClickEventArgs { IsChecked = true };
+			// Mocks
+			bool actualMember1IsChecked = false;
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetter = value => { actualMember1IsChecked = value; };
+			bool actualMember2IsChecked = false;
+			((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetter = value => { actualMember2IsChecked = value; };
+			bool actualMember3IsChecked = false;
+			((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetter = value => { actualMember3IsChecked = value; };
+			// Expected data
+			IList<IMemberListItemViewModel> expectedSelectedMembersField = MembersFieldValue.Skip(1).Take(3).ToList();
+			IMemberListItemViewModel expectedLastClickedMemberField = MembersFieldValue[3];
+
+			// Act
+			Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
+
+			// Assert
+			// Members
+			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("SelectedMembersField");
+			Assert.True(expectedSelectedMembersField.SequenceEqual(actualSelectedMembersField));
+			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
+			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
+			// Called method
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(true, actualMember1IsChecked);
+			Assert.Equal(true, actualMember2IsChecked);
+			Assert.Equal(true, actualMember3IsChecked);
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの下から上へ連続選択解除")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_Up()
+		{
+			// Arrange
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedGetter = () => true;
+			((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedGetter = () => false;
+			IMemberListItemViewModel valueLastClickedMember = MembersFieldValue[3];
+			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
+			// Input data
+			object inputSender = MembersFieldValue[1];
+			MemberClickEventArgs inputE = new MemberClickEventArgs { IsChecked = true };
+			// Mocks
+			bool actualMember1IsChecked = true;
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetter = value => { actualMember1IsChecked = value; };
+			bool actualMember2IsChecked = true;
+			((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetter = value => { actualMember2IsChecked = value; };
+			bool actualMember3IsChecked = true;
+			((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetter = value => { actualMember3IsChecked = value; };
+			// Expected data
+			IMemberListItemViewModel expectedLastClickedMemberField = MembersFieldValue[1];
+
+			// Act
+			Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
+
+			// Assert
+			// Members
+			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
+			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
+			// Called method
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(false, actualMember1IsChecked);
+			Assert.Equal(false, actualMember2IsChecked);
+			Assert.Equal(false, actualMember3IsChecked);
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 連続選択した項目が前回選択した項目と同じ")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_SameItem()
+		{
+			// Arrange
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedGetter = () => true;
+			IMemberListItemViewModel valueLastClickedMember = MembersFieldValue[1];
+			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
+			// Input data
+			object inputSender = MembersFieldValue[1];
+			MemberClickEventArgs inputE = new MemberClickEventArgs { IsChecked = true };
+			// Mocks
+			bool actualMember1IsChecked = false;
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetter = value => { actualMember1IsChecked = value; };
+			// Expected data
+			IList<IMemberListItemViewModel> expectedSelectedMembersField = MembersFieldValue.Skip(1).Take(1).ToList();
+			IMemberListItemViewModel expectedLastClickedMemberField = MembersFieldValue[1];
+
+			// Act
+			Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
+
+			// Assert
+			// Members
+			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("SelectedMembersField");
+			Assert.True(expectedSelectedMembersField.SequenceEqual(actualSelectedMembersField));
+			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
+			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
+			// Called method
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(true, actualMember1IsChecked);
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 一度も選択していない状態で連続選択クリック")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void Item_MemberExtendedClickTest_FirstClick()
+		{
+			// Arrange
+			Instance.SetPrivateField("LastClickedMemberField", null);
+			// Input data
+			object inputSender = MembersFieldValue[1];
+			MemberClickEventArgs inputE = new MemberClickEventArgs { IsChecked = true };
+			// Expected data
+			IMemberListItemViewModel expectedLastClickedMemberField = MembersFieldValue[1];
+
+			// Act
+			Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
+
+			// Assert
+			// Members
+			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
+			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
+			// Called method
+			foreach (IMemberListItemViewModel item in MembersFieldValue)
+			{
+				Assert.Equal(0, ((MemberListItemViewModelMock)item).IsCheckedGetterCount);
+			}
+		}
+
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 異常系 : senderが期待したものではない(使い方間違ってる)")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void Item_MemberExtendedClickTest_SenderTypeError()
+		{
+			// Arrange
+			object inputSender = new object();
+			MemberClickEventArgs inputE = new MemberClickEventArgs { IsChecked = false };
+
+			// Act & Assert
+			Assert.Throws<ArgumentException>(
+				() =>
+				{
+					Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
 				});
 		}
 	}
