@@ -216,8 +216,6 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			// Members
-			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("SelectedMembersField");
-			Assert.True(expectedSelectedMembersField.SequenceEqual(actualSelectedMembersField));
 			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
 			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
 			// Called method
@@ -296,8 +294,6 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			// Members
-			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("SelectedMembersField");
-			Assert.True(expectedSelectedMembersField.SequenceEqual(actualSelectedMembersField));
 			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
 			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
 			// Called method

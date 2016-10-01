@@ -243,11 +243,10 @@ namespace MatchGeneratorTest.ViewModel
 				actualMemberExtendedClickEParams.Add(e);
 			};
 			Instance.SetPrivateField("IsCheckedField", isCheckedValue);
-			Instance.IsChecked = false;
 			// Expected
 			object expectedMemberExtendedClickSenderParam = Instance;
-			bool expectedMemberExtendedClickEParam = isCheckedValue;
-			bool expectedIsChecked = true;
+			bool expectedMemberExtendedClickEParam = !isCheckedValue;
+			bool expectedIsChecked = !isCheckedValue;
 
 			// Act
 			Instance.InvokePrivateMethod("ExtendClickMember");
