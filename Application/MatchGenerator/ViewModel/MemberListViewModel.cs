@@ -70,7 +70,7 @@ namespace MatchGenerator.ViewModel
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
 				new MemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
 			}
-			.Select(item => { item.MemberClick += Item_MemberClick; return item; })
+			.Select(item => { item.MemberClick += Item_MemberClick; item.MemberExtendedClick += Item_MemberExtendedClick; return item; })
 			.Cast<IMemberListItemViewModel>()
 			.ToList();
 		}
@@ -84,6 +84,39 @@ namespace MatchGenerator.ViewModel
 		private void Item_MemberClick(object sender, MemberClickEventArgs e)
 		{
 			if (!(sender is IMemberListItemViewModel)) { throw new ArgumentException(); }
+
+			LastClickedMember = sender as IMemberListItemViewModel;
+		}
+
+		/// <summary>
+		/// メンバーリストのメンバーが連続選択クリックされたときのイベントハンドラ
+		/// </summary>
+		/// <param name="sender">クリックされたメンバーのViewModel (<see cref="IMemberListItemViewModel"/>)</param>
+		/// <param name="e">イベントデータ</param>
+		/// <exception cref="ArgumentException"><paramref name="sender"/>が<see cref="IMemberListItemViewModel"/>でない.</exception>
+		private void Item_MemberExtendedClick(object sender, MemberClickEventArgs e)
+		{
+			if (!(sender is IMemberListItemViewModel))
+			{
+				throw new ArgumentException();
+			}
+
+			if (LastClickedMember != null)
+			{
+				int clickedIndex = Members.IndexOf((IMemberListItemViewModel)sender);
+				int lastClickedIndex = Members.IndexOf(LastClickedMember);
+
+				int firstIndex = Math.Min(clickedIndex, lastClickedIndex);
+				int selectCount = Math.Abs(clickedIndex - lastClickedIndex) + 1;
+				bool nextIsCheckedState = LastClickedMember.IsChecked;
+
+				IEnumerable<IMemberListItemViewModel> targetMembers =
+					Members.Skip(firstIndex).Take(selectCount);
+				foreach (IMemberListItemViewModel member in targetMembers)
+				{
+					member.IsChecked = nextIsCheckedState;
+				}
+			}
 
 			LastClickedMember = sender as IMemberListItemViewModel;
 		}

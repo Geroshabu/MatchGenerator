@@ -16,8 +16,12 @@
         </DataTemplate>
 		<DataTemplate x:Key="memberListCheckBoxTemplate" DataType="{x:Type myvm:IMemberListItemViewModel}">
 			<StackPanel Orientation="Horizontal">
-				<CheckBox IsChecked="{Binding Path=IsChecked}" Command="{Binding MemberClickCommand}"/>
-			</StackPanel>
+                <CheckBox IsChecked="{Binding Path=IsChecked}" Command="{Binding MemberClickCommand}">
+                    <CheckBox.InputBindings>
+                        <MouseBinding Gesture="Shift+LeftClick" Command="{Binding MemberExtendedClickCommand}"/>
+                    </CheckBox.InputBindings>
+                </CheckBox>
+            </StackPanel>
 		</DataTemplate>
     </Window.Resources>
     <Grid>

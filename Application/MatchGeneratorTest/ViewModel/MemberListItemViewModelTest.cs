@@ -67,6 +67,16 @@ namespace MatchGeneratorTest.ViewModel
 				throw new NotImplementedException();
 			}
 		}
+
+		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
+
+		public ICommand MemberExtendedClickCommand
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 
 	public class MemberListItemViewModelTest
@@ -88,6 +98,8 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
 			Assert.NotNull(actualReturn.MemberClickCommand);
 			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
+			Assert.NotNull(actualReturn.MemberExtendedClickCommand);
+			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberExtendedClickCommand);
 		}
 	}
 
@@ -213,6 +225,47 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Act
 			Instance.InvokePrivateMethod("ClickMember");
+		}
+
+		[Theory(DisplayName = "ExtendClickMemberメソッド : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		[InlineData(true)]
+		[InlineData(false)]
+		public void ExtendClickMemberTest(bool isCheckedValue)
+		{
+			// Arrange
+			IList<object> actualMemberExtendedClickSenderParams = new List<object>();
+			IList<MemberClickEventArgs> actualMemberExtendedClickEParams = new List<MemberClickEventArgs>();
+			Instance.MemberExtendedClick += (s, e) =>
+			{
+				actualMemberExtendedClickSenderParams.Add(s);
+				actualMemberExtendedClickEParams.Add(e);
+			};
+			Instance.SetPrivateField("IsCheckedField", isCheckedValue);
+			// Expected
+			object expectedMemberExtendedClickSenderParam = Instance;
+			bool expectedMemberExtendedClickEParam = !isCheckedValue;
+			bool expectedIsChecked = !isCheckedValue;
+
+			// Act
+			Instance.InvokePrivateMethod("ExtendClickMember");
+
+			// Assert
+			Assert.Single(actualMemberExtendedClickSenderParams);
+			Assert.Single(actualMemberExtendedClickEParams);
+			Assert.Same(expectedMemberExtendedClickSenderParam, actualMemberExtendedClickSenderParams[0]);
+			Assert.Equal(expectedMemberExtendedClickEParam, actualMemberExtendedClickEParams[0].IsChecked);
+			Assert.Equal(expectedIsChecked, Instance.IsChecked);
+		}
+
+		[Fact(DisplayName = "ExtendClickMemberメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void ExtendClickMemberTest_NoEventHandler()
+		{
+			// Act
+			Instance.InvokePrivateMethod("ExtendClickMember");
 		}
 	}
 }

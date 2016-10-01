@@ -37,5 +37,16 @@ namespace MatchGenerator.ViewModel
 		/// このメンバーをクリックしたときの処理をするコマンド
 		/// </summary>
 		ICommand MemberClickCommand { get; }
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// 連続選択クリックされたときに発生する.
+		/// </summary>
+		event EventHandler<MemberClickEventArgs> MemberExtendedClick;
+
+		/// <summary>
+		/// このメンバーを連続選択クリックしたときの処理をするコマンド
+		/// </summary>
+		ICommand MemberExtendedClickCommand { get; }
 	}
 }

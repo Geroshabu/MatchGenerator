@@ -28,6 +28,7 @@ namespace MatchGenerator.ViewModel
 		{
 			Model = model;
 			MemberClickCommand = new DelegateCommand(ClickMember);
+			MemberExtendedClickCommand = new DelegateCommand(ExtendClickMember);
 		}
 
 		/// <summary>
@@ -81,6 +82,28 @@ namespace MatchGenerator.ViewModel
 			MemberClickEventArgs e = new MemberClickEventArgs();
 			e.IsChecked = this.IsChecked;
 			MemberClick?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// このメンバーが選択されているかどうかを示すコントロールが,
+		/// 連続選択クリックされたときに発生する.
+		/// </summary>
+		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
+
+		/// <summary>
+		/// このメンバーを連続選択クリックしたときの処理をするコマンド
+		/// </summary>
+		public ICommand MemberExtendedClickCommand { get; }
+		/// <summary>
+		/// <see cref="MemberExtendedClickCommand"/>の<see cref="ICommand.Execute"/>の処理
+		/// </summary>
+		private void ExtendClickMember()
+		{
+			this.IsChecked = !this.IsChecked; // MouseBindingなのでチェック状態は自動で変わらない
+
+			MemberClickEventArgs e = new MemberClickEventArgs();
+			e.IsChecked = this.IsChecked;
+			MemberExtendedClick?.Invoke(this, e);
 		}
 	}
 }
