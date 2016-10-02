@@ -83,6 +83,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileIO\DefaultImporter.cs" />
+    <Compile Include="FileIO\IMemberImporter.cs" />
     <Compile Include="Model\IPerson.cs" />
     <Compile Include="ViewModel\MemberClickEventArgs.cs" />
     <Compile Include="ViewModel\IMemberListItemViewModel.cs" />
