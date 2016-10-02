@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MatchGenerator.Model;
+using MatchGenerator.Core;
 
 namespace MatchGenerator.FileIO
 {
@@ -30,12 +31,28 @@ namespace MatchGenerator.FileIO
 		/// または, この操作は現在のプラットフォームではサポートされていない.
 		/// または, <paramref name="FileName"/>によってディレクトリが指定された.
 		/// または, 呼び出し元に必要なアクセス許可がない.</exception>
+		/// <exception cref="FileFormatException">ファイルの形式が不正.</exception>
 		public IList<IPerson> Import(string FileName)
 		{
 			IList<IPerson> all_data = new List<IPerson>();
 
 			// いったん全行をファイルから読み込んでしまう
 			string[] all_data_raw = File.ReadAllLines(FileName);
+
+			foreach (string data_raw in all_data_raw)
+			{
+				string[] elements = data_raw.Split(',');
+
+				if (elements.Length != Person.PropertyCount)
+				{
+					throw new FileFormatException();
+				}
+
+				string name = elements[0];
+				string description = elements[4];
+
+				all_data.Add(new Person { Name = name, Description = description });
+			}
 
 			return all_data;
 		}
