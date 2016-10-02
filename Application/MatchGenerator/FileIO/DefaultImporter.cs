@@ -37,7 +37,7 @@ namespace MatchGenerator.FileIO
 			IList<IPerson> all_data = new List<IPerson>();
 
 			// いったん全行をファイルから読み込んでしまう
-			string[] all_data_raw = File.ReadAllLines(FileName);
+			string[] all_data_raw = DoReadAllLines(FileName);
 
 			foreach (string data_raw in all_data_raw)
 			{
@@ -56,5 +56,11 @@ namespace MatchGenerator.FileIO
 
 			return all_data;
 		}
+
+		#region テストのために分離した処理
+
+		private Func<string, string[]> DoReadAllLines = path => File.ReadAllLines(path);
+
+		#endregion
 	}
 }
