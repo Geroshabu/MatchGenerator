@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGeneratorTest.FileIO
 {
-	class DefaultImporterTest
+	public class DefaultImporterTest
 	{
 	}
 }
