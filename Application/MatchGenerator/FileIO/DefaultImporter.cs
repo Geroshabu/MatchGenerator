@@ -9,7 +9,7 @@ namespace MatchGenerator.FileIO
 	/// <summary>
 	/// メンバー情報を読み込む標準のインポーター
 	/// </summary>
-	class DefaultImporter
+	internal class DefaultImporter
 	{
 	}
 }
