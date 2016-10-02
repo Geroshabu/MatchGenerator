@@ -19,7 +19,9 @@ namespace MatchGenerator.FileIO
 		/// <returns>読み込んだメンバー情報</returns>
 		public IList<IPerson> Import(string FileName)
 		{
-			throw new NotImplementedException();
+			IList<IPerson> all_data = new List<IPerson>();
+
+			return all_data;
 		}
 	}
 }
