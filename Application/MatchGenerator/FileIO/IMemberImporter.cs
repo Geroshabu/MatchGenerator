@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.FileIO
 {
-	interface IMemberImporter
+	public interface IMemberImporter
 	{
 	}
 }
