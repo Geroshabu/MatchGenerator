@@ -188,7 +188,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedIsChecked, actualIsChecked);
 		}
 
-		[Theory(DisplayName = "MemberClickメソッド : 正常系")]
+		[Theory(DisplayName = "ClickMemberメソッド : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		[InlineData(true)]
@@ -218,7 +218,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedIsChecked, actualMemberClickEParams[0].IsChecked);
 		}
 
-		[Fact(DisplayName = "MemberClickメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
+		[Fact(DisplayName = "ClickMemberメソッド : 異常系 : イベントハンドラが設定されていないときに落ちないこと")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "異常系")]
 		public void ClickMemberTest_NoEventHandler()
