@@ -125,7 +125,7 @@ namespace MatchGenerator
 				new SortDescription(
 					"Id",
 					ListSortDirection.Ascending));
-			allMembersListView.DataContext = view;
+			// allMembersListView.DataContext = view;
 
 			mainStatusBar.Content = "Importing success (" + AllMemberViewData.Count.ToString() + " members)";
 		}
