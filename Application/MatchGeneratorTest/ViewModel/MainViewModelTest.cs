@@ -1,14 +1,22 @@
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MatchGeneratorTest.ViewModel
 {
-	[TestClass]
 	public class MainViewModelTest
 	{
-		[TestMethod]
-		public void TestMethod1()
+		[Fact(DisplayName = "AllMembers.Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void AllMembersGetterTest()
 		{
+		}
+
+		[Fact(DisplayName = "AllMembers.Setterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void AllMembersSetterTest()
+		{
+
 		}
 	}
 }
