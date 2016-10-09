@@ -28,6 +28,11 @@
 			</StackPanel>
 		</DataTemplate>
 	</Window.Resources>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 	<Grid>
 		<ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334" DataContext="{Binding AllMembers}" ItemsSource="{Binding Members}">
 			<ListView.View>

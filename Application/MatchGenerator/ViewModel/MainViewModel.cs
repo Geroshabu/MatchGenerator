@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MatchGenerator.ViewModel
 {
@@ -27,6 +28,11 @@ namespace MatchGenerator.ViewModel
 				SetProperty(ref AllMembersField, value);
 			}
 		}
+
+		/// <summary>
+		/// メイン画面に表示するデータを読み込むコマンド
+		/// </summary>
+		public ICommand InitializeCommand { get; }
 
 		public MainViewModel()
 		{
