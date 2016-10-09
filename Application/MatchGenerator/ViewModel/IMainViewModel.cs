@@ -11,5 +11,9 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	public interface IMainViewModel
 	{
+		/// <summary>
+		/// 全てのメンバーを表示するリスト
+		/// </summary>
+		IMemberListViewModel AllMembers { get; set; }
 	}
 }
