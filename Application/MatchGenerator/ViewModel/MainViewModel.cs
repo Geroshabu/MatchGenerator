@@ -44,7 +44,7 @@ namespace MatchGenerator.ViewModel
 
 		public MainViewModel()
 		{
-			AllMembers = new MemberListViewModel();
+			AllMembers = MemberListViewModel.CreateMemberListViewModel();
 			InitializeCommand = new DelegateCommand(InitializeData);
 		}
 	}

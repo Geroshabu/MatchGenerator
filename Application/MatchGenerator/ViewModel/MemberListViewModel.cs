@@ -62,7 +62,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
-		public MemberListViewModel()
+		private MemberListViewModel()
 		{
 			Members = new List<IMemberListItemViewModel>
 			{
@@ -74,6 +74,9 @@ namespace MatchGenerator.ViewModel
 			.Cast<IMemberListItemViewModel>()
 			.ToList();
 		}
+
+		public static Func<IMemberListViewModel> CreateMemberListViewModel { get; } =
+			() => new MemberListViewModel();
 
 		/// <summary>
 		/// メンバーリストのメンバーがクリックされたときのイベントハンドラ
