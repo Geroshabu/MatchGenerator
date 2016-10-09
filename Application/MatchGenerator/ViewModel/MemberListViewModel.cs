@@ -62,21 +62,22 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
-		private MemberListViewModel()
+		private MemberListViewModel(IList<Model.IPerson> memberData)
 		{
-			Members = new List<IMemberListItemViewModel>
-			{
-				MemberListItemViewModel.CreateMemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"真田", "い", "M", "0", "う" })),
-				MemberListItemViewModel.CreateMemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"あ", "い", "M", "0", "う" })),
-				MemberListItemViewModel.CreateMemberListItemViewModel(new MatchGenerator.Core.Person(new string[] {"え", "お", "M", "0", "か" }))
-			}
-			.Select(item => { item.MemberClick += Item_MemberClick; item.MemberExtendedClick += Item_MemberExtendedClick; return item; })
-			.Cast<IMemberListItemViewModel>()
-			.ToList();
+			Members = memberData
+				.Select(
+					personData =>
+					{
+						IMemberListItemViewModel memberListItemViewModel = MemberListItemViewModel.CreateMemberListItemViewModel(personData);
+						memberListItemViewModel.MemberClick += Item_MemberClick;
+						memberListItemViewModel.MemberExtendedClick += Item_MemberExtendedClick;
+						return memberListItemViewModel;
+					})
+				.ToList();
 		}
 
-		public static Func<IMemberListViewModel> CreateMemberListViewModel { get; } =
-			() => new MemberListViewModel();
+		public static Func<IList<Model.IPerson>, IMemberListViewModel> CreateMemberListViewModel { get; } =
+			memberData => new MemberListViewModel(memberData);
 
 		/// <summary>
 		/// メンバーリストのメンバーがクリックされたときのイベントハンドラ

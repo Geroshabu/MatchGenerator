@@ -40,11 +40,12 @@ namespace MatchGenerator.ViewModel
 			string memberDataFileName = "MemberData.csv";
 			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
 			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+
+			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
 		}
 
 		public MainViewModel()
 		{
-			AllMembers = MemberListViewModel.CreateMemberListViewModel();
 			InitializeCommand = new DelegateCommand(InitializeData);
 		}
 	}
