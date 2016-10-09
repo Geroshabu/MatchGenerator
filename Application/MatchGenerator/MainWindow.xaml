@@ -8,6 +8,9 @@
 		xmlns:myvm="clr-namespace:MatchGenerator.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="403.594" Width="939.007" Loaded="Window_Loaded">
+    <Window.DataContext>
+        <myvm:MainViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Key="memberViewCheckBoxTemplate" DataType="{x:Type local_ui:MemberListViewItem}">
             <StackPanel Orientation="Horizontal">
