@@ -2,7 +2,7 @@ using Xunit;
 
 namespace MatchGeneratorTest.ViewModel
 {
-	public class MainViewModelTest
+	public class MainViewModelInstanceTest
 	{
 		[Fact(DisplayName = "AllMembers.Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
