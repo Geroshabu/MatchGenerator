@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace MatchGenerator.ViewModel
 {
@@ -34,9 +35,17 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		public ICommand InitializeCommand { get; }
 
+		private void InitializeData()
+		{
+			string memberDataFileName = "MemberData.csv";
+			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
+			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+		}
+
 		public MainViewModel()
 		{
 			AllMembers = new MemberListViewModel();
+			InitializeCommand = new DelegateCommand(InitializeData);
 		}
 	}
 }
