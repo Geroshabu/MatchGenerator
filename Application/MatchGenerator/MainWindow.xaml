@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MatchGenerator"
         xmlns:local_ui="clr-namespace:MatchGenerator.Core.UI"
 		xmlns:myvm="clr-namespace:MatchGenerator.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="403.594" Width="939.007" Loaded="Window_Loaded">
 	<Window.DataContext>
