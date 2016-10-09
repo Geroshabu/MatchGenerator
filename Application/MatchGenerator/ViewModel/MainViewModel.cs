@@ -27,5 +27,10 @@ namespace MatchGenerator.ViewModel
 				SetProperty(ref AllMembersField, value);
 			}
 		}
+
+		public MainViewModel()
+		{
+			AllMembers = new MemberListViewModel();
+		}
 	}
 }
