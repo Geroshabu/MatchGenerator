@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -48,6 +50,36 @@ namespace MatchGeneratorTest
 		{
 			PrivateObject po = new PrivateObject(instance);
 			return po.Invoke(methodName, args);
+		}
+
+		private static IDictionary<string, object> originalFieldValue = new Dictionary<string, object>();
+
+		/// <summary>
+		/// クラスの静的フィールドの値を設定する.
+		/// 静的フィールドはテストケースが終わってもそのままなので,
+		/// <see cref="RestoreStaticField"/>で元に戻すこと.
+		/// </summary>
+		public static void SetStaticField<T>(string fieldName, object value)
+		{
+			string key = $"{typeof(T)}+{fieldName}";
+			if (originalFieldValue.ContainsKey(key)) { throw new InvalidOperationException(); }
+
+			PrivateType pt = new PrivateType(typeof(T));
+			originalFieldValue.Add(key, pt.GetStaticField(fieldName));
+			pt.SetStaticField(fieldName, value);
+		}
+
+		/// <summary>
+		/// クラスの静的フィールドの値を元に戻す.
+		/// </summary>
+		public static void RestoreStaticField<T>(string fieldName)
+		{
+			string key = $"{typeof(T)}+{fieldName}";
+			if (!originalFieldValue.ContainsKey(key)) { return; }
+
+			PrivateType pt = new PrivateType(typeof(T));
+			pt.SetStaticField(fieldName, originalFieldValue[key]);
+			originalFieldValue.Remove(key);
 		}
 	}
 }
