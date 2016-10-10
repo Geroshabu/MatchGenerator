@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
 
@@ -14,7 +17,13 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MainViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMainViewModel
 	{
+		private CompositionContainer mefContainers;
+
 		private IMemberListViewModel AllMembersField;
+
+		[ImportMany]
+		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
+
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
@@ -41,6 +50,10 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		private void InitializeData()
 		{
+			// MEFによる収集
+			mefContainers = CreateMefContainer();
+			mefContainers.ComposeParts(this);
+
 			string memberDataFileName = "MemberData.csv";
 			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
 			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
