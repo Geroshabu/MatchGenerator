@@ -8,6 +8,7 @@ namespace MatchGeneratorTest.ViewModel
 	{
 		public const string AllMembers = "AllMembersField";
 		public const string InitializeData = "InitializeData";
+		public const string ReadMemberFromFile = "ReadMemberFromFile";
 	}
 
 	public class MainViewModelTest
@@ -22,6 +23,7 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			Assert.NotNull(actualReturn.InitializeCommand);
+			Assert.NotNull(actualReturn.ReadMemberFromFileCommand);
 		}
 	}
 
@@ -78,6 +80,14 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			Assert.NotNull(Instance.InitializeCommand);
+		}
+
+		[Fact(DisplayName = MainViewModelMember.ReadMemberFromFile + "メソッド : 正常系", Skip = "ダイアログの表示をモックに入れ替えられるようになってから")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void ReadMemberFromFileTest()
+		{
+
 		}
 	}
 }
