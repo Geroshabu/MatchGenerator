@@ -6,6 +6,11 @@ using MatchGenerator.ViewModel;
 
 namespace MatchGeneratorTest.ViewModel
 {
+	internal struct MemberListViewModelMember
+	{
+		public const string CreateMemberListViewModel = "<CreateMemberListViewModel>k__BackingField";
+	}
+
 	/// <summary>
 	/// <see cref="MemberListViewModel"/>のMock
 	/// </summary>
