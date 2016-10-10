@@ -47,6 +47,17 @@ namespace MatchGenerator.ViewModel
 			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
 		}
 
+		/// <summary>
+		/// ファイルからメンバー情報を読み込むコマンドを取得する
+		/// </summary>
+		public ICommand ReadMemberFromFileCommand
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+
 		public MainViewModel()
 		{
 			InitializeCommand = new DelegateCommand(InitializeData);
