@@ -21,6 +21,8 @@ namespace MatchGenerator.ViewModel
 
 		private IMemberListViewModel AllMembersField;
 
+		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
+
 		[ImportMany]
 		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
 

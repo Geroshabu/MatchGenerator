@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.Composition.Hosting;
@@ -10,6 +11,7 @@ namespace MatchGeneratorTest.ViewModel
 	internal struct MainViewModelMember
 	{
 		public const string AllMembers = "AllMembersField";
+		public const string DefaultMemberImporterType = "<DefaultMemberImporterType>k__BackingField";
 		public const string InitializeData = "InitializeData";
 		public const string ReadMemberFromFile = "ReadMemberFromFile";
 		public const string CreateMefContainer = "CreateMefContainerBody";
@@ -38,6 +40,21 @@ namespace MatchGeneratorTest.ViewModel
 		public MainViewModelInstanceTest()
 		{
 			Instance = new MainViewModel();
+		}
+
+		[Fact(DisplayName = nameof(MainViewModelMember.DefaultMemberImporterType) + ".Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void DefaultMemberImporterTypeTest()
+		{
+			// Arrange
+			Type expectedReturn = typeof(MatchGenerator.FileIO.DefaultImporter);
+
+			// Act
+			Type actualReturn = (Type)Instance.GetPrivateField(MainViewModelMember.DefaultMemberImporterType);
+
+			// Assert
+			Assert.Equal(expectedReturn, actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + ".Getterプロパティ : 正常系")]
