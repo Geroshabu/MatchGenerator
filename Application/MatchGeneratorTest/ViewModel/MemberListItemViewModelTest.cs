@@ -42,7 +42,7 @@ namespace MatchGeneratorTest.ViewModel
 		public Func<bool> IsCheckedGetter = () => false;
 		public int IsCheckedGetterCount = 0;
 		public Action<bool> IsCheckedSetter = _ => { };
-		public int IsCheckedSetterCount = 0;
+		public IList<bool> IsCheckedSetterParams = new List<bool>();
 		public bool IsChecked
 		{
 			get
@@ -53,7 +53,7 @@ namespace MatchGeneratorTest.ViewModel
 
 			set
 			{
-				IsCheckedSetterCount++;
+				IsCheckedSetterParams.Add(value);
 				IsCheckedSetter(value);
 			}
 		}
