@@ -8,6 +8,7 @@ namespace MatchGeneratorTest.ViewModel
 {
 	internal struct MemberListViewModelMember
 	{
+		public const string MembersField = "MembersField";
 		public const string CreateMemberListViewModel = "<CreateMemberListViewModel>k__BackingField";
 	}
 
@@ -123,6 +124,17 @@ namespace MatchGeneratorTest.ViewModel
 				new MemberListItemViewModelMock()
 			};
 			IList<IMemberListItemViewModel> expectedMembersField = inputMembers;
+			// Event handler
+			IList<object> actualPropertyChangedParamsSender = new List<object>();
+			IList<System.ComponentModel.PropertyChangedEventArgs> actualPropertyChangedParamsE = new List<System.ComponentModel.PropertyChangedEventArgs>();
+			Instance.PropertyChanged += (s, e) =>
+			{
+				actualPropertyChangedParamsSender.Add(s);
+				actualPropertyChangedParamsE.Add(e);
+			};
+			// Expected data
+			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance, Instance };
+			IList<string> expectedPropertyChangedParamsE = new List<string> { "Members", "SelectedMembers" };
 
 			// Act
 			Instance.Members = inputMembers;
@@ -130,6 +142,9 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			IList<IMemberListItemViewModel> actualMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("MembersField");
 			Assert.Same(expectedMembersField, actualMembersField);
+			// Called handler
+			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
+			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
@@ -138,18 +153,47 @@ namespace MatchGeneratorTest.ViewModel
 		public void SelectedMembersGetTest()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> SelectedMembersFieldValue = new List<IMemberListItemViewModel>
+			((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedGetter = () => true;
+			((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedGetter = () => true;
+			// Expected data
+			IList<IMemberListItemViewModel> expectedReturn = new List<IMemberListItemViewModel>
 			{
-				new MemberListItemViewModelMock()
+				MembersFieldValue[1], MembersFieldValue[3]
 			};
-			Instance.SetPrivateField("SelectedMembersField", SelectedMembersFieldValue);
-			IList<IMemberListItemViewModel> expectedReturn = SelectedMembersFieldValue;
 
 			// Act
 			IList<IMemberListItemViewModel> actualReturn = Instance.SelectedMembers;
 
 			// Assert
-			Assert.Same(expectedReturn, actualReturn);
+			Assert.True(expectedReturn.SequenceEqual(actualReturn));
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系 : 全メンバが空")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void SelectedMembersGetTest_EmptyMembers()
+		{
+			// Arrange
+			IList<IMemberListItemViewModel> membersFieldValue = new List<IMemberListItemViewModel>();
+			Instance.SetPrivateField(MemberListViewModelMember.MembersField, membersFieldValue);
+
+			// Act
+			IList<IMemberListItemViewModel> actualReturn = Instance.SelectedMembers;
+
+			// Assert
+			Assert.Empty(actualReturn);
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系 : 何も選択されていない")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void SelectedMembersGetTest_NoMemberSelected()
+		{
+			// Act
+			IList<IMemberListItemViewModel> actualReturn = Instance.SelectedMembers;
+
+			// Assert
+			Assert.Empty(actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Setterプロパティ : 正常系")]
@@ -160,16 +204,40 @@ namespace MatchGeneratorTest.ViewModel
 			// Arrange
 			IList<IMemberListItemViewModel> inputSelectedMembers = new List<IMemberListItemViewModel>
 			{
-				new MemberListItemViewModelMock()
+				MembersFieldValue[1], MembersFieldValue[3]
 			};
-			IList<IMemberListItemViewModel> expectedSelectedMembersField = inputSelectedMembers;
+			IList<IMemberListItemViewModel> notSelectedMembers = new List<IMemberListItemViewModel>
+			{
+				MembersFieldValue[0], MembersFieldValue[2], MembersFieldValue[4]
+			};
+			IList<object> actualPropertyChangedParamsSender = new List<object>();
+			IList<System.ComponentModel.PropertyChangedEventArgs> actualPropertyChangedParamsE = new List<System.ComponentModel.PropertyChangedEventArgs>();
+			Instance.PropertyChanged += (s, e) =>
+			{
+				actualPropertyChangedParamsSender.Add(s);
+				actualPropertyChangedParamsE.Add(e);
+			};
+			// Expected data
+			IList<bool> expectedIsCheckedSetterParamsSelected = new List<bool> { true };
+			IList<bool> expectedIsCheckedSetterParamsNotSelected = new List<bool> { false };
+			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance };
+			IList<string> expectedPropertyChangedParamsE = new List<string> { "SelectedMembers" };
 
 			// Act
-			Instance.Members = inputSelectedMembers;
+			Instance.SelectedMembers = inputSelectedMembers;
 
 			// Assert
-			IList<IMemberListItemViewModel> actualSelectedMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("MembersField");
-			Assert.Same(expectedSelectedMembersField, actualSelectedMembersField);
+			Assert.True(inputSelectedMembers
+						.Cast<MemberListItemViewModelMock>()
+						.Select(item => item.IsCheckedSetterParams)
+						.All(isCheckedParams => isCheckedParams.SequenceEqual(expectedIsCheckedSetterParamsSelected)));
+			Assert.True(notSelectedMembers
+						.Cast<MemberListItemViewModelMock>()
+						.Select(item => item.IsCheckedSetterParams)
+						.All(isCheckedParams => isCheckedParams.SequenceEqual(expectedIsCheckedSetterParamsNotSelected)));
+			// Called handler
+			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
+			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.LastClickedMember) + ".Getterプロパティ : 正常系")]
@@ -273,11 +341,11 @@ namespace MatchGeneratorTest.ViewModel
 			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
 			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
 			// Called method
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterParams.Count);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterParams.Count);
 			Assert.Equal(true, actualMember1IsChecked);
 			Assert.Equal(true, actualMember2IsChecked);
 			Assert.Equal(true, actualMember3IsChecked);
@@ -314,11 +382,11 @@ namespace MatchGeneratorTest.ViewModel
 			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
 			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
 			// Called method
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterParams.Count);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterParams.Count);
 			Assert.Equal(false, actualMember1IsChecked);
 			Assert.Equal(false, actualMember2IsChecked);
 			Assert.Equal(false, actualMember3IsChecked);
@@ -351,11 +419,11 @@ namespace MatchGeneratorTest.ViewModel
 			IMemberListItemViewModel actualLastClickedMember = (IMemberListItemViewModel)Instance.GetPrivateField("LastClickedMemberField");
 			Assert.Same(expectedLastClickedMemberField, actualLastClickedMember);
 			// Called method
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterCount);
-			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterCount);
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterCount);
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterCount);
-			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterCount);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[0]).IsCheckedSetterParams.Count);
+			Assert.Equal(1, ((MemberListItemViewModelMock)MembersFieldValue[1]).IsCheckedSetterParams.Count);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[2]).IsCheckedSetterParams.Count);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[3]).IsCheckedSetterParams.Count);
+			Assert.Equal(0, ((MemberListItemViewModelMock)MembersFieldValue[4]).IsCheckedSetterParams.Count);
 			Assert.Equal(true, actualMember1IsChecked);
 		}
 

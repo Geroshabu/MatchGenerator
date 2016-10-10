@@ -25,10 +25,10 @@ namespace MatchGenerator.ViewModel
 			set
 			{
 				SetProperty(ref MembersField, value);
+				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
-
-		private IList<IMemberListItemViewModel> SelectedMembersField;
+		
 		/// <summary>
 		/// 現在選択されているメンバー
 		/// </summary>
@@ -36,12 +36,20 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				return SelectedMembersField;
+				return MembersField.Where(item => item.IsChecked).ToList();
 			}
 
 			set
 			{
-				SetProperty(ref SelectedMembersField, value);
+				foreach (IMemberListItemViewModel item in value)
+				{
+					item.IsChecked = true;
+				}
+				foreach(IMemberListItemViewModel otherItem in Members.Except(value))
+				{
+					otherItem.IsChecked = false;
+				}
+				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
 
