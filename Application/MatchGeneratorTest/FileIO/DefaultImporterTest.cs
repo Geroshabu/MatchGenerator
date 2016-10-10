@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.Composition;
 using Xunit;
 using MatchGenerator.FileIO;
 using MatchGenerator.Model;
@@ -12,6 +13,21 @@ using MatchGeneratorTest.Model;
 
 namespace MatchGeneratorTest.FileIO
 {
+	/// <summary>
+	/// <see cref="DefaultImporter"/>のMock
+	/// </summary>
+	[Export(typeof(IMemberImporter))]
+	internal class DefaultImporterMock : IMemberImporter
+	{
+		public Func<string, IList<IPerson>> ImportFunc = _ => null;
+		public IList<string> ImportParamsFileName = new List<string>();
+		public IList<IPerson> Import(string FileName)
+		{
+			ImportParamsFileName.Add(FileName);
+			return ImportFunc(FileName);
+		}
+	}
+
 	public class DefaultImporterTest : IDisposable
 	{
 		private DefaultImporter Instance;

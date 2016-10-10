@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
 
@@ -14,7 +17,15 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MainViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMainViewModel
 	{
+		private CompositionContainer mefContainers;
+
 		private IMemberListViewModel AllMembersField;
+
+		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
+
+		[ImportMany]
+		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
+
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
@@ -41,9 +52,13 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		private void InitializeData()
 		{
+			// MEFによる収集
+			mefContainers = CreateMefContainer();
+			mefContainers.ComposeParts(this);
+
 			string memberDataFileName = "MemberData.csv";
-			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
-			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
+			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
 			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
 		}
@@ -66,7 +81,7 @@ namespace MatchGenerator.ViewModel
 			{
 				string memberDataFileName = dialog.FileName;
 
-				FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
+				FileIO.IMemberImporter importer = memberImporters.Single(i => i.GetType().Equals(DefaultMemberImporterType));
 				IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
 
 				AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
@@ -77,6 +92,25 @@ namespace MatchGenerator.ViewModel
 		{
 			InitializeCommand = new DelegateCommand(InitializeData);
 			ReadMemberFromFileCommand = new DelegateCommand(ReadMemberFromFile);
+
+			// 呼び出すメソッドをセット
+			CreateMefContainer = CreateMefContainerBody;
+		}
+
+		private Func<CompositionContainer> CreateMefContainer { get; }
+		/// <summary>
+		/// 自身のアセンブリと既定のアセンブリを探索し, MEFコンテナを作る.
+		/// </summary>
+		/// <returns>作成されたMEFコンテナ</returns>
+		private CompositionContainer CreateMefContainerBody()
+		{
+			AggregateCatalog mefCatalog = new AggregateCatalog();
+			// 自身
+			mefCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+			// 既定のアセンブリ
+			// 今はなし
+
+			return new CompositionContainer(mefCatalog);
 		}
 	}
 }
