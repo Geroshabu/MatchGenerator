@@ -7,6 +7,7 @@ namespace MatchGeneratorTest.ViewModel
 	internal struct MainViewModelMember
 	{
 		public const string AllMembers = "AllMembersField";
+		public const string InitializeData = "InitializeData";
 	}
 
 	public class MainViewModelTest
@@ -20,7 +21,7 @@ namespace MatchGeneratorTest.ViewModel
 			MainViewModel actualReturn = new MainViewModel();
 
 			// Assert
-			Assert.NotNull(actualReturn.AllMembers);
+			Assert.NotNull(actualReturn.InitializeCommand);
 		}
 	}
 
@@ -65,6 +66,18 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			IMemberListViewModel actualAllMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AllMembers);
 			Assert.Same(expectedAllMembersField, actualAllMembersField);
+		}
+
+		[Fact(DisplayName = MainViewModelMember.InitializeData + "メソッド : 正常系", Skip = "モックに入れ替えられるようになってから")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void InitializeDataTest()
+		{
+			// Act
+			Instance.InvokePrivateMethod(MainViewModelMember.InitializeData, null);
+
+			// Assert
+			Assert.NotNull(Instance.InitializeCommand);
 		}
 	}
 }
