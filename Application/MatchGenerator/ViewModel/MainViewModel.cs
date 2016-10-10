@@ -57,8 +57,8 @@ namespace MatchGenerator.ViewModel
 			mefContainers.ComposeParts(this);
 
 			string memberDataFileName = "MemberData.csv";
-			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
-			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
+			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
 			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
 		}
