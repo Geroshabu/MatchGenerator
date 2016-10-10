@@ -50,13 +50,7 @@ namespace MatchGenerator.ViewModel
 		/// <summary>
 		/// ファイルからメンバー情報を読み込むコマンドを取得する
 		/// </summary>
-		public ICommand ReadMemberFromFileCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		public ICommand ReadMemberFromFileCommand { get; }
 
 		public MainViewModel()
 		{
