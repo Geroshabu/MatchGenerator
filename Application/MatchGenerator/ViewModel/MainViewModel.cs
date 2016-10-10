@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
 
 namespace MatchGenerator.ViewModel
@@ -51,6 +52,26 @@ namespace MatchGenerator.ViewModel
 		/// ファイルからメンバー情報を読み込むコマンドを取得する
 		/// </summary>
 		public ICommand ReadMemberFromFileCommand { get; }
+
+		/// <summary>
+		/// ファイルからメンバー情報を読み込む
+		/// </summary>
+		private void ReadMemberFromFile()
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+
+			bool? result = dialog.ShowDialog();
+
+			if (result == true)
+			{
+				string memberDataFileName = dialog.FileName;
+
+				FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
+				IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+
+				AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
+			}
+		}
 
 		public MainViewModel()
 		{
