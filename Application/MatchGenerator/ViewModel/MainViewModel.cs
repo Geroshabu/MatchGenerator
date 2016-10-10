@@ -35,6 +35,9 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		public ICommand InitializeCommand { get; }
 
+		/// <summary>
+		/// メイン画面に表示するデータを読み込む
+		/// </summary>
 		private void InitializeData()
 		{
 			string memberDataFileName = "MemberData.csv";
