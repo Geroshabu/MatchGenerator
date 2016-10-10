@@ -25,6 +25,7 @@ namespace MatchGenerator.ViewModel
 			set
 			{
 				SetProperty(ref MembersField, value);
+				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
 		

@@ -124,6 +124,17 @@ namespace MatchGeneratorTest.ViewModel
 				new MemberListItemViewModelMock()
 			};
 			IList<IMemberListItemViewModel> expectedMembersField = inputMembers;
+			// Event handler
+			IList<object> actualPropertyChangedParamsSender = new List<object>();
+			IList<System.ComponentModel.PropertyChangedEventArgs> actualPropertyChangedParamsE = new List<System.ComponentModel.PropertyChangedEventArgs>();
+			Instance.PropertyChanged += (s, e) =>
+			{
+				actualPropertyChangedParamsSender.Add(s);
+				actualPropertyChangedParamsE.Add(e);
+			};
+			// Expected data
+			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance, Instance };
+			IList<string> expectedPropertyChangedParamsE = new List<string> { "Members", "SelectedMembers" };
 
 			// Act
 			Instance.Members = inputMembers;
@@ -131,6 +142,9 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			IList<IMemberListItemViewModel> actualMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField("MembersField");
 			Assert.Same(expectedMembersField, actualMembersField);
+			// Called handler
+			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
+			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
