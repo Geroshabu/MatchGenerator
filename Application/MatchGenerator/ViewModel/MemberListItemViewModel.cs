@@ -24,12 +24,18 @@ namespace MatchGenerator.ViewModel
 		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを生成する.
 		/// </summary>
 		/// <param name="model">ViewModelの表示対象となるModel</param>
-		public MemberListItemViewModel(IPerson model)
+		private MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
 			MemberClickCommand = new DelegateCommand(ClickMember);
 			MemberExtendedClickCommand = new DelegateCommand(ExtendClickMember);
 		}
+
+		/// <summary>
+		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを作成する.
+		/// </summary>
+		public static Func<IPerson, IMemberListItemViewModel> CreateMemberListItemViewModel { get; } =
+			person => new MemberListItemViewModel(person);
 
 		/// <summary>
 		/// "名前"欄に表示する文字列を取得

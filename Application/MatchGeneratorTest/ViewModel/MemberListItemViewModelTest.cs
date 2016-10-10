@@ -91,7 +91,7 @@ namespace MatchGeneratorTest.ViewModel
 			IPerson expectedModel = inputModel;
 
 			// Act
-			MemberListItemViewModel actualReturn = new MemberListItemViewModel(inputModel);
+			IMemberListItemViewModel actualReturn = MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
 
 			// Assert
 			// 影響するフィールドの確認
@@ -111,7 +111,7 @@ namespace MatchGeneratorTest.ViewModel
 		public MemberListItemViewModelInstanceTest()
 		{
 			ModelField = new PersonMock();
-			Instance = new MemberListItemViewModel(ModelField);
+			Instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(ModelField);
 			Instance.SetPrivateField("Model", ModelField);
 		}
 

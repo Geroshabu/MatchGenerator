@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace MatchGenerator.ViewModel
 {
@@ -28,9 +30,26 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// メイン画面に表示するデータを読み込むコマンド
+		/// </summary>
+		public ICommand InitializeCommand { get; }
+
+		/// <summary>
+		/// メイン画面に表示するデータを読み込む
+		/// </summary>
+		private void InitializeData()
+		{
+			string memberDataFileName = "MemberData.csv";
+			FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
+			IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
+
+			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
+		}
+
 		public MainViewModel()
 		{
-			AllMembers = new MemberListViewModel();
+			InitializeCommand = new DelegateCommand(InitializeData);
 		}
 	}
 }

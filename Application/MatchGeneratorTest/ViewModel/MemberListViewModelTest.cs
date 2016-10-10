@@ -71,7 +71,10 @@ namespace MatchGeneratorTest.ViewModel
 
 		public MemberListViewModelInstanceTest()
 		{
-			Instance = new MemberListViewModel();
+			IList<MatchGenerator.Model.IPerson> inputMemberData = new List<MatchGenerator.Model.IPerson>();
+
+			Instance = (MemberListViewModel)MemberListViewModel.CreateMemberListViewModel(inputMemberData);
+
 			MembersFieldValue = new List<IMemberListItemViewModel>
 			{
 				new MemberListItemViewModelMock(),

@@ -6,68 +6,71 @@
         xmlns:local="clr-namespace:MatchGenerator"
         xmlns:local_ui="clr-namespace:MatchGenerator.Core.UI"
 		xmlns:myvm="clr-namespace:MatchGenerator.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="403.594" Width="939.007" Loaded="Window_Loaded">
-    <Window.DataContext>
-        <myvm:MainViewModel/>
-    </Window.DataContext>
-    <Window.Resources>
-        <DataTemplate x:Key="memberViewCheckBoxTemplate" DataType="{x:Type local_ui:MemberListViewItem}">
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding Path=IsChecked}"/>
-            </StackPanel>
-        </DataTemplate>
+	<Window.DataContext>
+		<myvm:MainViewModel/>
+	</Window.DataContext>
+	<Window.Resources>
+		<DataTemplate x:Key="memberViewCheckBoxTemplate" DataType="{x:Type local_ui:MemberListViewItem}">
+			<StackPanel Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding Path=IsChecked}"/>
+			</StackPanel>
+		</DataTemplate>
 		<DataTemplate x:Key="memberListCheckBoxTemplate" DataType="{x:Type myvm:IMemberListItemViewModel}">
 			<StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding Path=IsChecked}" Command="{Binding MemberClickCommand}">
-                    <CheckBox.InputBindings>
-                        <MouseBinding Gesture="Shift+LeftClick" Command="{Binding MemberExtendedClickCommand}"/>
-                    </CheckBox.InputBindings>
-                </CheckBox>
-            </StackPanel>
+				<CheckBox IsChecked="{Binding Path=IsChecked}" Command="{Binding MemberClickCommand}">
+					<CheckBox.InputBindings>
+						<MouseBinding Gesture="Shift+LeftClick" Command="{Binding MemberExtendedClickCommand}"/>
+					</CheckBox.InputBindings>
+				</CheckBox>
+			</StackPanel>
 		</DataTemplate>
-    </Window.Resources>
-    <Grid>
-        <ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334" DataContext="{Binding AllMembers}" ItemsSource="{Binding Members}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn CellTemplate="{StaticResource memberListCheckBoxTemplate}"/>
-                    <GridViewColumn Header="名前" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Description}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Menu x:Name="menu" Height="24" VerticalAlignment="Top">
-            <MenuItem Header="データ(_D)">
-                <MenuItem Header="読み込み(_R)"/>
-            </MenuItem>
-            <MenuItem Header="設定(_S)">
-                <MenuItem x:Name="layoutConfigureMenuItem" Header="レイアウト(_L)" Click="layoutConfigureMenuItem_Click"/>
-            </MenuItem>
-        </Menu>
-        <Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359" ItemsSource="{Binding}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
-                    <GridViewColumn Header="名前" DisplayMemberBinding="{Binding Path=Person.Name}"/>
-                    <GridViewColumn Header="グループ" DisplayMemberBinding="{Binding Path=Person.Group}"/>
-                    <GridViewColumn Header="Gスコア" DisplayMemberBinding="{Binding Path=Person.GScore}"/>
-                    <GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Path=Person.Description}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label x:Name="entrantsTitle" Content="参加者" HorizontalAlignment="Left" Margin="453,29,0,0" VerticalAlignment="Top"/>
-        <StatusBar Height="35" VerticalAlignment="Bottom">
-            <Label x:Name="mainStatusBar" Content="Status"/>
-        </StatusBar>
-        <Button x:Name="buttonAttend" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="361,167,0,0" VerticalAlignment="Top" Width="75" Click="buttonAttend_Click"/>
-        <Button x:Name="buttonAbsent" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="361,227,0,0" VerticalAlignment="Top" Width="75" Click="buttonAbsent_Click"/>
-        <Button x:Name="buttonStart" Content="試合開始" Margin="0,0,23,54" HorizontalAlignment="Right" Width="74" Height="24" VerticalAlignment="Bottom" Click="buttonStart_Click"/>
+	</Window.Resources>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+	<Grid>
+		<ListView x:Name="allMembersListView" Margin="10,57,0,40" HorizontalAlignment="Left" Width="334" DataContext="{Binding AllMembers}" ItemsSource="{Binding Members}">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn CellTemplate="{StaticResource memberListCheckBoxTemplate}"/>
+					<GridViewColumn Header="名前" DisplayMemberBinding="{Binding Name}"/>
+					<GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Description}"/>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<Menu x:Name="menu" Height="24" VerticalAlignment="Top">
+			<MenuItem Header="データ(_D)">
+				<MenuItem Header="読み込み(_R)"/>
+			</MenuItem>
+			<MenuItem Header="設定(_S)">
+				<MenuItem x:Name="layoutConfigureMenuItem" Header="レイアウト(_L)" Click="layoutConfigureMenuItem_Click"/>
+			</MenuItem>
+		</Menu>
+		<Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+		<ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359" ItemsSource="{Binding}">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
+					<GridViewColumn Header="名前" DisplayMemberBinding="{Binding Path=Person.Name}"/>
+					<GridViewColumn Header="グループ" DisplayMemberBinding="{Binding Path=Person.Group}"/>
+					<GridViewColumn Header="Gスコア" DisplayMemberBinding="{Binding Path=Person.GScore}"/>
+					<GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Path=Person.Description}"/>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<Label x:Name="entrantsTitle" Content="参加者" HorizontalAlignment="Left" Margin="453,29,0,0" VerticalAlignment="Top"/>
+		<StatusBar Height="35" VerticalAlignment="Bottom">
+			<Label x:Name="mainStatusBar" Content="Status"/>
+		</StatusBar>
+		<Button x:Name="buttonAttend" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="361,167,0,0" VerticalAlignment="Top" Width="75" Click="buttonAttend_Click"/>
+		<Button x:Name="buttonAbsent" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="361,227,0,0" VerticalAlignment="Top" Width="75" Click="buttonAbsent_Click"/>
+		<Button x:Name="buttonStart" Content="試合開始" Margin="0,0,23,54" HorizontalAlignment="Right" Width="74" Height="24" VerticalAlignment="Bottom" Click="buttonStart_Click"/>
 		<ListView x:Name="testListView" HorizontalAlignment="Left" Height="100" Margin="821,57,0,0" VerticalAlignment="Top" Width="100" ItemsSource="{Binding Members}">
-			<ListView.DataContext>
-				<myvm:MemberListViewModel/>
-			</ListView.DataContext>
 			<ListView.View>
 				<GridView>
 					<GridViewColumn CellTemplate="{StaticResource memberListCheckBoxTemplate}"/>
@@ -76,5 +79,5 @@
 				</GridView>
 			</ListView.View>
 		</ListView>
-    </Grid>
+	</Grid>
 </Window>
