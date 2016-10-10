@@ -44,6 +44,9 @@
 			</ListView.View>
 		</ListView>
 		<Menu x:Name="menu" Height="24" VerticalAlignment="Top">
+			<MenuItem Header="ファイル(_F)">
+				<MenuItem Header="データ読み込み(_O)"/>
+			</MenuItem>
 			<MenuItem Header="データ(_D)">
 				<MenuItem Header="読み込み(_R)"/>
 			</MenuItem>
