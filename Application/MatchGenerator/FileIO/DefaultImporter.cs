@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.Composition;
 using MatchGenerator.Model;
 using MatchGenerator.Core;
 
@@ -12,6 +13,7 @@ namespace MatchGenerator.FileIO
 	/// <summary>
 	/// メンバー情報を読み込む標準のインポーター
 	/// </summary>
+	[Export(typeof(IMemberImporter))]
 	internal class DefaultImporter : IMemberImporter
 	{
 		/// <summary>
