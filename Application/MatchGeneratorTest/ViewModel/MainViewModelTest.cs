@@ -23,6 +23,7 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			Assert.NotNull(actualReturn.InitializeCommand);
+			Assert.NotNull(actualReturn.ReadMemberFromFileCommand);
 		}
 	}
 

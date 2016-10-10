@@ -76,6 +76,7 @@ namespace MatchGenerator.ViewModel
 		public MainViewModel()
 		{
 			InitializeCommand = new DelegateCommand(InitializeData);
+			ReadMemberFromFileCommand = new DelegateCommand(ReadMemberFromFile);
 		}
 	}
 }
