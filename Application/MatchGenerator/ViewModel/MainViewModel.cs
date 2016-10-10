@@ -81,7 +81,7 @@ namespace MatchGenerator.ViewModel
 			{
 				string memberDataFileName = dialog.FileName;
 
-				FileIO.DefaultImporter importer = new FileIO.DefaultImporter();
+				FileIO.IMemberImporter importer = memberImporters.Single(i => i.GetType().Equals(DefaultMemberImporterType));
 				IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
 
 				AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
