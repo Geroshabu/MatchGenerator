@@ -77,6 +77,25 @@ namespace MatchGenerator.ViewModel
 		{
 			InitializeCommand = new DelegateCommand(InitializeData);
 			ReadMemberFromFileCommand = new DelegateCommand(ReadMemberFromFile);
+
+			// 呼び出すメソッドをセット
+			CreateMefContainer = CreateMefContainerBody;
+		}
+
+		private Func<CompositionContainer> CreateMefContainer { get; }
+		/// <summary>
+		/// 自身のアセンブリと既定のアセンブリを探索し, MEFコンテナを作る.
+		/// </summary>
+		/// <returns>作成されたMEFコンテナ</returns>
+		private CompositionContainer CreateMefContainerBody()
+		{
+			AggregateCatalog mefCatalog = new AggregateCatalog();
+			// 自身
+			mefCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+			// 既定のアセンブリ
+			// 今はなし
+
+			return new CompositionContainer(mefCatalog);
 		}
 	}
 }

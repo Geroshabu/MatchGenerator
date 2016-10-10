@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.Composition.Hosting;
 using Xunit;
 using MatchGenerator.ViewModel;
 
@@ -9,6 +12,7 @@ namespace MatchGeneratorTest.ViewModel
 		public const string AllMembers = "AllMembersField";
 		public const string InitializeData = "InitializeData";
 		public const string ReadMemberFromFile = "ReadMemberFromFile";
+		public const string CreateMefContainer = "CreateMefContainerBody";
 	}
 
 	public class MainViewModelTest
@@ -88,6 +92,20 @@ namespace MatchGeneratorTest.ViewModel
 		public void ReadMemberFromFileTest()
 		{
 
+		}
+
+		[Fact(DisplayName = MainViewModelMember.CreateMefContainer + "メソッド : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void CreateMefContainerTest()
+		{
+			// Act
+			CompositionContainer actualReturn = (CompositionContainer)Instance.InvokePrivateMethod(MainViewModelMember.CreateMefContainer, null);
+
+			// Assert
+			// 動作に必要な最低限のインスタンス(自身のインスタンス)が取得できるか.
+			IEnumerable<MatchGenerator.FileIO.IMemberImporter> importers = actualReturn.GetExportedValues<MatchGenerator.FileIO.IMemberImporter>();
+			Assert.True(importers.Any(importer => importer is MatchGenerator.FileIO.DefaultImporter));
 		}
 	}
 }
