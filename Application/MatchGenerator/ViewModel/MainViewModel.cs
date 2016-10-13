@@ -43,6 +43,21 @@ namespace MatchGenerator.ViewModel
 		}
 
 		/// <summary>
+		/// 出席するメンバーを表示するリスト
+		/// </summary>
+		public IMemberListViewModel AttendanceMembers
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		/// <summary>
 		/// メイン画面に表示するデータを読み込むコマンド
 		/// </summary>
 		public ICommand InitializeCommand { get; }
