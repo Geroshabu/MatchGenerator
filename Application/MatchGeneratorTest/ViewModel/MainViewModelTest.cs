@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Xunit;
@@ -16,6 +17,7 @@ namespace MatchGeneratorTest.ViewModel
 	{
 		public const string MefContainer = "mefContainers";
 		public const string AllMembers = "AllMembersField";
+		public const string AttendanceMembers = "AttendanceMembersField";
 		public const string DefaultMemberImporterType = "<DefaultMemberImporterType>k__BackingField";
 		public const string MemberImporters = "<memberImporters>k__BackingField";
 		public const string InitializeData = "InitializeData";
@@ -96,6 +98,54 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			IMemberListViewModel actualAllMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AllMembers);
 			Assert.Same(expectedAllMembersField, actualAllMembersField);
+		}
+
+		[Fact(DisplayName = nameof(MainViewModel.AttendanceMembers) + ".Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void AttendanceMembersGetterTest()
+		{
+			// Arrange
+			IMemberListViewModel attendanceMembersFieldValue = new MemberListViewModelMock();
+			Instance.SetPrivateField(MainViewModelMember.AttendanceMembers, attendanceMembersFieldValue);
+			IMemberListViewModel expectedReturn = attendanceMembersFieldValue;
+
+			// Act
+			IMemberListViewModel actualReturn = Instance.AttendanceMembers;
+
+			// Assert
+			Assert.Same(expectedReturn, actualReturn);
+		}
+
+		[Fact(DisplayName = nameof(MainViewModel.AttendanceMembers) + ".Setterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void AttendanceMembersSetterTest()
+		{
+			// Arrange
+			IMemberListViewModel inputAttendanceMembers = new MemberListViewModelMock();
+			IMemberListViewModel expectedAttendanceMembersField = inputAttendanceMembers;
+			// Event handler
+			IList<object> actualPropertyChangedParamsSender = new List<object>();
+			IList<PropertyChangedEventArgs> actualPropertyChangedParamsE = new List<PropertyChangedEventArgs>();
+			Instance.PropertyChanged += (s, e) =>
+			{
+				actualPropertyChangedParamsSender.Add(s);
+				actualPropertyChangedParamsE.Add(e);
+			};
+			// Expected data
+			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance };
+			IList<string> expectedPropertyChangedParamsE = new List<string> { "AttendanceMembers" };
+
+			// Act
+			Instance.AttendanceMembers = inputAttendanceMembers;
+
+			// Assert
+			IMemberListViewModel actualAttendanceMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AttendanceMembers);
+			Assert.Same(expectedAttendanceMembersField, actualAttendanceMembersField);
+			// Called handler
+			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
+			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
 		}
 
 		[Fact(DisplayName = MainViewModelMember.ReadMemberFromFile + "メソッド : 正常系", Skip = "ダイアログの表示をモックに入れ替えられるようになってから")]
