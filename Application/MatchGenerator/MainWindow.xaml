@@ -55,14 +55,12 @@
 			</MenuItem>
 		</Menu>
 		<Label x:Name="allMembersTitle" Content="全メンバー" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
-		<ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359" ItemsSource="{Binding}">
+		<ListView x:Name="entrantsListView" HorizontalAlignment="Left" Margin="453,57,0,40" Width="359" DataContext="{Binding AttendanceMembers}" ItemsSource="{Binding Members}">
 			<ListView.View>
 				<GridView>
-					<GridViewColumn CellTemplate="{StaticResource memberViewCheckBoxTemplate}"/>
-					<GridViewColumn Header="名前" DisplayMemberBinding="{Binding Path=Person.Name}"/>
-					<GridViewColumn Header="グループ" DisplayMemberBinding="{Binding Path=Person.Group}"/>
-					<GridViewColumn Header="Gスコア" DisplayMemberBinding="{Binding Path=Person.GScore}"/>
-					<GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Path=Person.Description}"/>
+					<GridViewColumn CellTemplate="{StaticResource memberListCheckBoxTemplate}"/>
+					<GridViewColumn Header="名前" DisplayMemberBinding="{Binding Name}"/>
+					<GridViewColumn Header="コメント" DisplayMemberBinding="{Binding Description}"/>
 				</GridView>
 			</ListView.View>
 		</ListView>
