@@ -76,7 +76,10 @@ namespace MatchGenerator.ViewModel
 			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
 			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
+			IList<Model.IPerson> attendanceMembers = new List<Model.IPerson>();
+
 			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
+			AttendanceMembers = MemberListViewModel.CreateMemberListViewModel(attendanceMembers);
 		}
 
 		/// <summary>

@@ -199,12 +199,14 @@ namespace MatchGeneratorTest.ViewModel
 			// Arrange
 			IList<IPerson> members = new List<IPerson>();
 			IMemberListViewModel allMembers = new MemberListViewModelMock();
+			IMemberListViewModel attendanceMembers = new MemberListViewModelMock();
 			// Expected data
 			CompositionContainer expectedMefContainerField = MefContainer;
 			IEnumerable<IMemberImporter> expectedMemberImportersField = MefContainer.GetExportedValues<IMemberImporter>();
 			IMemberListViewModel expectedAllMembersField = allMembers;
+			IMemberListViewModel expectedAttendanceMembersField = attendanceMembers;
 			IList<string> expectedImportParamsFileName = new List<string> { "MemberData.csv" };
-			IList<IList<IPerson>> expectedCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>> { members };
+			IList<IList<IPerson>> expectedCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>> { members, new List<IPerson>() };
 			// Mock of CreateMefContainer
 			Instance.SetPrivateField(MainViewModelMember.CreateMefContainer,
 				new Func<CompositionContainer>(() => MefContainer));
@@ -216,12 +218,14 @@ namespace MatchGeneratorTest.ViewModel
 			IMemberImporter importer = importers.Single(i => i.GetType().Equals(typeof(DefaultImporterMock)));
 			((DefaultImporterMock)importer).ImportFunc = _ => members;
 			// Mock of MemberListViewModel.CreateMemberListViewModel
+			int calledCount = 0;
 			IList<IList<IPerson>> actualCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>>();
+			IList<IMemberListViewModel> createMemberListViewModelReturn = new List<IMemberListViewModel> { allMembers, attendanceMembers };
 			Utils.SetStaticField<MemberListViewModel>(MemberListViewModelMember.CreateMemberListViewModel,
 				new Func<IList<IPerson>, IMemberListViewModel>(persons =>
 				{
 					actualCreateMemberListViewModelParamsMemberData.Add(persons);
-					return allMembers;
+					return createMemberListViewModelReturn[calledCount++];
 				}));
 
 			// Act
@@ -237,10 +241,15 @@ namespace MatchGeneratorTest.ViewModel
 			// AllMembers
 			IMemberListViewModel actualAllMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AllMembers);
 			Assert.Same(expectedAllMembersField, actualAllMembersField);
+			// AttendanceMembers
+			IMemberListViewModel actualAttendanceMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AttendanceMembers);
+			Assert.Same(expectedAttendanceMembersField, actualAttendanceMembersField);
 			// Called methods
 			IList<string> actualImportParamsFileName = ((DefaultImporterMock)importer).ImportParamsFileName;
 			Assert.True(expectedImportParamsFileName.SequenceEqual(actualImportParamsFileName));
-			Assert.True(expectedCreateMemberListViewModelParamsMemberData.SequenceEqual(actualCreateMemberListViewModelParamsMemberData));
+			Assert.Equal(2, actualCreateMemberListViewModelParamsMemberData.Count);
+			Assert.Same(expectedCreateMemberListViewModelParamsMemberData[0], actualCreateMemberListViewModelParamsMemberData[0]);
+			Assert.True(expectedCreateMemberListViewModelParamsMemberData[1].SequenceEqual(actualCreateMemberListViewModelParamsMemberData[1]));
 		}
 	}
 }
