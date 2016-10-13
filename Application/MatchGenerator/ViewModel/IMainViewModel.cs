@@ -18,6 +18,11 @@ namespace MatchGenerator.ViewModel
 		IMemberListViewModel AllMembers { get; set; }
 
 		/// <summary>
+		/// 出席するメンバーを表示するリスト
+		/// </summary>
+		IMemberListViewModel AttendanceMembers { get; set; }
+
+		/// <summary>
 		/// ファイルからメンバー情報を読み込むコマンドを取得する
 		/// </summary>
 		ICommand ReadMemberFromFileCommand { get; }

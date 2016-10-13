@@ -42,6 +42,22 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		private IMemberListViewModel AttendanceMembersField;
+		/// <summary>
+		/// 出席するメンバーを表示するリスト
+		/// </summary>
+		public IMemberListViewModel AttendanceMembers
+		{
+			get
+			{
+				return AttendanceMembersField;
+			}
+			set
+			{
+				SetProperty(ref AttendanceMembersField, value);
+			}
+		}
+
 		/// <summary>
 		/// メイン画面に表示するデータを読み込むコマンド
 		/// </summary>
@@ -60,7 +76,10 @@ namespace MatchGenerator.ViewModel
 			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
 			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
+			IList<Model.IPerson> attendanceMembers = new List<Model.IPerson>();
+
 			AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
+			AttendanceMembers = MemberListViewModel.CreateMemberListViewModel(attendanceMembers);
 		}
 
 		/// <summary>
