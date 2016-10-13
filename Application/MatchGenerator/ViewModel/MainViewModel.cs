@@ -42,6 +42,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		private IMemberListViewModel AttendanceMembersField;
 		/// <summary>
 		/// 出席するメンバーを表示するリスト
 		/// </summary>
@@ -49,11 +50,11 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return AttendanceMembersField;
 			}
 			set
 			{
-				throw new NotImplementedException();
+				SetProperty(ref AttendanceMembersField, value);
 			}
 		}
 
