@@ -13,7 +13,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModel
 	/// </summary>
-	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
+	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel, ICloneable
 	{
 		/// <summary>
 		/// このViewModelで扱うModel
@@ -110,6 +110,14 @@ namespace MatchGenerator.ViewModel
 			MemberClickEventArgs e = new MemberClickEventArgs();
 			e.IsChecked = this.IsChecked;
 			MemberExtendedClick?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// 現在のインスタンスのコピーである新しいオブジェクトを作成する.
+		/// <returns>このインスタンスのコピーである新しいオブジェクト.</returns>
+		public object Clone()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
