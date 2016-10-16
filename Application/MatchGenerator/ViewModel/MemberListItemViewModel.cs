@@ -13,7 +13,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModel
 	/// </summary>
-	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
+	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel, ICloneable
 	{
 		/// <summary>
 		/// このViewModelで扱うModel
@@ -32,10 +32,28 @@ namespace MatchGenerator.ViewModel
 		}
 
 		/// <summary>
+		/// Copy Constructor
+		/// </summary>
+		/// <remarks>値型と, <see cref="Model"/>フィールドは引き継がれる.</remarks>
+		private MemberListItemViewModel(MemberListItemViewModel other)
+		{
+			this.Model = other.Model;
+			this.IsCheckedField = other.IsCheckedField;
+			this.MemberClickCommand = new DelegateCommand(ClickMember);
+			this.MemberExtendedClickCommand = new DelegateCommand(ExtendClickMember);
+		}
+
+		/// <summary>
 		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを作成する.
 		/// </summary>
 		public static Func<IPerson, IMemberListItemViewModel> CreateMemberListItemViewModel { get; } =
 			person => new MemberListItemViewModel(person);
+
+		/// <summary>
+		/// 指定されたインスタンスをコピーし, <see cref="MemberListItemViewModel"/>の新しいインスタンスを作成する.
+		/// </summary>
+		public static Func<MemberListItemViewModel, IMemberListItemViewModel> CopyMemberListItemViewModel { get; } =
+			other => new MemberListItemViewModel(other);
 
 		/// <summary>
 		/// "名前"欄に表示する文字列を取得
@@ -110,6 +128,14 @@ namespace MatchGenerator.ViewModel
 			MemberClickEventArgs e = new MemberClickEventArgs();
 			e.IsChecked = this.IsChecked;
 			MemberExtendedClick?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// 現在のインスタンスのコピーである新しいオブジェクトを作成する.
+		/// <returns>このインスタンスのコピーである新しいオブジェクト.</returns>
+		public object Clone()
+		{
+			return MemberListItemViewModel.CopyMemberListItemViewModel(this);
 		}
 	}
 }
