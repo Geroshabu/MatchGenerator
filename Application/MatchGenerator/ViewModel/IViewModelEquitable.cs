@@ -3,7 +3,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// ViewModelとして同一であるかを判定できることを表す.
 	/// </summary>
-	public interface IViewModelEquatable
+	public interface IViewModelEquitable
 	{
 		/// <summary>
 		/// このViewModelが表現しているModelが,
@@ -15,6 +15,6 @@ namespace MatchGenerator.ViewModel
 		/// 与えられたViewModelが表現しているModelと
 		/// 等しいかどうか.
 		/// 等しければtrue, 等しくなければfalse</returns>
-		bool EqualsModel(IViewModelEquatable other);
+		bool EqualsModel(IViewModelEquitable other);
 	}
 }

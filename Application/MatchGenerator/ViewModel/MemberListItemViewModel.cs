@@ -148,7 +148,7 @@ namespace MatchGenerator.ViewModel
 		/// 与えられたViewModelが表現しているModelと
 		/// 等しいかどうか.
 		/// 等しければtrue, 等しくなければfalse</returns>
-		public bool EqualsModel(IViewModelEquatable other)
+		public bool EqualsModel(IViewModelEquitable other)
 		{
 			throw new NotImplementedException();
 		}
