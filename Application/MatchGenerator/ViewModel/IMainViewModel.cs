@@ -23,6 +23,11 @@ namespace MatchGenerator.ViewModel
 		IMemberListViewModel AttendanceMembers { get; set; }
 
 		/// <summary>
+		/// メイン画面に表示するデータを読み込むコマンド
+		/// </summary>
+		ICommand InitializeCommand { get; }
+
+		/// <summary>
 		/// ファイルからメンバー情報を読み込むコマンドを取得する
 		/// </summary>
 		ICommand ReadMemberFromFileCommand { get; }
