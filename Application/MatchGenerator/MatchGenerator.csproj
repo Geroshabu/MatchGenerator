@@ -89,6 +89,7 @@
     <Compile Include="FileIO\IMemberImporter.cs" />
     <Compile Include="Model\IPerson.cs" />
     <Compile Include="ViewModel\IMainViewModel.cs" />
+    <Compile Include="ViewModel\IViewModelEquatable.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MemberClickEventArgs.cs" />
     <Compile Include="ViewModel\IMemberListItemViewModel.cs" />
