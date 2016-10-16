@@ -86,9 +86,9 @@ namespace MatchGeneratorTest.ViewModel
 			}
 		}
 
-		public Func<IViewModelEquitable, bool> EqualsModelFunc = _ => false;
-		public IList<IViewModelEquitable> EqualsModelParamsOther = new List<IViewModelEquitable>();
-		public bool EqualsModel(IViewModelEquitable other)
+		public Func<object, bool> EqualsModelFunc = _ => false;
+		public IList<object> EqualsModelParamsOther = new List<object>();
+		public bool EqualsModel(object other)
 		{
 			EqualsModelParamsOther.Add(other);
 			return EqualsModelFunc(other);
