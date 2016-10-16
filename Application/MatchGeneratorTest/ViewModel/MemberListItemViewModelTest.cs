@@ -341,4 +341,66 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.True(expectedOtherParamsCopyMemberListItemViewModel.SequenceEqual(actualOtherParamsCopyMemberListItemViewModel));
 		}
 	}
+
+	public class MemberListItemViewModelInstancesTest
+	{
+		private IList<MemberListItemViewModel> Instances = new List<MemberListItemViewModel>();
+
+		private IList<IPerson> ModelFields = new List<IPerson>();
+
+		public MemberListItemViewModelInstancesTest()
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				IPerson modelField = new PersonMock();
+				MemberListItemViewModel instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(modelField);
+				instance.SetPrivateField(MemberListItemViewModelMember.Model, modelField);
+				ModelFields.Add(modelField);
+				Instances.Add(instance);
+			}
+		}
+
+		[Fact(DisplayName = "EqualsModelメソッド : 正常系 : 等しいときにtrueを返す")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void EqualsModelTestEqual()
+		{
+			// Arrange
+			Instances[1].SetPrivateField(MemberListItemViewModelMember.Model, ModelFields[0]);
+			object inputOther = Instances[1];
+
+			// Act
+			bool actualReturn = Instances[0].EqualsModel(inputOther);
+
+			// Assert
+			Assert.Equal(true, actualReturn);
+		}
+
+		[Fact(DisplayName = "EqualsModelメソッド : 正常系 : 等しくないときにfalseを返す")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void EqualsModelTestNotEqual()
+		{
+			// Act
+			bool actualReturn = Instances[0].EqualsModel(Instances[1]);
+
+			// Assert
+			Assert.Equal(false, actualReturn);
+		}
+
+		[Fact(DisplayName = "EqualsModelメソッド : 正常系 : 型が違うときにfalseを返す")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void EqualsModelTestDifferentType()
+		{
+			// Arrange
+			object inputOther = new object();
+
+			// Act
+			bool actualReturn = Instances[0].EqualsModel(inputOther);
+
+			// Assert
+			Assert.Equal(false, actualReturn);
+		}
+	}
 }

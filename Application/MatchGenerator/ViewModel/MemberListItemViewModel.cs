@@ -147,7 +147,12 @@ namespace MatchGenerator.ViewModel
 		/// <returns>このViewModelと与えられたViewModelが等しいときtrue, 等しくないときfalse</returns>
 		public bool EqualsModel(object other)
 		{
-			throw new NotImplementedException();
+			if (other is MemberListItemViewModel)
+			{
+				return (other as MemberListItemViewModel).Model == this.Model;
+			}
+
+			return false;
 		}
 	}
 }
