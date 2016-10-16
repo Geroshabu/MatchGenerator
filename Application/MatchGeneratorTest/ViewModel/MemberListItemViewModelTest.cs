@@ -85,6 +85,14 @@ namespace MatchGeneratorTest.ViewModel
 				throw new NotImplementedException();
 			}
 		}
+
+		public Func<IViewModelEquatable, bool> EqualsModelFunc = _ => false;
+		public IList<IViewModelEquatable> EqualsModelParamsOther = new List<IViewModelEquatable>();
+		public bool EqualsModel(IViewModelEquatable other)
+		{
+			EqualsModelParamsOther.Add(other);
+			return EqualsModelFunc(other);
+		}
 	}
 
 	public class MemberListItemViewModelTest
