@@ -10,7 +10,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModelのインタフェース
 	/// </summary>
-	public interface IMemberListItemViewModel
+	public interface IMemberListItemViewModel : IViewModelEquitable
 	{
 		/// <summary>
 		/// "名前"欄に表示する文字列を取得

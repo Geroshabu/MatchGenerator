@@ -137,5 +137,22 @@ namespace MatchGenerator.ViewModel
 		{
 			return MemberListItemViewModel.CopyMemberListItemViewModel(this);
 		}
+
+		/// <summary>
+		/// このViewModelと与えられたViewModelが等しいかどうかを判定する.
+		/// 同じ型のViewModelであること, かつViewModelが表現している
+		/// Modelが同じインスタンスであるとき, 等しいと判定する.
+		/// </summary>
+		/// <param name="other">このViewModelと比較するViewModel</param>
+		/// <returns>このViewModelと与えられたViewModelが等しいときtrue, 等しくないときfalse</returns>
+		public bool EqualsModel(object other)
+		{
+			if (other is MemberListItemViewModel)
+			{
+				return (other as MemberListItemViewModel).Model == this.Model;
+			}
+
+			return false;
+		}
 	}
 }
