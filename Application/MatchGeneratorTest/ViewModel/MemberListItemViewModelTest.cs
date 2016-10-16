@@ -10,6 +10,12 @@ using System.Windows.Input;
 
 namespace MatchGeneratorTest.ViewModel
 {
+	internal struct MemberListItemViewModelMember
+	{
+		public const string Model = "Model";
+		public const string IsCheckedField = "IsCheckedField";
+	}
+
 	/// <summary>
 	/// <see cref="MemberListItemViewModel"/>のMock
 	/// </summary>
@@ -96,6 +102,32 @@ namespace MatchGeneratorTest.ViewModel
 			// Assert
 			// 影響するフィールドの確認
 			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
+			Assert.NotNull(actualReturn.MemberClickCommand);
+			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
+			Assert.NotNull(actualReturn.MemberExtendedClickCommand);
+			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberExtendedClickCommand);
+		}
+
+		[Theory(DisplayName = nameof(MemberListItemViewModel) + "コピーコンストラクタ : 正常系")]
+		[InlineData(false)]
+		[InlineData(true)]
+		[Trait("category", "ViewModel"), Trait("type", "正常系")]
+		public void CopyConstructorTest(bool isCheckedFieldValue)
+		{
+			// Arrange
+			IPerson inputModel = new PersonMock();
+			MemberListItemViewModel inputOther = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
+			inputOther.SetPrivateField(MemberListItemViewModelMember.IsCheckedField, isCheckedFieldValue);
+			// Expected data
+			IPerson expectedModel = (IPerson)inputOther.GetPrivateField(MemberListItemViewModelMember.Model);
+
+			// Act
+			IMemberListItemViewModel actualReturn = MemberListItemViewModel.CopyMemberListItemViewModel(inputOther);
+
+			// Assert
+			// 影響するフィールドの確認
+			Assert.Same(inputModel, (IPerson)actualReturn.GetPrivateField(MemberListItemViewModelMember.Model));
+			Assert.Equal(isCheckedFieldValue, (bool)actualReturn.GetPrivateField(MemberListItemViewModelMember.IsCheckedField));
 			Assert.NotNull(actualReturn.MemberClickCommand);
 			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
 			Assert.NotNull(actualReturn.MemberExtendedClickCommand);
