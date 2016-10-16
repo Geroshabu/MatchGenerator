@@ -139,15 +139,12 @@ namespace MatchGenerator.ViewModel
 		}
 
 		/// <summary>
-		/// このViewModelが表現しているModelが,
-		/// 与えられたViewModelが表現しているModelと
-		/// 等しいかどうかを判定する.
+		/// このViewModelと与えられたViewModelが等しいかどうかを判定する.
+		/// 同じ型のViewModelであること, かつViewModelが表現している
+		/// Modelが同じインスタンスであるとき, 等しいと判定する.
 		/// </summary>
 		/// <param name="other">このViewModelと比較するViewModel</param>
-		/// <returns>このViewModelが表現しているModelが,
-		/// 与えられたViewModelが表現しているModelと
-		/// 等しいかどうか.
-		/// 等しければtrue, 等しくなければfalse</returns>
+		/// <returns>このViewModelと与えられたViewModelが等しいときtrue, 等しくないときfalse</returns>
 		public bool EqualsModel(object other)
 		{
 			throw new NotImplementedException();
