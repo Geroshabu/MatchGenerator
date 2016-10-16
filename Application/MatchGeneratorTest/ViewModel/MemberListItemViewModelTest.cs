@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Linq;
 using Xunit;
 using MatchGenerator.Core;
 using MatchGenerator.Model;
@@ -14,6 +15,7 @@ namespace MatchGeneratorTest.ViewModel
 	{
 		public const string Model = "Model";
 		public const string IsCheckedField = "IsCheckedField";
+		public const string CopyMemberListItemViewModel = "<CopyMemberListItemViewModel>k__BackingField";
 	}
 
 	/// <summary>
@@ -135,7 +137,7 @@ namespace MatchGeneratorTest.ViewModel
 		}
 	}
 
-	public class MemberListItemViewModelInstanceTest
+	public class MemberListItemViewModelInstanceTest : IDisposable
 	{
 		private MemberListItemViewModel Instance;
 		private IPerson ModelField;
@@ -145,6 +147,11 @@ namespace MatchGeneratorTest.ViewModel
 			ModelField = new PersonMock();
 			Instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(ModelField);
 			Instance.SetPrivateField("Model", ModelField);
+		}
+
+		public void Dispose()
+		{
+			Utils.RestoreStaticField<MemberListItemViewModel>(MemberListItemViewModelMember.CopyMemberListItemViewModel);
 		}
 
 		[Fact(DisplayName = "Nameプロパティ : 正常系")]
@@ -298,6 +305,32 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Act
 			Instance.InvokePrivateMethod("ExtendClickMember");
+		}
+
+		[Fact(DisplayName = "Cloneメソッド : 正常系 : 期待する戻り値が得られること")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void CloneTest()
+		{
+			// Arrange
+			IMemberListItemViewModel returnValue = new MemberListItemViewModelMock();
+			IList<MemberListItemViewModel> actualOtherParamsCopyMemberListItemViewModel = new List<MemberListItemViewModel>();
+			Utils.SetStaticField<MemberListItemViewModel>(MemberListItemViewModelMember.CopyMemberListItemViewModel,
+				new Func<MemberListItemViewModel, IMemberListItemViewModel>(
+					other =>
+					{
+						actualOtherParamsCopyMemberListItemViewModel.Add(other);
+						return returnValue;
+					}));
+			// Expected data
+			IList<MemberListItemViewModel> expectedOtherParamsCopyMemberListItemViewModel = new List<MemberListItemViewModel> { Instance };
+
+			// Act
+			object actualReturn = Instance.Clone();
+
+			// Assert
+			Assert.Same(returnValue, actualReturn);
+			Assert.True(expectedOtherParamsCopyMemberListItemViewModel.SequenceEqual(actualOtherParamsCopyMemberListItemViewModel));
 		}
 	}
 }

@@ -135,7 +135,7 @@ namespace MatchGenerator.ViewModel
 		/// <returns>このインスタンスのコピーである新しいオブジェクト.</returns>
 		public object Clone()
 		{
-			throw new NotImplementedException();
+			return MemberListItemViewModel.CopyMemberListItemViewModel(this);
 		}
 	}
 }
