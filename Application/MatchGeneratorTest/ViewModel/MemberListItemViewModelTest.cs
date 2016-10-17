@@ -23,7 +23,16 @@ namespace MatchGeneratorTest.ViewModel
 	/// </summary>
 	internal class MemberListItemViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
 	{
-		public IPerson ModelField = null;
+		public Func<IPerson> ModelGetterFunc = () => null;
+		public int ModelGetterCount = 0;
+		public IPerson Model
+		{
+			get
+			{
+				ModelGetterCount++;
+				return ModelGetterFunc();
+			}
+		}
 
 		public Func<string> DescriptionGetter = () => null;
 		public int DescriptionGetterCount = 0;
@@ -111,7 +120,7 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			// 影響するフィールドの確認
-			Assert.Same(expectedModel, actualReturn.GetPrivateField("Model"));
+			Assert.Same(expectedModel, actualReturn.Model);
 			Assert.NotNull(actualReturn.MemberClickCommand);
 			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
 			Assert.NotNull(actualReturn.MemberExtendedClickCommand);
@@ -129,14 +138,14 @@ namespace MatchGeneratorTest.ViewModel
 			MemberListItemViewModel inputOther = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
 			inputOther.SetPrivateField(MemberListItemViewModelMember.IsCheckedField, isCheckedFieldValue);
 			// Expected data
-			IPerson expectedModel = (IPerson)inputOther.GetPrivateField(MemberListItemViewModelMember.Model);
+			IPerson expectedModel = (IPerson)inputOther.GetBackingField(MemberListItemViewModelMember.Model);
 
 			// Act
 			IMemberListItemViewModel actualReturn = MemberListItemViewModel.CopyMemberListItemViewModel(inputOther);
 
 			// Assert
 			// 影響するフィールドの確認
-			Assert.Same(inputModel, (IPerson)actualReturn.GetPrivateField(MemberListItemViewModelMember.Model));
+			Assert.Same(inputModel, actualReturn.Model);
 			Assert.Equal(isCheckedFieldValue, (bool)actualReturn.GetPrivateField(MemberListItemViewModelMember.IsCheckedField));
 			Assert.NotNull(actualReturn.MemberClickCommand);
 			Assert.IsType<Microsoft.Practices.Prism.Commands.DelegateCommand>(actualReturn.MemberClickCommand);
@@ -154,7 +163,7 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			ModelField = new PersonMock();
 			Instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(ModelField);
-			Instance.SetPrivateField("Model", ModelField);
+			Instance.SetBackingField(MemberListItemViewModelMember.Model, ModelField);
 		}
 
 		public void Dispose()
@@ -354,7 +363,7 @@ namespace MatchGeneratorTest.ViewModel
 			{
 				IPerson modelField = new PersonMock();
 				MemberListItemViewModel instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(modelField);
-				instance.SetPrivateField(MemberListItemViewModelMember.Model, modelField);
+				instance.SetBackingField(MemberListItemViewModelMember.Model, modelField);
 				ModelFields.Add(modelField);
 				Instances.Add(instance);
 			}
@@ -366,7 +375,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void EqualsModelTestEqual()
 		{
 			// Arrange
-			Instances[1].SetPrivateField(MemberListItemViewModelMember.Model, ModelFields[0]);
+			Instances[1].SetBackingField(MemberListItemViewModelMember.Model, ModelFields[0]);
 			object inputOther = Instances[1];
 
 			// Act

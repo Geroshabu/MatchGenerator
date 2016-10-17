@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
 	/// <summary>
 	/// <see cref="System.Windows.Controls.ListView"/>で表示するときの, メンバーのViewModelのインタフェース
 	/// </summary>
-	public interface IMemberListItemViewModel : IViewModelEquitable
+	public interface IMemberListItemViewModel : IViewModel<IPerson>, IViewModelEquitable
 	{
 		/// <summary>
 		/// "名前"欄に表示する文字列を取得

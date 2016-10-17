@@ -16,9 +16,9 @@ namespace MatchGenerator.ViewModel
 	class MemberListItemViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel, ICloneable
 	{
 		/// <summary>
-		/// このViewModelで扱うModel
+		/// このViewModelが表現するModelを取得する.
 		/// </summary>
-		private IPerson Model;
+		public IPerson Model { get; }
 
 		/// <summary>
 		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを生成する.
@@ -118,6 +118,7 @@ namespace MatchGenerator.ViewModel
 		/// このメンバーを連続選択クリックしたときの処理をするコマンド
 		/// </summary>
 		public ICommand MemberExtendedClickCommand { get; }
+
 		/// <summary>
 		/// <see cref="MemberExtendedClickCommand"/>の<see cref="ICommand.Execute"/>の処理
 		/// </summary>
