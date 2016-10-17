@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
@@ -11,6 +12,17 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MemberListViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
 	{
+		/// <summary>
+		/// このViewModelが表現するModelを取得する
+		/// </summary>
+		public IList<IPerson> Model
+		{
+			get
+			{
+				return Members.Select(vm => vm.Model).ToList();
+			}
+		}
+
 		private IList<IMemberListItemViewModel> MembersField;
 		/// <summary>
 		/// リストに表示するすべてのメンバー
