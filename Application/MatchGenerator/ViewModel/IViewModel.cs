@@ -9,7 +9,8 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// ViewModelの基本となるインタフェース
 	/// </summary>
-	public interface IViewModel
+	/// <typeparam name="T">このViewModelが表現するModelの型</typeparam>
+	public interface IViewModel<T>
 	{
 	}
 }
