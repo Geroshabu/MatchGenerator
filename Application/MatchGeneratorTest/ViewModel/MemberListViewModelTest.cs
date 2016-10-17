@@ -4,6 +4,7 @@ using System.Linq;
 using Xunit;
 using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
+using MatchGeneratorTest.Model;
 
 namespace MatchGeneratorTest.ViewModel
 {
@@ -103,6 +104,27 @@ namespace MatchGeneratorTest.ViewModel
 			};
 
 			Instance.SetPrivateField("MembersField", MembersFieldValue);
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.Model) + ".Getterプロパティ : 正常系")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void ModelGetTest()
+		{
+			// Arrange
+			IList<IPerson> expectedReturn = new List<IPerson>();
+			foreach(IMemberListItemViewModel vm in MembersFieldValue)
+			{
+				IPerson member = new PersonMock();
+				((MemberListItemViewModelMock)vm).ModelGetterFunc = () => member;
+				expectedReturn.Add(member);
+			}
+
+			// Act
+			IList<IPerson> actualReturn = Instance.Model;
+
+			// Assert
+			Assert.Equal<IPerson>(expectedReturn, actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系")]

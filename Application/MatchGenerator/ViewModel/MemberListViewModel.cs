@@ -19,7 +19,7 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return Members.Select(vm => vm.Model).ToList();
 			}
 		}
 
