@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator.ViewModel
 {
+	/// <summary>
+	/// ViewModelの基本となるインタフェース
+	/// </summary>
 	public interface IViewModel
 	{
 	}
