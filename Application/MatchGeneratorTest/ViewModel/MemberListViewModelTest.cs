@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
 
 namespace MatchGeneratorTest.ViewModel
@@ -17,6 +18,17 @@ namespace MatchGeneratorTest.ViewModel
 	/// </summary>
 	internal class MemberListViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
 	{
+		public Func<IList<IPerson>> ModelGetterFunc = () => null;
+		public int ModelGetterCount = 0;
+		public IList<IPerson> Model
+		{
+			get
+			{
+				ModelGetterCount++;
+				return ModelGetterFunc();
+			}
+		}
+
 		public Func<IList<IMemberListItemViewModel>> MembersGetterFunc = () => null;
 		public int MembersGetterCount = 0;
 		public Action<IList<IMemberListItemViewModel>> MembersSetterAction = _ => { };

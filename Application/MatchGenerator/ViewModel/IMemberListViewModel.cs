@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
 	/// <summary>
 	/// メンバーのリストのViewModelのインタフェース
 	/// </summary>
-	public interface IMemberListViewModel
+	public interface IMemberListViewModel : IViewModel<IList<IPerson>>
 	{
 		/// <summary>
 		/// リストに表示するすべてのメンバー
