@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Moq;
 using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
 using MatchGeneratorTest.Model;
@@ -115,7 +116,7 @@ namespace MatchGeneratorTest.ViewModel
 			IList<IPerson> expectedReturn = new List<IPerson>();
 			foreach(IMemberListItemViewModel vm in MembersFieldValue)
 			{
-				IPerson member = new PersonMock();
+				IPerson member = new Mock<IPerson>().Object;
 				((MemberListItemViewModelMock)vm).ModelGetterFunc = () => member;
 				expectedReturn.Add(member);
 			}
