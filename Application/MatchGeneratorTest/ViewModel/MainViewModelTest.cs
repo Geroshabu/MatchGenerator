@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Xunit;
+using Moq;
 using MatchGenerator.ViewModel;
 using MatchGenerator.Model;
 using MatchGenerator.FileIO;
@@ -72,7 +73,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void AllMembersGetterTest()
 		{
 			// Arrange
-			IMemberListViewModel AllMembersFieldValue = new MemberListViewModelMock();
+			IMemberListViewModel AllMembersFieldValue = new Mock<IMemberListViewModel>().Object;
 			Instance.SetPrivateField(MainViewModelMember.AllMembers, AllMembersFieldValue);
 			IMemberListViewModel expectedReturn = AllMembersFieldValue;
 
@@ -89,7 +90,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void AllMembersSetterTest()
 		{
 			// Arrange
-			IMemberListViewModel inputAllMembers = new MemberListViewModelMock();
+			IMemberListViewModel inputAllMembers = new Mock<IMemberListViewModel>().Object;
 			IMemberListViewModel expectedAllMembersField = inputAllMembers;
 
 			// Act
@@ -106,7 +107,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void AttendanceMembersGetterTest()
 		{
 			// Arrange
-			IMemberListViewModel attendanceMembersFieldValue = new MemberListViewModelMock();
+			IMemberListViewModel attendanceMembersFieldValue = new Mock<IMemberListViewModel>().Object;
 			Instance.SetPrivateField(MainViewModelMember.AttendanceMembers, attendanceMembersFieldValue);
 			IMemberListViewModel expectedReturn = attendanceMembersFieldValue;
 
@@ -123,7 +124,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void AttendanceMembersSetterTest()
 		{
 			// Arrange
-			IMemberListViewModel inputAttendanceMembers = new MemberListViewModelMock();
+			IMemberListViewModel inputAttendanceMembers = new Mock<IMemberListViewModel>().Object;
 			IMemberListViewModel expectedAttendanceMembersField = inputAttendanceMembers;
 			// Event handler
 			IList<object> actualPropertyChangedParamsSender = new List<object>();
@@ -198,8 +199,8 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			IList<IPerson> members = new List<IPerson>();
-			IMemberListViewModel allMembers = new MemberListViewModelMock();
-			IMemberListViewModel attendanceMembers = new MemberListViewModelMock();
+			IMemberListViewModel allMembers = new Mock<IMemberListViewModel>().Object;
+			IMemberListViewModel attendanceMembers = new Mock<IMemberListViewModel>().Object;
 			// Expected data
 			CompositionContainer expectedMefContainerField = MefContainer;
 			IEnumerable<IMemberImporter> expectedMemberImportersField = MefContainer.GetExportedValues<IMemberImporter>();

@@ -15,63 +15,6 @@ namespace MatchGeneratorTest.ViewModel
 		public const string CreateMemberListViewModel = "<CreateMemberListViewModel>k__BackingField";
 	}
 
-	/// <summary>
-	/// <see cref="MemberListViewModel"/>のMock
-	/// </summary>
-	internal class MemberListViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
-	{
-		public Func<IList<IPerson>> ModelGetterFunc = () => null;
-		public int ModelGetterCount = 0;
-		public IList<IPerson> Model
-		{
-			get
-			{
-				ModelGetterCount++;
-				return ModelGetterFunc();
-			}
-		}
-
-		public Func<IList<IMemberListItemViewModel>> MembersGetterFunc = () => null;
-		public int MembersGetterCount = 0;
-		public Action<IList<IMemberListItemViewModel>> MembersSetterAction = _ => { };
-		public IList<IList<IMemberListItemViewModel>> MembersSetterParams = new List<IList<IMemberListItemViewModel>>();
-		public IList<IMemberListItemViewModel> Members
-		{
-			get
-			{
-				MembersGetterCount++;
-				return MembersGetterFunc();
-			}
-
-			set
-			{
-				MembersSetterParams.Add(value);
-				MembersSetterAction(value);
-			}
-		}
-
-		public IList<Func<IList<IMemberListItemViewModel>>> SelectedMembersGetterFuncs = new List<Func<IList<IMemberListItemViewModel>>>();
-		public int SelectedMembersGetterCount = 0;
-		public IList<Action<IList<IMemberListItemViewModel>>> SelectedMembersSetterActions = new List<Action<IList<IMemberListItemViewModel>>>();
-		public IList<IList<IMemberListItemViewModel>> SelectedMembersSetterParams = new List<IList<IMemberListItemViewModel>>();
-		public int SelectedMembersSetterCount = 0;
-		public IList<IMemberListItemViewModel> SelectedMembers
-		{
-			get
-			{
-				SelectedMembersGetterCount++;
-				return SelectedMembersGetterFuncs[SelectedMembersGetterCount - 1]();
-			}
-
-			set
-			{
-				SelectedMembersSetterCount++;
-				SelectedMembersSetterParams.Add(value);
-				SelectedMembersSetterActions[SelectedMembersSetterCount - 1](value);
-			}
-		}
-	}
-
 	public class MemberListViewModelTest
 	{
 		[Fact(DisplayName = nameof(MemberListViewModel) + "コンストラクタ : 正常系", Skip = "未実装")]
