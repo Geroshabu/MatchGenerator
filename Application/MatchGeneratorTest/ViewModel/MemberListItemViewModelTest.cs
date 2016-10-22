@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Linq;
 using Xunit;
+using Moq;
 using MatchGenerator.Core;
 using MatchGenerator.Model;
 using MatchGenerator.ViewModel;
@@ -18,92 +19,6 @@ namespace MatchGeneratorTest.ViewModel
 		public const string CopyMemberListItemViewModel = "<CopyMemberListItemViewModel>k__BackingField";
 	}
 
-	/// <summary>
-	/// <see cref="MemberListItemViewModel"/>のMock
-	/// </summary>
-	internal class MemberListItemViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
-	{
-		public Func<IPerson> ModelGetterFunc = () => null;
-		public int ModelGetterCount = 0;
-		public IPerson Model
-		{
-			get
-			{
-				ModelGetterCount++;
-				return ModelGetterFunc();
-			}
-		}
-
-		public Func<string> DescriptionGetter = () => null;
-		public int DescriptionGetterCount = 0;
-		public string Description
-		{
-			get
-			{
-				DescriptionGetterCount++;
-				return DescriptionGetter();
-			}
-		}
-
-		public Func<string> NameGetter = () => null;
-		public int NameGetterCount = 0;
-		public string Name
-		{
-			get
-			{
-				NameGetterCount++;
-				return NameGetter();
-			}
-		}
-
-		public Func<bool> IsCheckedGetter = () => false;
-		public int IsCheckedGetterCount = 0;
-		public Action<bool> IsCheckedSetter = _ => { };
-		public IList<bool> IsCheckedSetterParams = new List<bool>();
-		public bool IsChecked
-		{
-			get
-			{
-				IsCheckedGetterCount++;
-				return IsCheckedGetter();
-			}
-
-			set
-			{
-				IsCheckedSetterParams.Add(value);
-				IsCheckedSetter(value);
-			}
-		}
-
-		public event EventHandler<MemberClickEventArgs> MemberClick;
-
-		public ICommand MemberClickCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
-
-		public ICommand MemberExtendedClickCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		public Func<object, bool> EqualsModelFunc = _ => false;
-		public IList<object> EqualsModelParamsOther = new List<object>();
-		public bool EqualsModel(object other)
-		{
-			EqualsModelParamsOther.Add(other);
-			return EqualsModelFunc(other);
-		}
-	}
-
 	public class MemberListItemViewModelTest
 	{
 		[Fact(DisplayName = "MemberListItemViewModelコンストラクタ : 正常系")]
@@ -112,7 +27,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void ConstructorTest()
 		{
 			// Arrange
-			IPerson inputModel = new PersonMock();
+			IPerson inputModel = new Mock<IPerson>().Object;
 			IPerson expectedModel = inputModel;
 
 			// Act
@@ -134,7 +49,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void CopyConstructorTest(bool isCheckedFieldValue)
 		{
 			// Arrange
-			IPerson inputModel = new PersonMock();
+			IPerson inputModel = new Mock<IPerson>().Object;
 			MemberListItemViewModel inputOther = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
 			inputOther.SetPrivateField(MemberListItemViewModelMember.IsCheckedField, isCheckedFieldValue);
 			// Expected data
@@ -161,7 +76,7 @@ namespace MatchGeneratorTest.ViewModel
 
 		public MemberListItemViewModelInstanceTest()
 		{
-			ModelField = new PersonMock();
+			ModelField = new Mock<IPerson>().Object;
 			Instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(ModelField);
 			Instance.SetBackingField(MemberListItemViewModelMember.Model, ModelField);
 		}
@@ -178,7 +93,10 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			string expectedName = "foobar";
-			((PersonMock)ModelField).NameFunc = () => "foobar";
+			// Mock of Model
+			Mock<IPerson> modelFieldMock = new Mock<IPerson>();
+			modelFieldMock.Setup(model => model.Name).Returns("foobar");
+			Instance.SetBackingField(MemberListItemViewModelMember.Model, modelFieldMock.Object);
 
 			// Act
 			string actualName = Instance.Name;
@@ -187,7 +105,7 @@ namespace MatchGeneratorTest.ViewModel
 			// 戻り値
 			Assert.Equal(expectedName, actualName);
 			// 内部でメソッドが呼ばれた回数
-			Assert.Equal(1, ((PersonMock)ModelField).NameCount);
+			modelFieldMock.VerifyGet(model => model.Name, Times.Once);
 		}
 
 		[Fact(DisplayName = "Descriptionプロパティ : 正常系")]
@@ -197,7 +115,9 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			string expectedDescription = "foobar";
-			((PersonMock)ModelField).DescriptionFunc = () => "foobar";
+			Mock<IPerson> modelFieldMock = new Mock<IPerson>();
+			modelFieldMock.Setup(model => model.Description).Returns("foobar");
+			Instance.SetBackingField(MemberListItemViewModelMember.Model, modelFieldMock.Object);
 
 			// Act
 			string actualDescription = Instance.Description;
@@ -206,7 +126,7 @@ namespace MatchGeneratorTest.ViewModel
 			// 戻り値
 			Assert.Equal(expectedDescription, actualDescription);
 			// 内部でメソッドが呼ばれた回数
-			Assert.Equal(1, ((PersonMock)ModelField).DescriptionCount);
+			modelFieldMock.VerifyGet(model => model.Description, Times.Once);
 		}
 
 		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
@@ -330,7 +250,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void CloneTest()
 		{
 			// Arrange
-			IMemberListItemViewModel returnValue = new MemberListItemViewModelMock();
+			IMemberListItemViewModel returnValue = new Mock<IMemberListItemViewModel>().Object;
 			IList<MemberListItemViewModel> actualOtherParamsCopyMemberListItemViewModel = new List<MemberListItemViewModel>();
 			Utils.SetStaticField<MemberListItemViewModel>(MemberListItemViewModelMember.CopyMemberListItemViewModel,
 				new Func<MemberListItemViewModel, IMemberListItemViewModel>(
@@ -361,7 +281,7 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				IPerson modelField = new PersonMock();
+				IPerson modelField = new Mock<IPerson>().Object;
 				MemberListItemViewModel instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(modelField);
 				instance.SetBackingField(MemberListItemViewModelMember.Model, modelField);
 				ModelFields.Add(modelField);
