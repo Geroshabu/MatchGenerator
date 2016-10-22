@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Xunit;
 
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
@@ -33,3 +34,6 @@ using System.Runtime.InteropServices;
 // 既定値にすることができます:
 //[アセンブリ: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.*")]
+
+// 静的フィールドを複数のテストで扱うため, テストの並列実行はしない
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
