@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Xunit;
@@ -181,7 +182,6 @@ namespace MatchGeneratorTest.ViewModel
 		public MainViewModelInstanceUseMefTest()
 		{
 			AggregateCatalog mefCatalog = new AggregateCatalog();
-			mefCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 			MefContainer = new CompositionContainer(mefCatalog);
 
 			Instance = new MainViewModel();
@@ -201,23 +201,23 @@ namespace MatchGeneratorTest.ViewModel
 			IList<IPerson> members = new List<IPerson>();
 			IMemberListViewModel allMembers = new Mock<IMemberListViewModel>().Object;
 			IMemberListViewModel attendanceMembers = new Mock<IMemberListViewModel>().Object;
+			// Setup mocks
+			Mock<IMemberImporter> importerMock = new Mock<IMemberImporter>();
+			importerMock.Setup(importer => importer.Import("MemberData.csv")).Returns(members);
+			MefContainer.ComposeExportedValue(importerMock.Object);
+			MefContainer.SatisfyImportsOnce(Instance);
 			// Expected data
 			CompositionContainer expectedMefContainerField = MefContainer;
 			IEnumerable<IMemberImporter> expectedMemberImportersField = MefContainer.GetExportedValues<IMemberImporter>();
 			IMemberListViewModel expectedAllMembersField = allMembers;
 			IMemberListViewModel expectedAttendanceMembersField = attendanceMembers;
-			IList<string> expectedImportParamsFileName = new List<string> { "MemberData.csv" };
 			IList<IList<IPerson>> expectedCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>> { members, new List<IPerson>() };
 			// Mock of CreateMefContainer
 			Instance.SetPrivateField(MainViewModelMember.CreateMefContainer,
 				new Func<CompositionContainer>(() => MefContainer));
 			// Mock of DefaultMemberImporterType
 			Instance.SetPrivateField(MainViewModelMember.DefaultMemberImporterType,
-				typeof(DefaultImporterMock));
-			// Mock of IMemberImporter.Import
-			IEnumerable<IMemberImporter> importers = MefContainer.GetExportedValues<IMemberImporter>();
-			IMemberImporter importer = importers.Single(i => i.GetType().Equals(typeof(DefaultImporterMock)));
-			((DefaultImporterMock)importer).ImportFunc = _ => members;
+				importerMock.Object.GetType());
 			// Mock of MemberListViewModel.CreateMemberListViewModel
 			int calledCount = 0;
 			IList<IList<IPerson>> actualCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>>();
@@ -246,8 +246,6 @@ namespace MatchGeneratorTest.ViewModel
 			IMemberListViewModel actualAttendanceMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AttendanceMembers);
 			Assert.Same(expectedAttendanceMembersField, actualAttendanceMembersField);
 			// Called methods
-			IList<string> actualImportParamsFileName = ((DefaultImporterMock)importer).ImportParamsFileName;
-			Assert.True(expectedImportParamsFileName.SequenceEqual(actualImportParamsFileName));
 			Assert.Equal(2, actualCreateMemberListViewModelParamsMemberData.Count);
 			Assert.Same(expectedCreateMemberListViewModelParamsMemberData[0], actualCreateMemberListViewModelParamsMemberData[0]);
 			Assert.True(expectedCreateMemberListViewModelParamsMemberData[1].SequenceEqual(actualCreateMemberListViewModelParamsMemberData[1]));
