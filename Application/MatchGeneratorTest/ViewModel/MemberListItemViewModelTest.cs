@@ -19,92 +19,6 @@ namespace MatchGeneratorTest.ViewModel
 		public const string CopyMemberListItemViewModel = "<CopyMemberListItemViewModel>k__BackingField";
 	}
 
-	/// <summary>
-	/// <see cref="MemberListItemViewModel"/>のMock
-	/// </summary>
-	internal class MemberListItemViewModelMock : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListItemViewModel
-	{
-		public Func<IPerson> ModelGetterFunc = () => null;
-		public int ModelGetterCount = 0;
-		public IPerson Model
-		{
-			get
-			{
-				ModelGetterCount++;
-				return ModelGetterFunc();
-			}
-		}
-
-		public Func<string> DescriptionGetter = () => null;
-		public int DescriptionGetterCount = 0;
-		public string Description
-		{
-			get
-			{
-				DescriptionGetterCount++;
-				return DescriptionGetter();
-			}
-		}
-
-		public Func<string> NameGetter = () => null;
-		public int NameGetterCount = 0;
-		public string Name
-		{
-			get
-			{
-				NameGetterCount++;
-				return NameGetter();
-			}
-		}
-
-		public Func<bool> IsCheckedGetter = () => false;
-		public int IsCheckedGetterCount = 0;
-		public Action<bool> IsCheckedSetter = _ => { };
-		public IList<bool> IsCheckedSetterParams = new List<bool>();
-		public bool IsChecked
-		{
-			get
-			{
-				IsCheckedGetterCount++;
-				return IsCheckedGetter();
-			}
-
-			set
-			{
-				IsCheckedSetterParams.Add(value);
-				IsCheckedSetter(value);
-			}
-		}
-
-		public event EventHandler<MemberClickEventArgs> MemberClick;
-
-		public ICommand MemberClickCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		public event EventHandler<MemberClickEventArgs> MemberExtendedClick;
-
-		public ICommand MemberExtendedClickCommand
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		public Func<object, bool> EqualsModelFunc = _ => false;
-		public IList<object> EqualsModelParamsOther = new List<object>();
-		public bool EqualsModel(object other)
-		{
-			EqualsModelParamsOther.Add(other);
-			return EqualsModelFunc(other);
-		}
-	}
-
 	public class MemberListItemViewModelTest
 	{
 		[Fact(DisplayName = "MemberListItemViewModelコンストラクタ : 正常系")]
@@ -336,7 +250,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void CloneTest()
 		{
 			// Arrange
-			IMemberListItemViewModel returnValue = new MemberListItemViewModelMock();
+			IMemberListItemViewModel returnValue = new Mock<IMemberListItemViewModel>().Object;
 			IList<MemberListItemViewModel> actualOtherParamsCopyMemberListItemViewModel = new List<MemberListItemViewModel>();
 			Utils.SetStaticField<MemberListItemViewModel>(MemberListItemViewModelMember.CopyMemberListItemViewModel,
 				new Func<MemberListItemViewModel, IMemberListItemViewModel>(
