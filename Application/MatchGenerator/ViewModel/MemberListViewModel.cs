@@ -39,6 +39,7 @@ namespace MatchGenerator.ViewModel
 			set
 			{
 				SetProperty(ref MembersField, new ObservableCollection<IMemberListItemViewModel>(value));
+				MembersField.CollectionChanged += CollectionChanged;
 				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Xunit;
 using Moq;
@@ -128,6 +129,38 @@ namespace MatchGeneratorTest.ViewModel
 			// Called handler
 			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
 			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系")]
+		[Trait("category", "ViewModel"), Trait("type", "正常系")]
+		public void MemberSetTest_CollectionChangedEvent()
+		{
+			// Arrange
+			IList<IMemberListItemViewModel> inputMembers = new List<IMemberListItemViewModel>();
+			IMemberListItemViewModel addedMember = new Mock<IMemberListItemViewModel>().Object;
+			// Event handler
+			IList<object> actualSenderParamsOfCollectionChanged = new List<object>();
+			IList<NotifyCollectionChangedEventArgs> actualEParamsOfCollectionChanged = new List<NotifyCollectionChangedEventArgs>();
+			Instance.CollectionChanged += (s, e) =>
+			{
+				actualSenderParamsOfCollectionChanged.Add(s);
+				actualEParamsOfCollectionChanged.Add(e);
+			};
+			// Expected data
+			IList<object> expectedSenderParamsOfCollectionChanged = new List<object>();
+			IList<IMemberListItemViewModel> expectedNewItemsOfEParamOfCollectionChanged = new List<IMemberListItemViewModel> { addedMember };
+
+			// Act
+			Instance.Members = inputMembers;
+			ObservableCollection<IMemberListItemViewModel> membersField =
+				(ObservableCollection<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
+			membersField.Add(addedMember);
+
+			// Assert
+			expectedSenderParamsOfCollectionChanged.Add(membersField);
+			Assert.Equal(expectedSenderParamsOfCollectionChanged, actualSenderParamsOfCollectionChanged);
+			Assert.Equal(expectedNewItemsOfEParamOfCollectionChanged, 
+				actualEParamsOfCollectionChanged.Select(e => e.NewItems[0]).Cast<IMemberListItemViewModel>().ToList());
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
