@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,12 @@ namespace MatchGenerator.ViewModel
 		}
 
 		private IMemberListItemViewModel LastClickedMemberField;
+
+		/// <summary>
+		/// コレクションが変更された場合に発生する.
+		/// </summary>
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 		/// <summary>
 		/// 最後にチェックボックスがクリックされたメンバー
 		/// </summary>

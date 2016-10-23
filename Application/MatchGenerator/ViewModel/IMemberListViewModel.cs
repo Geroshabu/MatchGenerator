@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// メンバーのリストのViewModelのインタフェース
 	/// </summary>
-	public interface IMemberListViewModel : IViewModel<IList<IPerson>>
+	public interface IMemberListViewModel : IViewModel<IList<IPerson>>, INotifyCollectionChanged
 	{
 		/// <summary>
 		/// リストに表示するすべてのメンバー
