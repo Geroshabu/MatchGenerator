@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
-		private IList<IMemberListItemViewModel> MembersField;
+		private ObservableCollection<IMemberListItemViewModel> MembersField;
 		/// <summary>
 		/// リストに表示するすべてのメンバー
 		/// </summary>
@@ -37,7 +38,7 @@ namespace MatchGenerator.ViewModel
 
 			set
 			{
-				SetProperty(ref MembersField, value);
+				SetProperty(ref MembersField, new ObservableCollection<IMemberListItemViewModel>(value));
 				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
