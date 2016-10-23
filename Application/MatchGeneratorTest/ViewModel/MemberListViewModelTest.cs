@@ -509,5 +509,47 @@ namespace MatchGeneratorTest.ViewModel
 					Instance.InvokePrivateMethod("Item_MemberExtendedClick", inputSender, inputE);
 				});
 		}
+
+		[Fact(DisplayName = nameof(IEnumerable<IMemberListItemViewModel>) + "<" + nameof(IMemberListItemViewModel) + ">." + nameof(IEnumerable<IMemberListItemViewModel>.GetEnumerator) + "メソッド : 正常系")]
+		[Trait("category", "ViewModel"), Trait("type", "正常系")]
+		public void GetEnumeratorOfIMemberListItemViewModelTest()
+		{
+			// Arrange
+			// Field values
+			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>
+			{
+				new Mock<IMemberListItemViewModel>().Object,
+				new Mock<IMemberListItemViewModel>().Object
+			};
+			Instance.SetPrivateField(MemberListViewModelMember.MembersField, memberFieldValue);
+			// Expected data
+			IList<IMemberListItemViewModel> expectedReturnData = memberFieldValue;
+
+			// Act & Assert
+			Assert.True(Instance.SequenceEqual(expectedReturnData));
+		}
+
+		[Fact(DisplayName = nameof(System.Collections.IEnumerable) + "." + nameof(System.Collections.IEnumerable.GetEnumerator) + "メソッド : 正常系")]
+		[Trait("category", "ViewModel"), Trait("type", "正常系")]
+		public void GetEnumeratorTest()
+		{
+			// Arrange
+			// Field values
+			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>
+			{
+				new Mock<IMemberListItemViewModel>().Object,
+				new Mock<IMemberListItemViewModel>().Object
+			};
+			Instance.SetPrivateField(MemberListViewModelMember.MembersField, memberFieldValue);
+			// Expected data
+			IList<IMemberListItemViewModel> expectedReturnData = memberFieldValue;
+
+			// Act & Assert
+			int count = 0;
+			foreach(IMemberListItemViewModel vm in (System.Collections.IEnumerable)Instance)
+			{
+				Assert.Same(expectedReturnData[count++], vm);
+			}
+		}
 	}
 }

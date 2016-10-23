@@ -161,7 +161,7 @@ namespace MatchGenerator.ViewModel
 		/// <returns>メンバーのコレクションの反復処理に使用できる列挙子</returns>
 		public IEnumerator<IMemberListItemViewModel> GetEnumerator()
 		{
-			throw new NotImplementedException();
+			return Members.GetEnumerator();
 		}
 
 		/// <summary>
@@ -170,7 +170,7 @@ namespace MatchGenerator.ViewModel
 		/// <returns>メンバーのコレクションの反復処理に使用できる列挙子</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			throw new NotImplementedException();
+			return Members.GetEnumerator();
 		}
 	}
 }
