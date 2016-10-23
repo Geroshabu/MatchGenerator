@@ -131,7 +131,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系 : コレクション変更イベントが設定されること")]
 		[Trait("category", "ViewModel"), Trait("type", "正常系")]
 		public void MemberSetTest_CollectionChangedEvent()
 		{
