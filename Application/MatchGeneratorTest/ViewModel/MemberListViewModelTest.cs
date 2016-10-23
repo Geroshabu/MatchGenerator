@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Xunit;
 using Moq;
@@ -69,13 +71,13 @@ namespace MatchGeneratorTest.ViewModel
 				expectedReturn.Add(member);
 			}
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 
 			// Act
 			IList<IPerson> actualReturn = Instance.Model;
 
 			// Assert
-			Assert.Equal<IPerson>(expectedReturn, actualReturn);
+			Assert.Equal(expectedReturn, actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系")]
@@ -84,7 +86,8 @@ namespace MatchGeneratorTest.ViewModel
 		public void MembersGetTest()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> MembersFieldValue = MembersFieldMocks.Select(mock => mock.Object).ToList();
+			IList<IMemberListItemViewModel> MembersFieldValue =
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object));
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField, MembersFieldValue);
 			IList<IMemberListItemViewModel> expectedReturn = MembersFieldValue;
 
@@ -101,7 +104,8 @@ namespace MatchGeneratorTest.ViewModel
 		public void MembersSetTest()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> inputMembers = MembersFieldMocks.Select(mock => mock.Object).ToList();
+			IList<IMemberListItemViewModel> inputMembers =
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object));
 			IList<IMemberListItemViewModel> expectedMembersField = inputMembers;
 			// Event handler
 			IList<object> actualPropertyChangedParamsSender = new List<object>();
@@ -119,11 +123,44 @@ namespace MatchGeneratorTest.ViewModel
 			Instance.Members = inputMembers;
 
 			// Assert
-			IList<IMemberListItemViewModel> actualMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
-			Assert.Same(expectedMembersField, actualMembersField);
+			ObservableCollection<IMemberListItemViewModel> actualMembersField =
+				(ObservableCollection<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
+			Assert.Equal(expectedMembersField, actualMembersField);
 			// Called handler
 			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
 			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系 : コレクション変更イベントが設定されること")]
+		[Trait("category", "ViewModel"), Trait("type", "正常系")]
+		public void MemberSetTest_CollectionChangedEvent()
+		{
+			// Arrange
+			IList<IMemberListItemViewModel> inputMembers = new List<IMemberListItemViewModel>();
+			IMemberListItemViewModel addedMember = new Mock<IMemberListItemViewModel>().Object;
+			// Event handler
+			IList<object> actualSenderParamsOfCollectionChanged = new List<object>();
+			IList<NotifyCollectionChangedEventArgs> actualEParamsOfCollectionChanged = new List<NotifyCollectionChangedEventArgs>();
+			Instance.CollectionChanged += (s, e) =>
+			{
+				actualSenderParamsOfCollectionChanged.Add(s);
+				actualEParamsOfCollectionChanged.Add(e);
+			};
+			// Expected data
+			IList<object> expectedSenderParamsOfCollectionChanged = new List<object>();
+			IList<IMemberListItemViewModel> expectedNewItemsOfEParamOfCollectionChanged = new List<IMemberListItemViewModel> { addedMember };
+
+			// Act
+			Instance.Members = inputMembers;
+			ObservableCollection<IMemberListItemViewModel> membersField =
+				(ObservableCollection<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
+			membersField.Add(addedMember);
+
+			// Assert
+			expectedSenderParamsOfCollectionChanged.Add(membersField);
+			Assert.Equal(expectedSenderParamsOfCollectionChanged, actualSenderParamsOfCollectionChanged);
+			Assert.Equal(expectedNewItemsOfEParamOfCollectionChanged, 
+				actualEParamsOfCollectionChanged.Select(e => e.NewItems[0]).Cast<IMemberListItemViewModel>().ToList());
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
@@ -133,7 +170,7 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 			// Expected data
 			IList<IMemberListItemViewModel> expectedReturn = new List<IMemberListItemViewModel>
 			{
@@ -155,7 +192,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void SelectedMembersGetTest_EmptyMembers()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> membersFieldValue = new List<IMemberListItemViewModel>();
+			ObservableCollection<IMemberListItemViewModel> membersFieldValue = new ObservableCollection<IMemberListItemViewModel>();
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField, membersFieldValue);
 
 			// Act
@@ -172,11 +209,12 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock =>
-				{
-					mock.Setup(vm => vm.IsChecked).Returns(false);
-					return mock.Object;
-				}).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(
+					MembersFieldMocks.Select(mock =>
+					{
+						mock.Setup(vm => vm.IsChecked).Returns(false);
+						return mock.Object;
+					})));
 
 			// Act
 			IList<IMemberListItemViewModel> actualReturn = Instance.SelectedMembers;
@@ -212,7 +250,7 @@ namespace MatchGeneratorTest.ViewModel
 			};
 			// Field values
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 			// Expected data
 			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance };
 			IList<string> expectedPropertyChangedParamsE = new List<string> { "SelectedMembers" };
@@ -312,7 +350,7 @@ namespace MatchGeneratorTest.ViewModel
 			// Arrange
 			// Field values
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 			IMemberListItemViewModel valueLastClickedMember = MembersFieldMocks[1].Object;
 			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
 			// Input data
@@ -352,7 +390,7 @@ namespace MatchGeneratorTest.ViewModel
 			// Arrange
 			// Field values
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 			IMemberListItemViewModel valueLastClickedMember = MembersFieldMocks[4].Object;
 			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
 			// Input data
@@ -395,7 +433,7 @@ namespace MatchGeneratorTest.ViewModel
 			// Arrange
 			// Field values
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				MembersFieldMocks.Select(mock => mock.Object).ToList());
+				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
 			IMemberListItemViewModel valueLastClickedMember = MembersFieldMocks[1].Object;
 			Instance.SetPrivateField("LastClickedMemberField", valueLastClickedMember);
 			// Input data

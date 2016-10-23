@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
-		private IList<IMemberListItemViewModel> MembersField;
+		private ObservableCollection<IMemberListItemViewModel> MembersField;
 		/// <summary>
 		/// リストに表示するすべてのメンバー
 		/// </summary>
@@ -36,7 +38,8 @@ namespace MatchGenerator.ViewModel
 
 			set
 			{
-				SetProperty(ref MembersField, value);
+				SetProperty(ref MembersField, new ObservableCollection<IMemberListItemViewModel>(value));
+				MembersField.CollectionChanged += CollectionChanged;
 				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
@@ -66,6 +69,12 @@ namespace MatchGenerator.ViewModel
 		}
 
 		private IMemberListItemViewModel LastClickedMemberField;
+
+		/// <summary>
+		/// コレクションが変更された場合に発生する.
+		/// </summary>
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 		/// <summary>
 		/// 最後にチェックボックスがクリックされたメンバー
 		/// </summary>
