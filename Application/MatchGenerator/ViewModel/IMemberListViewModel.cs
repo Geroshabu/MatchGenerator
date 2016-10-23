@@ -11,7 +11,7 @@ namespace MatchGenerator.ViewModel
 	/// <summary>
 	/// メンバーのリストのViewModelのインタフェース
 	/// </summary>
-	public interface IMemberListViewModel : IViewModel<IList<IPerson>>, INotifyCollectionChanged
+	public interface IMemberListViewModel : IViewModel<IList<IPerson>>, INotifyCollectionChanged, IEnumerable<IMemberListItemViewModel>
 	{
 		/// <summary>
 		/// リストに表示するすべてのメンバー
