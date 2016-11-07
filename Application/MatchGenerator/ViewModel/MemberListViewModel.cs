@@ -159,9 +159,9 @@ namespace MatchGenerator.ViewModel
 		/// メンバーのコレクションを反復処理する列挙子を返す.
 		/// </summary>
 		/// <returns>メンバーのコレクションの反復処理に使用できる列挙子</returns>
-		public IEnumerator<IMemberListItemViewModel> GetEnumerator()
+		public IEnumerator<IPerson> GetEnumerator()
 		{
-			return Members.GetEnumerator();
+			return Model.GetEnumerator();
 		}
 
 		/// <summary>
