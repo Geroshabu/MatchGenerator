@@ -170,7 +170,7 @@ namespace MatchGenerator.ViewModel
 		/// <returns>メンバーのコレクションの反復処理に使用できる列挙子</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return Members.GetEnumerator();
+			return Model.GetEnumerator();
 		}
 	}
 }
