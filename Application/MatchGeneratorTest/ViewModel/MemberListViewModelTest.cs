@@ -510,23 +510,29 @@ namespace MatchGeneratorTest.ViewModel
 				});
 		}
 
-		[Fact(DisplayName = nameof(IEnumerable<IMemberListItemViewModel>) + "<" + nameof(IMemberListItemViewModel) + ">." + nameof(IEnumerable<IMemberListItemViewModel>.GetEnumerator) + "メソッド : 正常系")]
+		[Fact(DisplayName = nameof(IEnumerable<IPerson>) + "<" + nameof(IPerson) + ">." + nameof(IEnumerable<IPerson>.GetEnumerator) + "メソッド : 正常系")]
 		[Trait("category", "ViewModel"), Trait("type", "正常系")]
-		public void GetEnumeratorOfIMemberListItemViewModelTest()
+		public void GetEnumeratorOfIPersonTest()
 		{
 			// Arrange
 			// Field values
-			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>
+			IList<IPerson> modelListData = new List<IPerson>
 			{
-				new Mock<IMemberListItemViewModel>().Object,
-				new Mock<IMemberListItemViewModel>().Object
+				new Mock<IPerson>().Object,
+				new Mock<IPerson>().Object
 			};
+			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>(
+				modelListData
+				.Select(person =>
+				{
+					Mock<IMemberListItemViewModel> viewModelMock = new Mock<IMemberListItemViewModel>();
+					viewModelMock.Setup(vm => vm.Model).Returns(person);
+					return viewModelMock.Object;
+				}));
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField, memberFieldValue);
-			// Expected data
-			IList<IMemberListItemViewModel> expectedReturnData = memberFieldValue;
 
 			// Act & Assert
-			Assert.True(Instance.SequenceEqual(expectedReturnData));
+			Assert.True(Instance.SequenceEqual(modelListData));
 		}
 
 		[Fact(DisplayName = nameof(System.Collections.IEnumerable) + "." + nameof(System.Collections.IEnumerable.GetEnumerator) + "メソッド : 正常系")]
@@ -535,20 +541,26 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			// Field values
-			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>
+			IList<IPerson> modelListData = new List<IPerson>
 			{
-				new Mock<IMemberListItemViewModel>().Object,
-				new Mock<IMemberListItemViewModel>().Object
+				new Mock<IPerson>().Object,
+				new Mock<IPerson>().Object
 			};
+			ObservableCollection<IMemberListItemViewModel> memberFieldValue = new ObservableCollection<IMemberListItemViewModel>(
+				modelListData
+				.Select(person =>
+				{
+					Mock<IMemberListItemViewModel> viewModelMock = new Mock<IMemberListItemViewModel>();
+					viewModelMock.Setup(vm => vm.Model).Returns(person);
+					return viewModelMock.Object;
+				}));
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField, memberFieldValue);
-			// Expected data
-			IList<IMemberListItemViewModel> expectedReturnData = memberFieldValue;
 
 			// Act & Assert
 			int count = 0;
-			foreach(IMemberListItemViewModel vm in (System.Collections.IEnumerable)Instance)
+			foreach(IPerson person in (System.Collections.IEnumerable)Instance)
 			{
-				Assert.Same(expectedReturnData[count++], vm);
+				Assert.Same(modelListData[count++], person);
 			}
 		}
 	}
