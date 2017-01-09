@@ -13,6 +13,7 @@ namespace MatchGeneratorTest.ViewModel
 {
 	internal struct MemberListViewModelMember
 	{
+		public const string Model = "model";
 		public const string MembersField = "MembersField";
 		public const string CreateMemberListViewModel = "<CreateMemberListViewModel>k__BackingField";
 	}
