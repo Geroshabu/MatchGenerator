@@ -40,7 +40,7 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				return AllMembersField;
+				return new MemberListViewModel(model);
 			}
 
 			set

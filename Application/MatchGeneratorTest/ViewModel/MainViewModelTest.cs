@@ -73,16 +73,12 @@ namespace MatchGeneratorTest.ViewModel
 		[Trait("type", "正常系")]
 		public void AllMembersGetterTest()
 		{
-			// Arrange
-			IMemberListViewModel AllMembersFieldValue = new Mock<IMemberListViewModel>().Object;
-			Instance.SetPrivateField(MainViewModelMember.AllMembers, AllMembersFieldValue);
-			IMemberListViewModel expectedReturn = AllMembersFieldValue;
-
 			// Act
 			IMemberListViewModel actualReturn = Instance.AllMembers;
 
 			// Assert
-			Assert.Same(expectedReturn, actualReturn);
+			Assert.NotNull(actualReturn);
+			Assert.IsType<MemberListViewModel>(actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + ".Setterプロパティ : 正常系")]
