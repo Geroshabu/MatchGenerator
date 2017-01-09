@@ -77,21 +77,14 @@ namespace MatchGeneratorTest.ViewModel
 		public void ModelGetTest()
 		{
 			// Arrange
-			IList<IPerson> expectedReturn = new List<IPerson>();
-			foreach(Mock<IMemberListItemViewModel> mock in MembersFieldMocks)
-			{
-				IPerson member = new Mock<IPerson>().Object;
-				mock.Setup(vm => vm.Model).Returns(member);
-				expectedReturn.Add(member);
-			}
-			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
-				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object)));
+			createModel(3);
+			setMockObject();
 
 			// Act
 			IList<IPerson> actualReturn = Instance.Model;
 
 			// Assert
-			Assert.Equal(expectedReturn, actualReturn);
+			Assert.Equal(ModelMock.Select(mock => mock.Object), actualReturn);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系 : モデルが空の時")]
@@ -253,7 +246,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Empty(actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Setterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Setterプロパティ : 正常系", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void SelectedMembersSetTest()
@@ -372,7 +365,7 @@ namespace MatchGeneratorTest.ViewModel
 				});
 		}
 
-		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの上から下へ連続選択")]
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの上から下へ連続選択", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void Item_MemberExtendedClickTest_Down()
@@ -412,7 +405,7 @@ namespace MatchGeneratorTest.ViewModel
 			}
 		}
 
-		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの下から上へ連続選択解除")]
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : リストの下から上へ連続選択解除", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void Item_MemberExtendedClickTest_Up()
@@ -455,7 +448,7 @@ namespace MatchGeneratorTest.ViewModel
 			}
 		}
 
-		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 連続選択した項目が前回選択した項目と同じ")]
+		[Fact(DisplayName = "Item_MemberExtendedClickメソッド : 正常系 : 連続選択した項目が前回選択した項目と同じ", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void Item_MemberExtendedClickTest_SameItem()
@@ -540,7 +533,7 @@ namespace MatchGeneratorTest.ViewModel
 				});
 		}
 
-		[Fact(DisplayName = nameof(IEnumerable<IPerson>) + "<" + nameof(IPerson) + ">." + nameof(IEnumerable<IPerson>.GetEnumerator) + "メソッド : 正常系")]
+		[Fact(DisplayName = nameof(IEnumerable<IPerson>) + "<" + nameof(IPerson) + ">." + nameof(IEnumerable<IPerson>.GetEnumerator) + "メソッド : 正常系", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel"), Trait("type", "正常系")]
 		public void GetEnumeratorOfIPersonTest()
 		{
@@ -565,7 +558,7 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.True(Instance.SequenceEqual(modelListData));
 		}
 
-		[Fact(DisplayName = nameof(System.Collections.IEnumerable) + "." + nameof(System.Collections.IEnumerable.GetEnumerator) + "メソッド : 正常系")]
+		[Fact(DisplayName = nameof(System.Collections.IEnumerable) + "." + nameof(System.Collections.IEnumerable.GetEnumerator) + "メソッド : 正常系", Skip = "仕様変更待ち")]
 		[Trait("category", "ViewModel"), Trait("type", "正常系")]
 		public void GetEnumeratorTest()
 		{
