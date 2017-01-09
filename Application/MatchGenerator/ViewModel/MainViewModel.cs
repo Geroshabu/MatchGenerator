@@ -19,6 +19,11 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MainViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMainViewModel
 	{
+		/// <summary>
+		/// このViewModelが表現するModel
+		/// </summary>
+		private ObservableCollection<IPerson> model = new ObservableCollection<IPerson>();
+
 		private CompositionContainer mefContainers;
 
 		private IMemberListViewModel AllMembersField;
