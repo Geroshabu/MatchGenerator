@@ -97,6 +97,11 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		public MemberListViewModel(ObservableCollection<IPerson> modelData)
+		{
+			model = modelData;
+		}
+
 		private MemberListViewModel(IList<Model.IPerson> memberData)
 		{
 			Members = memberData
