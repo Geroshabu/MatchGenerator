@@ -16,6 +16,11 @@ namespace MatchGenerator.ViewModel
 	internal class MemberListViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMemberListViewModel
 	{
 		/// <summary>
+		/// このViewModelが表現するModel
+		/// </summary>
+		private ObservableCollection<IPerson> model;
+
+		/// <summary>
 		/// このViewModelが表現するModelを取得する
 		/// </summary>
 		public IList<IPerson> Model
