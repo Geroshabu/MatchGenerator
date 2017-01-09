@@ -94,22 +94,38 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedReturn, actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系 : モデルが空の時")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void MembersGetTest()
+		public void MembersGetTestEmpty()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> MembersFieldValue =
-				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object));
-			Instance.SetPrivateField(MemberListViewModelMember.MembersField, MembersFieldValue);
-			IList<IMemberListItemViewModel> expectedReturn = MembersFieldValue;
+			setupModelAsEmpty();
+			setMockObject();
 
 			// Act
 			IList<IMemberListItemViewModel> actualReturn = Instance.Members;
 
 			// Assert
-			Assert.Same(expectedReturn, actualReturn);
+			Assert.NotNull(actualReturn);
+			Assert.Empty(actualReturn);
+		}
+
+		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Getterプロパティ : 正常系 : モデルがいくつかあるとき")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void MembersGetTest()
+		{
+			// Arrange
+			createModel(3);
+			setMockObject();
+
+			// Act
+			IList<IMemberListItemViewModel> actualReturn = Instance.Members;
+
+			// Assert
+			Assert.NotNull(actualReturn);
+			Assert.True(actualReturn.Count == 3);
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系")]
