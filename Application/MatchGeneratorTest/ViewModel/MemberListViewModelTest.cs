@@ -43,6 +43,11 @@ namespace MatchGeneratorTest.ViewModel
 
 		private IList<Mock<IMemberListItemViewModel>> MembersFieldMocks;
 
+		/// <summary>
+		/// モデルのモック
+		/// </summary>
+		private IList<Mock<IPerson>> ModelMock = new List<Mock<IPerson>>();
+
 		public MemberListViewModelInstanceTest()
 		{
 			IList<MatchGenerator.Model.IPerson> inputMemberData = new List<MatchGenerator.Model.IPerson>();
@@ -571,6 +576,26 @@ namespace MatchGeneratorTest.ViewModel
 			{
 				Assert.Same(modelListData[count++], person);
 			}
+		}
+
+		private void createModel(int numberOfModel)
+		{
+			for (int i = 0; i < numberOfModel; i++)
+			{
+				ModelMock.Add(new Mock<IPerson>());
+			}
+		}
+
+		private void setupModelAsEmpty()
+		{
+			ModelMock.Clear();
+		}
+
+		private void setMockObject()
+		{
+			Instance.SetPrivateField(
+				MemberListViewModelMember.Model,
+				new ObservableCollection<IPerson>(ModelMock.Select(mock => mock.Object)));
 		}
 	}
 }
