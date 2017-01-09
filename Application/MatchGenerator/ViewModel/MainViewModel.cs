@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
@@ -17,6 +19,11 @@ namespace MatchGenerator.ViewModel
 	/// </summary>
 	internal class MainViewModel : Microsoft.Practices.Prism.Mvvm.BindableBase, IMainViewModel
 	{
+		/// <summary>
+		/// このViewModelが表現するModel
+		/// </summary>
+		private ObservableCollection<IPerson> model = new ObservableCollection<IPerson>();
+
 		private CompositionContainer mefContainers;
 
 		private IMemberListViewModel AllMembersField;
