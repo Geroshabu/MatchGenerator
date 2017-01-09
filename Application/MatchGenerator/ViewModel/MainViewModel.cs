@@ -10,6 +10,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
+using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
 {
