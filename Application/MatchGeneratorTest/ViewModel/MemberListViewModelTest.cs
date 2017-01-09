@@ -20,12 +20,20 @@ namespace MatchGeneratorTest.ViewModel
 
 	public class MemberListViewModelTest
 	{
-		[Fact(DisplayName = nameof(MemberListViewModel) + "コンストラクタ : 正常系", Skip = "未実装")]
+		[Fact(DisplayName = nameof(MemberListViewModel) + "コンストラクタ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
 		public void ConstructorTest()
 		{
+			// Arrange
+			var input = new ObservableCollection<IPerson>();
 
+			// Act
+			MemberListViewModel actualResult = new MemberListViewModel(input);
+
+			// Assert
+			object actualModel = actualResult.GetPrivateField(MemberListViewModelMember.Model);
+			Assert.Same(input, actualModel);
 		}
 	}
 
