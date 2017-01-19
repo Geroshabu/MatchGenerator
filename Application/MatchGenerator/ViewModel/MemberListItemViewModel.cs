@@ -24,7 +24,7 @@ namespace MatchGenerator.ViewModel
 		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを生成する.
 		/// </summary>
 		/// <param name="model">ViewModelの表示対象となるModel</param>
-		private MemberListItemViewModel(IPerson model)
+		public MemberListItemViewModel(IPerson model)
 		{
 			Model = model;
 			MemberClickCommand = new DelegateCommand(ClickMember);
