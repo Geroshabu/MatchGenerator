@@ -31,7 +31,7 @@ namespace MatchGeneratorTest.ViewModel
 			IPerson expectedModel = inputModel;
 
 			// Act
-			IMemberListItemViewModel actualReturn = MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
+			MemberListItemViewModel actualReturn = new MemberListItemViewModel(inputModel);
 
 			// Assert
 			// 影響するフィールドの確認
