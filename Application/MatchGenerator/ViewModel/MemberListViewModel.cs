@@ -110,7 +110,7 @@ namespace MatchGenerator.ViewModel
 				.Select(
 					personData =>
 					{
-						IMemberListItemViewModel memberListItemViewModel = MemberListItemViewModel.CreateMemberListItemViewModel(personData);
+						IMemberListItemViewModel memberListItemViewModel = new MemberListItemViewModel(personData);
 						memberListItemViewModel.MemberClick += Item_MemberClick;
 						memberListItemViewModel.MemberExtendedClick += Item_MemberExtendedClick;
 						return memberListItemViewModel;
