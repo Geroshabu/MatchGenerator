@@ -39,14 +39,9 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				IList<IMemberListItemViewModel> memberList = new List<IMemberListItemViewModel>();
-
-				foreach (IPerson personModel in model)
-				{
-					memberList.Add(MemberListItemViewModel.CreateMemberListItemViewModel(personModel));
-				}
-
-				return memberList;
+				return model
+					.Select(person => new MemberListItemViewModel(person) as IMemberListItemViewModel)
+					.ToList();
 			}
 
 			set
