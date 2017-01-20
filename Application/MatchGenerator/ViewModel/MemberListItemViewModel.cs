@@ -44,12 +44,6 @@ namespace MatchGenerator.ViewModel
 		}
 
 		/// <summary>
-		/// <see cref="MemberListItemViewModel"/>の新しいインスタンスを作成する.
-		/// </summary>
-		public static Func<IPerson, IMemberListItemViewModel> CreateMemberListItemViewModel { get; } =
-			person => new MemberListItemViewModel(person);
-
-		/// <summary>
 		/// 指定されたインスタンスをコピーし, <see cref="MemberListItemViewModel"/>の新しいインスタンスを作成する.
 		/// </summary>
 		public static Func<MemberListItemViewModel, IMemberListItemViewModel> CopyMemberListItemViewModel { get; } =
