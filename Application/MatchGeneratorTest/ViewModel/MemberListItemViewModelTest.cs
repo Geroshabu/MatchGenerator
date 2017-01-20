@@ -50,7 +50,7 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			IPerson inputModel = new Mock<IPerson>().Object;
-			MemberListItemViewModel inputOther = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(inputModel);
+			MemberListItemViewModel inputOther = new MemberListItemViewModel(inputModel);
 			inputOther.SetPrivateField(MemberListItemViewModelMember.IsCheckedField, isCheckedFieldValue);
 			// Expected data
 			IPerson expectedModel = (IPerson)inputOther.GetBackingField(MemberListItemViewModelMember.Model);
@@ -77,7 +77,7 @@ namespace MatchGeneratorTest.ViewModel
 		public MemberListItemViewModelInstanceTest()
 		{
 			ModelField = new Mock<IPerson>().Object;
-			Instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(ModelField);
+			Instance = new MemberListItemViewModel(ModelField);
 			Instance.SetBackingField(MemberListItemViewModelMember.Model, ModelField);
 		}
 
@@ -282,7 +282,7 @@ namespace MatchGeneratorTest.ViewModel
 			for (int i = 0; i < 2; i++)
 			{
 				IPerson modelField = new Mock<IPerson>().Object;
-				MemberListItemViewModel instance = (MemberListItemViewModel)MemberListItemViewModel.CreateMemberListItemViewModel(modelField);
+				MemberListItemViewModel instance = new MemberListItemViewModel(modelField);
 				instance.SetBackingField(MemberListItemViewModelMember.Model, modelField);
 				ModelFields.Add(modelField);
 				Instances.Add(instance);
