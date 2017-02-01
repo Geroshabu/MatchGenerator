@@ -120,6 +120,24 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedDescription, actualDescription);
 		}
 
+		[Fact(DisplayName = nameof(MemberListItemViewModel.IsChecked) + "プロパティ : イベントハンドラを設定しない場合に, 値を設定/取得できる")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void IsCheckedTestWithoutEventHandler()
+		{
+			// Arrange
+			bool inputValue = true;
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
+
+			// Arrange
+			target.IsChecked = inputValue;
+			bool actualValue = target.IsChecked;
+
+			// Assert
+			Assert.Equal(inputValue, actualValue);
+		}
+
 		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
