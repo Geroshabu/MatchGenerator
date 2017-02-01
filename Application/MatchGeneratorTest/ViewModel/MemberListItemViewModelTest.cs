@@ -110,18 +110,14 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			string expectedDescription = "foobar";
-			Mock<IPerson> modelFieldMock = new Mock<IPerson>();
-			modelFieldMock.Setup(model => model.Description).Returns("foobar");
-			Instance.SetBackingField(MemberListItemViewModelMember.Model, modelFieldMock.Object);
 
 			// Act
-			string actualDescription = Instance.Description;
+			var person = new Person { Description = expectedDescription };
+			var instance = new MemberListItemViewModel(person);
+			string actualDescription = instance.Description;
 
 			// Assert
-			// 戻り値
 			Assert.Equal(expectedDescription, actualDescription);
-			// 内部でメソッドが呼ばれた回数
-			modelFieldMock.VerifyGet(model => model.Description, Times.Once);
 		}
 
 		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
