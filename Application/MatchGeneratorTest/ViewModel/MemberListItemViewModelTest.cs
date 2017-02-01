@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Linq;
 using Xunit;
@@ -120,39 +121,45 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedDescription, actualDescription);
 		}
 
-		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MemberListItemViewModel.IsChecked) + "プロパティ : イベントハンドラを設定しない場合に, 値を設定/取得できる")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void IsCheckedGetterTest()
+		public void IsCheckedTestWithoutEventHandler()
 		{
 			// Arrange
-			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			bool expectedIsChecked = !beforeIsChecked;
-			Instance.SetPrivateField("IsCheckedField", !beforeIsChecked);
+			bool inputValue = true;
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
 
-			// Act
-			bool actualIsChecked = Instance.IsChecked;
+			// Arrange
+			target.IsChecked = inputValue;
+			bool actualValue = target.IsChecked;
 
 			// Assert
-			Assert.Equal(expectedIsChecked, actualIsChecked);
+			Assert.Equal(inputValue, actualValue);
 		}
 
-		[Fact(DisplayName = "IsChecked.Setterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MemberListItemViewModel.IsChecked) + "プロパティ : イベントハンドラを設定しない場合に, 値を設定/取得できる")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void IsCheckedSetterTest()
+		public void IsCheckedTestWithEventHandler()
 		{
 			// Arrange
-			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			bool inputIsChecked = !beforeIsChecked;
-			bool expectedIsChecked = !beforeIsChecked;
+			bool inputValue = true;
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
+			object actualSender = null;
+			PropertyChangedEventArgs actualE = null;
+			target.PropertyChanged += (s, e) => { actualSender = s; actualE = e; };
 
-			// Act
-			Instance.IsChecked = inputIsChecked;
+			// Arrange
+			target.IsChecked = inputValue;
+			bool actualValue = target.IsChecked;
 
 			// Assert
-			bool actualIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			Assert.Equal(expectedIsChecked, actualIsChecked);
+			Assert.Equal(inputValue, actualValue);
+			Assert.Same(target, actualSender);
+			Assert.Equal(nameof(MemberListItemViewModel.IsChecked), actualE.PropertyName);
 		}
 
 		[Theory(DisplayName = "ClickMemberメソッド : 正常系")]
