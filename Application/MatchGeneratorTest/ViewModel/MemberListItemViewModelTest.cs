@@ -162,41 +162,6 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(nameof(MemberListItemViewModel.IsChecked), actualE.PropertyName);
 		}
 
-		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
-		[Trait("category", "ViewModel")]
-		[Trait("type", "正常系")]
-		public void IsCheckedGetterTest()
-		{
-			// Arrange
-			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			bool expectedIsChecked = !beforeIsChecked;
-			Instance.SetPrivateField("IsCheckedField", !beforeIsChecked);
-
-			// Act
-			bool actualIsChecked = Instance.IsChecked;
-
-			// Assert
-			Assert.Equal(expectedIsChecked, actualIsChecked);
-		}
-
-		[Fact(DisplayName = "IsChecked.Setterプロパティ : 正常系")]
-		[Trait("category", "ViewModel")]
-		[Trait("type", "正常系")]
-		public void IsCheckedSetterTest()
-		{
-			// Arrange
-			bool beforeIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			bool inputIsChecked = !beforeIsChecked;
-			bool expectedIsChecked = !beforeIsChecked;
-
-			// Act
-			Instance.IsChecked = inputIsChecked;
-
-			// Assert
-			bool actualIsChecked = (bool)Instance.GetPrivateField("IsCheckedField");
-			Assert.Equal(expectedIsChecked, actualIsChecked);
-		}
-
 		[Theory(DisplayName = "ClickMemberメソッド : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
