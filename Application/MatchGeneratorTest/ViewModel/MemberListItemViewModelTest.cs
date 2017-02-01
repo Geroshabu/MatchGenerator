@@ -93,19 +93,14 @@ namespace MatchGeneratorTest.ViewModel
 		{
 			// Arrange
 			string expectedName = "foobar";
-			// Mock of Model
-			Mock<IPerson> modelFieldMock = new Mock<IPerson>();
-			modelFieldMock.Setup(model => model.Name).Returns("foobar");
-			Instance.SetBackingField(MemberListItemViewModelMember.Model, modelFieldMock.Object);
 
 			// Act
-			string actualName = Instance.Name;
+			var person = new Person { Name = expectedName };
+			var instance = new MemberListItemViewModel(person);
+			string actualName = instance.Name;
 
 			// Assert
-			// 戻り値
 			Assert.Equal(expectedName, actualName);
-			// 内部でメソッドが呼ばれた回数
-			modelFieldMock.VerifyGet(model => model.Name, Times.Once);
 		}
 
 		[Fact(DisplayName = "Descriptionプロパティ : 正常系")]
