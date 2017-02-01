@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Linq;
 using Xunit;
@@ -136,6 +137,29 @@ namespace MatchGeneratorTest.ViewModel
 
 			// Assert
 			Assert.Equal(inputValue, actualValue);
+		}
+
+		[Fact(DisplayName = nameof(MemberListItemViewModel.IsChecked) + "プロパティ : イベントハンドラを設定しない場合に, 値を設定/取得できる")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		public void IsCheckedTestWithEventHandler()
+		{
+			// Arrange
+			bool inputValue = true;
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
+			object actualSender = null;
+			PropertyChangedEventArgs actualE = null;
+			target.PropertyChanged += (s, e) => { actualSender = s; actualE = e; };
+
+			// Arrange
+			target.IsChecked = inputValue;
+			bool actualValue = target.IsChecked;
+
+			// Assert
+			Assert.Equal(inputValue, actualValue);
+			Assert.Same(target, actualSender);
+			Assert.Equal(nameof(MemberListItemViewModel.IsChecked), actualE.PropertyName);
 		}
 
 		[Fact(DisplayName = "IsChecked.Getterプロパティ : 正常系")]
