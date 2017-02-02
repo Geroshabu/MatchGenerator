@@ -39,9 +39,7 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				return model
-					.Select(person => new MemberListItemViewModel(person) as IMemberListItemViewModel)
-					.ToList();
+				return MembersField;
 			}
 			private set
 			{
