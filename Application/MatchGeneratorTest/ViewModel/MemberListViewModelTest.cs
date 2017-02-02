@@ -127,8 +127,7 @@ namespace MatchGeneratorTest.ViewModel
 		public void MembersSetTest()
 		{
 			// Arrange
-			IList<IMemberListItemViewModel> inputMembers =
-				new ObservableCollection<IMemberListItemViewModel>(MembersFieldMocks.Select(mock => mock.Object));
+			IList<IMemberListItemViewModel> inputMembers = MembersFieldMocks.Select(mock => mock.Object).ToList();
 			IList<IMemberListItemViewModel> expectedMembersField = inputMembers;
 			// Event handler
 			IList<object> actualPropertyChangedParamsSender = new List<object>();
@@ -146,8 +145,7 @@ namespace MatchGeneratorTest.ViewModel
 			Instance.Members = inputMembers;
 
 			// Assert
-			ObservableCollection<IMemberListItemViewModel> actualMembersField =
-				(ObservableCollection<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
+			var actualMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
 			Assert.Equal(expectedMembersField, actualMembersField);
 			// Called handler
 			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
