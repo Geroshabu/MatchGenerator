@@ -43,8 +43,7 @@ namespace MatchGenerator.ViewModel
 					.Select(person => new MemberListItemViewModel(person) as IMemberListItemViewModel)
 					.ToList();
 			}
-
-			set
+			private set
 			{
 				SetProperty(ref MembersField, value);
 				OnPropertyChanged(nameof(SelectedMembers));
