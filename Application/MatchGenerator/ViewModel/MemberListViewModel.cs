@@ -31,7 +31,7 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
-		private ObservableCollection<IMemberListItemViewModel> MembersField;
+		private IList<IMemberListItemViewModel> MembersField;
 		/// <summary>
 		/// リストに表示するすべてのメンバー
 		/// </summary>
@@ -46,8 +46,7 @@ namespace MatchGenerator.ViewModel
 
 			set
 			{
-				SetProperty(ref MembersField, new ObservableCollection<IMemberListItemViewModel>(value));
-				MembersField.CollectionChanged += CollectionChanged;
+				SetProperty(ref MembersField, value);
 				OnPropertyChanged(nameof(SelectedMembers));
 			}
 		}
