@@ -77,8 +77,16 @@ namespace MatchGeneratorTest.ViewModel
 		public void ModelGetTest()
 		{
 			// Arrange
-			createModel(3);
-			setMockObject();
+			Instance.SetPrivateField(MemberListViewModelMember.MembersField,
+				MembersFieldMocks.Zip(
+					ModelMock,
+					(memberMock, modelMock) =>
+					{
+						memberMock.Setup(member => member.Model).Returns(modelMock.Object);
+						return memberMock.Object;
+					}
+				)
+				.ToList());
 
 			// Act
 			IList<IPerson> actualReturn = Instance.Model;
