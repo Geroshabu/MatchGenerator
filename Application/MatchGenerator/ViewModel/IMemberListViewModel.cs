@@ -16,7 +16,7 @@ namespace MatchGenerator.ViewModel
 		/// <summary>
 		/// リストに表示するすべてのメンバー
 		/// </summary>
-		IList<IMemberListItemViewModel> Members { get; set; }
+		IList<IMemberListItemViewModel> Members { get; }
 
 		/// <summary>
 		/// 現在選択されているメンバー
