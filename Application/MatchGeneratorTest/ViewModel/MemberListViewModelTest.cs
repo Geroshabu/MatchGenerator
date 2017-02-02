@@ -121,37 +121,6 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.True(actualReturn.Count == 3);
 		}
 
-		[Fact(DisplayName = nameof(MemberListViewModel.Members) + ".Setterプロパティ : 正常系")]
-		[Trait("category", "ViewModel")]
-		[Trait("type", "正常系")]
-		public void MembersSetTest()
-		{
-			// Arrange
-			IList<IMemberListItemViewModel> inputMembers = MembersFieldMocks.Select(mock => mock.Object).ToList();
-			IList<IMemberListItemViewModel> expectedMembersField = inputMembers;
-			// Event handler
-			IList<object> actualPropertyChangedParamsSender = new List<object>();
-			IList<System.ComponentModel.PropertyChangedEventArgs> actualPropertyChangedParamsE = new List<System.ComponentModel.PropertyChangedEventArgs>();
-			Instance.PropertyChanged += (s, e) =>
-			{
-				actualPropertyChangedParamsSender.Add(s);
-				actualPropertyChangedParamsE.Add(e);
-			};
-			// Expected data
-			IList<object> expectedPropertyChangedParamsSender = new List<object> { Instance, Instance };
-			IList<string> expectedPropertyChangedParamsE = new List<string> { "Members", "SelectedMembers" };
-
-			// Act
-			Instance.Members = inputMembers;
-
-			// Assert
-			var actualMembersField = (IList<IMemberListItemViewModel>)Instance.GetPrivateField(MemberListViewModelMember.MembersField);
-			Assert.Equal(expectedMembersField, actualMembersField);
-			// Called handler
-			Assert.True(actualPropertyChangedParamsSender.SequenceEqual(expectedPropertyChangedParamsSender));
-			Assert.True(actualPropertyChangedParamsE.Select(e => e.PropertyName).SequenceEqual(expectedPropertyChangedParamsE));
-		}
-
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
