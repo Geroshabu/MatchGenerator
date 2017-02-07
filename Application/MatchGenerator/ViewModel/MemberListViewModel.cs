@@ -98,6 +98,12 @@ namespace MatchGenerator.ViewModel
 		public MemberListViewModel(ObservableCollection<IPerson> modelData)
 		{
 			model = modelData;
+            Members = model.Select(person => new MemberListItemViewModel(person)).Cast<IMemberListItemViewModel>().ToList();
+            foreach (IMemberListItemViewModel memberViewModel in Members)
+            {
+                memberViewModel.MemberClick += Item_MemberClick;
+                memberViewModel.MemberExtendedClick += Item_MemberExtendedClick;
+            }
 		}
 
 		private MemberListViewModel(IList<Model.IPerson> memberData)
