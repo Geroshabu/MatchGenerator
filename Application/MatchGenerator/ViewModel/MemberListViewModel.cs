@@ -95,6 +95,10 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+        /// <summary>
+        /// <see cref="MemberListViewModel"/>インスタンスを生成し, インスタンスが持つモデルを初期化する.
+        /// </summary>
+        /// <param name="modelData">生成した<see cref="MemberListViewModel"/>インスタンスに持たせるモデルの値</param>
 		public MemberListViewModel(ObservableCollection<IPerson> modelData)
 		{
 			model = modelData;
