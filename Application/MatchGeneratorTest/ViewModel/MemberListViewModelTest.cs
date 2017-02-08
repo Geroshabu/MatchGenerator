@@ -101,14 +101,22 @@ namespace MatchGeneratorTest.ViewModel
 		public void MembersGetTest()
 		{
 			// Arrange
+			var personData = new ObservableCollection<IPerson>
+			{
+				new Mock<IPerson>().Object,
+				new Mock<IPerson>().Object,
+				new Mock<IPerson>().Object
+			};
 			IList<IMemberListItemViewModel> membersFieldValue = new List<IMemberListItemViewModel>();
 			Instance.SetPrivateField(MemberListViewModelMember.MembersField, membersFieldValue);
 
 			// Act
-			IList<IMemberListItemViewModel> actualReturn = Instance.Members;
+			var target = new MemberListViewModel(personData);
+			IList<IMemberListItemViewModel> actualReturn = target.Members;
 
 			// Assert
-			Assert.Same(membersFieldValue, actualReturn);
+			IList<IPerson> actualPeople = actualReturn.Select(vm => vm.Model).ToList();
+			Assert.True(!personData.Except(actualPeople).Any() && !actualPeople.Except(personData).Any());
 		}
 
 		[Fact(DisplayName = nameof(MemberListViewModel.SelectedMembers) + ".Getterプロパティ : 正常系")]

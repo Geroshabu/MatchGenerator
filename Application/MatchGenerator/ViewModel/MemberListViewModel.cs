@@ -95,9 +95,22 @@ namespace MatchGenerator.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// <see cref="MemberListViewModel"/>インスタンスを生成し, インスタンスが持つModelを初期化する.
+		/// </summary>
+		/// <param name="modelData">
+		/// 生成した<see cref="MemberListViewModel"/>インスタンスで扱いたい全メンバーの<see cref="IPerson"/>のコレクション.
+		/// 生成したインスタンスに持たせるModelの値として用いられる.
+		/// </param>
 		public MemberListViewModel(ObservableCollection<IPerson> modelData)
 		{
 			model = modelData;
+			Members = model.Select(person => new MemberListItemViewModel(person)).Cast<IMemberListItemViewModel>().ToList();
+			foreach (IMemberListItemViewModel memberViewModel in Members)
+			{
+				memberViewModel.MemberClick += Item_MemberClick;
+				memberViewModel.MemberExtendedClick += Item_MemberExtendedClick;
+			}
 		}
 
 		private MemberListViewModel(IList<Model.IPerson> memberData)
