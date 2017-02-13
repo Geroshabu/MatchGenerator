@@ -32,11 +32,18 @@ namespace MatchGenerator.ViewModel
 		/// このメンバーが選択されているかどうかを示すコントロールが,
 		/// クリックされたときに発生する.
 		/// </summary>
+		/// <remarks>イベント発生元は自インスタンスである.</remarks>
 		event EventHandler<MemberClickEventArgs> MemberClick;
 
 		/// <summary>
-		/// このメンバーをクリックしたときの処理をするコマンド
+		/// このメンバーをクリックしたときに, Viewから実行されるコマンド.
 		/// </summary>
+		/// <remarks>
+		/// <see cref="MemberClick"/>を発生させる.
+		/// クリック時, Viewとバインディングしている<see cref="IsChecked"/>の
+		/// 値は自動で反転されるため, イベントデータには<see cref="IsChecked"/>の
+		/// 値が, クリック後のメンバーの選択状態としてセットされる.
+		/// </remarks>
 		ICommand MemberClickCommand { get; }
 
 		/// <summary>
