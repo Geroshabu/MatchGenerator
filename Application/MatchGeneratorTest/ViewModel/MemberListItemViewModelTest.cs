@@ -162,6 +162,42 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(nameof(MemberListItemViewModel.IsChecked), actualE.PropertyName);
 		}
 
+        [Fact(DisplayName = nameof(MemberListItemViewModel.MemberClickCommand) + "プロパティ : " + nameof(MemberListItemViewModel.MemberClick) + "イベントが設定されていないときに" + nameof(ICommand.Execute) + "を実行しても落ちないこと")]
+        [Trait("category", "ViewModel")]
+        [Trait("type", "異常系")]
+        public void MemberClickCommandTestWithNoHandler()
+        {
+            // Arrange
+            var person = new Person();
+            var target = new MemberListItemViewModel(person);
+
+            // Act
+            target.MemberClickCommand.Execute(null);
+        }
+
+        [Theory(DisplayName = nameof(MemberListItemViewModel.MemberClickCommand) + "プロパティ : " + nameof(MemberListItemViewModel.MemberClick) + "イベントが設定されているときに" + nameof(ICommand.Execute) + "を実行してイベントが正しく発火すること")]
+        [Trait("category", "ViewModel")]
+        [Trait("type", "正常系")]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void MemberClickCommandTestWithHandler(bool isChecked)
+        {
+            // Arrange
+            var person = new Person();
+            var target = new MemberListItemViewModel(person);
+            target.IsChecked = isChecked;
+            object actualSender = null;
+            MemberClickEventArgs actualE = null;
+            target.MemberClick += (s, e) => { actualSender = s; actualE = e; };
+
+            // Act
+            target.MemberClickCommand.Execute(null);
+
+            // Assert
+            Assert.Same(target, actualSender);
+            Assert.Equal(isChecked, actualE.IsChecked);
+        }
+
 		[Theory(DisplayName = "ClickMemberメソッド : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
