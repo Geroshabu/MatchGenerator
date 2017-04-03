@@ -198,6 +198,43 @@ namespace MatchGeneratorTest.ViewModel
             Assert.Equal(isChecked, actualE.IsChecked);
         }
 
+		[Fact(DisplayName = nameof(MemberListItemViewModel.MemberExtendedClickCommand) + "プロパティ : " + nameof(MemberListItemViewModel.MemberExtendedClick) + "イベントが設定されていないときに" + nameof(ICommand.Execute) + "を実行しても落ちないこと")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "異常系")]
+		public void MemberExtendedClickCommandTestWithNoHandler()
+		{
+			// Arrange
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
+
+			// Act
+			target.MemberExtendedClickCommand.Execute(null);
+		}
+
+		[Theory(DisplayName = nameof(MemberListItemViewModel.MemberExtendedClickCommand) + "プロパティ : " + nameof(MemberListItemViewModel.MemberExtendedClick) + "イベントが設定されているときに" + nameof(ICommand.Execute) + "を実行してイベントが正しく発火すること")]
+		[Trait("category", "ViewModel")]
+		[Trait("type", "正常系")]
+		[InlineData(true)]
+		[InlineData(false)]
+		public void MemberExtendedClickCommandTestWithHandler(bool isCheckedBefore)
+		{
+			// Arrange
+			var person = new Person();
+			var target = new MemberListItemViewModel(person);
+			target.IsChecked = isCheckedBefore;
+			object actualSender = null;
+			MemberClickEventArgs actualE = null;
+			target.MemberExtendedClick += (s, e) => { actualSender = s; actualE = e; };
+
+			// Act
+			target.MemberExtendedClickCommand.Execute(null);
+
+			// Assert
+			Assert.Same(target, actualSender);
+			Assert.NotEqual(isCheckedBefore, actualE.IsChecked);
+			Assert.Equal(target.IsChecked, actualE.IsChecked);
+		}
+
 		[Theory(DisplayName = "ClickMemberメソッド : 正常系")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
