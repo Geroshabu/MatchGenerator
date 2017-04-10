@@ -126,6 +126,20 @@ namespace MatchGenerator.ViewModel
         /// <summary>
         /// メンバーを参加リストに移動させるコマンドを取得する
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// 全メンバーのうち, 選択されている人を, 参加メンバーのリストに追加する.
+        /// ただし, 既に参加メンバーのリストに存在している人は,
+        /// 重複してしまうので追加されない.
+        /// </para>
+        /// <para>
+        /// 参加メンバーのリストでは, 追加された人は未選択状態とする.
+        /// </para>
+        /// <para>
+        /// このコマンドは, 全メンバーのうち, 1人以上のメンバーが
+        /// 選択状態の場合に, 実行できる.
+        /// </para>
+        /// </remarks>
         public ICommand AttendCommand { get; }
 
 		private Func<CompositionContainer> CreateMefContainer { get; }
