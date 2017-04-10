@@ -123,6 +123,11 @@ namespace MatchGenerator.ViewModel
 			CreateMefContainer = CreateMefContainerBody;
 		}
 
+        /// <summary>
+        /// メンバーを参加リストに移動させるコマンドを取得する
+        /// </summary>
+        public ICommand AttendCommand { get; }
+
 		private Func<CompositionContainer> CreateMefContainer { get; }
 		/// <summary>
 		/// 自身のアセンブリと既定のアセンブリを探索し, MEFコンテナを作る.

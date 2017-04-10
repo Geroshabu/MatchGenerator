@@ -31,5 +31,10 @@ namespace MatchGenerator.ViewModel
 		/// ファイルからメンバー情報を読み込むコマンドを取得する
 		/// </summary>
 		ICommand ReadMemberFromFileCommand { get; }
+
+        /// <summary>
+        /// メンバーを参加リストに移動させるコマンドを取得する
+        /// </summary>
+        ICommand AttendCommand { get; }
 	}
 }
