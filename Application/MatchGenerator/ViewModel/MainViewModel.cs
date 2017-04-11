@@ -26,13 +26,12 @@ namespace MatchGenerator.ViewModel
 
 		private CompositionContainer mefContainers;
 
-		private IMemberListViewModel AllMembersField;
-
 		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
 
 		[ImportMany]
 		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
 
+		private IMemberListViewModel AllMembersField;
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
