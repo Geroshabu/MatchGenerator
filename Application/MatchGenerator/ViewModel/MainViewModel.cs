@@ -31,7 +31,7 @@ namespace MatchGenerator.ViewModel
 		[ImportMany]
 		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
 
-		private IMemberListViewModel AllMembersField;
+		private IMemberListViewModel allMembersField;
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
@@ -44,7 +44,7 @@ namespace MatchGenerator.ViewModel
 
 			set
 			{
-				SetProperty(ref AllMembersField, value);
+				SetProperty(ref allMembersField, value);
 			}
 		}
 

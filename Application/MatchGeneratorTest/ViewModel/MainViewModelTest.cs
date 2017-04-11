@@ -18,7 +18,7 @@ namespace MatchGeneratorTest.ViewModel
 	internal struct MainViewModelMember
 	{
 		public const string MefContainer = "mefContainers";
-		public const string AllMembers = "AllMembersField";
+		public const string AllMembers = "allMembersField";
 		public const string AttendanceMembers = "AttendanceMembersField";
 		public const string DefaultMemberImporterType = "<DefaultMemberImporterType>k__BackingField";
 		public const string MemberImporters = "<memberImporters>k__BackingField";
