@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatchGenerator
 {
-	class Bootstrapper
+	internal class Bootstrapper
 	{
 	}
 }
