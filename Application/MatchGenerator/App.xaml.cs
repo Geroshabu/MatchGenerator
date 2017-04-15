@@ -25,5 +25,11 @@ namespace MatchGenerator
 			MessageBox.Show(message, "予期せぬエラー");
 			e.Handled = true;
 		}
+
+		private void Application_Startup(object sender, StartupEventArgs e)
+		{
+			var bootstrapper = new Bootstrapper();
+			bootstrapper.Run();
+		}
 	}
 }
