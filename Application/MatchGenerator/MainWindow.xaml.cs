@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using MatchGenerator.Core;
 using MatchGenerator.Core.UI;
 
@@ -23,6 +24,7 @@ namespace MatchGenerator
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
+	[Export]
 	public partial class MainWindow : Window
 	{
 		private ObservableCollection<MemberListViewItem> AllMemberViewData;
