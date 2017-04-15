@@ -10,6 +10,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.ServiceLocation;
 using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
@@ -29,9 +30,6 @@ namespace MatchGenerator.ViewModel
 		private IMemberListViewModel AllMembersField;
 
 		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
-
-		[ImportMany]
-		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
 
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
@@ -80,7 +78,8 @@ namespace MatchGenerator.ViewModel
 			mefContainers.ComposeParts(this);
 
 			string memberDataFileName = "MemberData.csv";
-			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
+			IEnumerable<FileIO.IMemberImporter> importers = ServiceLocator.Current.GetAllInstances<FileIO.IMemberImporter>();
+			FileIO.IMemberImporter defaultImporter = importers.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
 			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
 			IList<Model.IPerson> attendanceMembers = new List<Model.IPerson>();
@@ -107,7 +106,8 @@ namespace MatchGenerator.ViewModel
 			{
 				string memberDataFileName = dialog.FileName;
 
-				FileIO.IMemberImporter importer = memberImporters.Single(i => i.GetType().Equals(DefaultMemberImporterType));
+				IEnumerable<FileIO.IMemberImporter> importers = ServiceLocator.Current.GetAllInstances<FileIO.IMemberImporter>();
+				FileIO.IMemberImporter importer = importers.Single(i => i.GetType().Equals(DefaultMemberImporterType));
 				IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
 
 				AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
