@@ -108,6 +108,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="FileIO\DefaultImporterTest.cs" />
     <Compile Include="Model\PersonTest.cs" />
     <Compile Include="Utils.cs" />
