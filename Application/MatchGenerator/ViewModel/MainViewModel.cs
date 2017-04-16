@@ -27,10 +27,9 @@ namespace MatchGenerator.ViewModel
 
 		private CompositionContainer mefContainers;
 
-		private IMemberListViewModel AllMembersField;
-
 		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
 
+		private IMemberListViewModel allMembersField;
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
@@ -38,12 +37,12 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				return new MemberListViewModel(model);
+				return allMembersField;
 			}
 
 			set
 			{
-				SetProperty(ref AllMembersField, value);
+				SetProperty(ref allMembersField, value);
 			}
 		}
 

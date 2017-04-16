@@ -19,7 +19,7 @@ namespace MatchGeneratorTest.ViewModel
 	internal struct MainViewModelMember
 	{
 		public const string MefContainer = "mefContainers";
-		public const string AllMembers = "AllMembersField";
+		public const string AllMembers = "allMembersField";
 		public const string AttendanceMembers = "AttendanceMembersField";
 		public const string DefaultMemberImporterType = "<DefaultMemberImporterType>k__BackingField";
 		public const string MemberImporters = "<memberImporters>k__BackingField";
@@ -69,34 +69,45 @@ namespace MatchGeneratorTest.ViewModel
 			Assert.Equal(expectedReturn, actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + ".Getterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + "プロパティ : 設定した値が取得できること")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void AllMembersGetterTest()
+		public void AllMembersTest()
 		{
+			// Arrange
+			IMemberListViewModel allMembers = new Mock<IMemberListViewModel>().Object;
+
 			// Act
+			Instance.AllMembers = allMembers;
 			IMemberListViewModel actualReturn = Instance.AllMembers;
 
 			// Assert
-			Assert.NotNull(actualReturn);
-			Assert.IsType<MemberListViewModel>(actualReturn);
+			Assert.Same(allMembers, actualReturn);
 		}
 
-		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + ".Setterプロパティ : 正常系")]
+		[Fact(DisplayName = nameof(MainViewModel.AllMembers) + "プロパティ : イベントハンドラが設定されている場合に, 設定した値が取得でき, イベントが発生すること")]
 		[Trait("category", "ViewModel")]
 		[Trait("type", "正常系")]
-		public void AllMembersSetterTest()
+		public void AllMembersTestWithHandler()
 		{
 			// Arrange
-			IMemberListViewModel inputAllMembers = new Mock<IMemberListViewModel>().Object;
-			IMemberListViewModel expectedAllMembersField = inputAllMembers;
+			IMemberListViewModel allMembers = new Mock<IMemberListViewModel>().Object;
+			object actualSender = null;
+			string actualPropertyName = null;
+			Instance.PropertyChanged += (s, e) =>
+			{
+				actualSender = s;
+				actualPropertyName = e.PropertyName;
+			};
 
 			// Act
-			Instance.AllMembers = inputAllMembers;
+			Instance.AllMembers = allMembers;
+			IMemberListViewModel actualReturn = Instance.AllMembers;
 
 			// Assert
-			IMemberListViewModel actualAllMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AllMembers);
-			Assert.Same(expectedAllMembersField, actualAllMembersField);
+			Assert.Same(allMembers, actualReturn);
+			Assert.Same(Instance, actualSender);
+			Assert.Equal(nameof(Instance.AllMembers), actualPropertyName);
 		}
 
 		[Fact(DisplayName = nameof(MainViewModel.AttendanceMembers) + ".Getterプロパティ : 正常系")]
