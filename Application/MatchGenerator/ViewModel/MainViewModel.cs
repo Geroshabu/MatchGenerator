@@ -10,6 +10,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.ServiceLocation;
 using MatchGenerator.Model;
 
 namespace MatchGenerator.ViewModel
@@ -26,13 +27,9 @@ namespace MatchGenerator.ViewModel
 
 		private CompositionContainer mefContainers;
 
-		private IMemberListViewModel AllMembersField;
-
 		private Type DefaultMemberImporterType { get; } = typeof(FileIO.DefaultImporter);
 
-		[ImportMany]
-		private IEnumerable<FileIO.IMemberImporter> memberImporters { get; set; }
-
+		private IMemberListViewModel allMembersField;
 		/// <summary>
 		/// 全てのメンバーを表示するリスト
 		/// </summary>
@@ -40,12 +37,12 @@ namespace MatchGenerator.ViewModel
 		{
 			get
 			{
-				return new MemberListViewModel(model);
+				return allMembersField;
 			}
 
 			set
 			{
-				SetProperty(ref AllMembersField, value);
+				SetProperty(ref allMembersField, value);
 			}
 		}
 
@@ -75,12 +72,9 @@ namespace MatchGenerator.ViewModel
 		/// </summary>
 		private void InitializeData()
 		{
-			// MEFによる収集
-			mefContainers = CreateMefContainer();
-			mefContainers.ComposeParts(this);
-
 			string memberDataFileName = "MemberData.csv";
-			FileIO.IMemberImporter defaultImporter = memberImporters.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
+			IEnumerable<FileIO.IMemberImporter> importers = ServiceLocator.Current.GetAllInstances<FileIO.IMemberImporter>();
+			FileIO.IMemberImporter defaultImporter = importers.Single(importer => importer.GetType().Equals(DefaultMemberImporterType));
 			IList<Model.IPerson> allMembers = defaultImporter.Import(memberDataFileName);
 
 			IList<Model.IPerson> attendanceMembers = new List<Model.IPerson>();
@@ -107,7 +101,8 @@ namespace MatchGenerator.ViewModel
 			{
 				string memberDataFileName = dialog.FileName;
 
-				FileIO.IMemberImporter importer = memberImporters.Single(i => i.GetType().Equals(DefaultMemberImporterType));
+				IEnumerable<FileIO.IMemberImporter> importers = ServiceLocator.Current.GetAllInstances<FileIO.IMemberImporter>();
+				FileIO.IMemberImporter importer = importers.Single(i => i.GetType().Equals(DefaultMemberImporterType));
 				IList<Model.IPerson> allMembers = importer.Import(memberDataFileName);
 
 				AllMembers = MemberListViewModel.CreateMemberListViewModel(allMembers);
@@ -118,44 +113,25 @@ namespace MatchGenerator.ViewModel
 		{
 			InitializeCommand = new DelegateCommand(InitializeData);
 			ReadMemberFromFileCommand = new DelegateCommand(ReadMemberFromFile);
-
-			// 呼び出すメソッドをセット
-			CreateMefContainer = CreateMefContainerBody;
 		}
 
-        /// <summary>
-        /// メンバーを参加リストに移動させるコマンドを取得する
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// 全メンバーのうち, 選択されている人を, 参加メンバーのリストに追加する.
-        /// ただし, 既に参加メンバーのリストに存在している人は,
-        /// 重複してしまうので追加されない.
-        /// </para>
-        /// <para>
-        /// 参加メンバーのリストでは, 追加された人は未選択状態とする.
-        /// </para>
-        /// <para>
-        /// このコマンドは, 全メンバーのうち, 1人以上のメンバーが
-        /// 選択状態の場合に, 実行できる.
-        /// </para>
-        /// </remarks>
-        public ICommand AttendCommand { get; }
-
-		private Func<CompositionContainer> CreateMefContainer { get; }
 		/// <summary>
-		/// 自身のアセンブリと既定のアセンブリを探索し, MEFコンテナを作る.
+		/// メンバーを参加リストに移動させるコマンドを取得する
 		/// </summary>
-		/// <returns>作成されたMEFコンテナ</returns>
-		private CompositionContainer CreateMefContainerBody()
-		{
-			AggregateCatalog mefCatalog = new AggregateCatalog();
-			// 自身
-			mefCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-			// 既定のアセンブリ
-			// 今はなし
-
-			return new CompositionContainer(mefCatalog);
-		}
+		/// <remarks>
+		/// <para>
+		/// 全メンバーのうち, 選択されている人を, 参加メンバーのリストに追加する.
+		/// ただし, 既に参加メンバーのリストに存在している人は,
+		/// 重複してしまうので追加されない.
+		/// </para>
+		/// <para>
+		/// 参加メンバーのリストでは, 追加された人は未選択状態とする.
+		/// </para>
+		/// <para>
+		/// このコマンドは, 全メンバーのうち, 1人以上のメンバーが
+		/// 選択状態の場合に, 実行できる.
+		/// </para>
+		/// </remarks>
+		public ICommand AttendCommand { get; }
 	}
 }
