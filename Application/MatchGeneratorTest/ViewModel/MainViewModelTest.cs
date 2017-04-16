@@ -153,20 +153,6 @@ namespace MatchGeneratorTest.ViewModel
 		{
 
 		}
-
-		[Fact(DisplayName = MainViewModelMember.CreateMefContainerBody + "メソッド : 正常系")]
-		[Trait("category", "ViewModel")]
-		[Trait("type", "正常系")]
-		public void CreateMefContainerTest()
-		{
-			// Act
-			CompositionContainer actualReturn = (CompositionContainer)Instance.InvokePrivateMethod(MainViewModelMember.CreateMefContainerBody);
-
-			// Assert
-			// 動作に必要な最低限のインスタンス(自身のインスタンス)が取得できるか.
-			IEnumerable<MatchGenerator.FileIO.IMemberImporter> importers = actualReturn.GetExportedValues<MatchGenerator.FileIO.IMemberImporter>();
-			Assert.True(importers.Any(importer => importer is MatchGenerator.FileIO.DefaultImporter));
-		}
 	}
 
 	public class MainViewModelInstanceUseMefTest : IDisposable
