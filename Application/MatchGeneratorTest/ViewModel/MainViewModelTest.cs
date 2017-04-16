@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
+using Microsoft.Practices.ServiceLocation;
 using Xunit;
 using Moq;
 using MatchGenerator.ViewModel;
@@ -153,20 +154,6 @@ namespace MatchGeneratorTest.ViewModel
 		{
 
 		}
-
-		[Fact(DisplayName = MainViewModelMember.CreateMefContainerBody + "メソッド : 正常系")]
-		[Trait("category", "ViewModel")]
-		[Trait("type", "正常系")]
-		public void CreateMefContainerTest()
-		{
-			// Act
-			CompositionContainer actualReturn = (CompositionContainer)Instance.InvokePrivateMethod(MainViewModelMember.CreateMefContainerBody);
-
-			// Assert
-			// 動作に必要な最低限のインスタンス(自身のインスタンス)が取得できるか.
-			IEnumerable<MatchGenerator.FileIO.IMemberImporter> importers = actualReturn.GetExportedValues<MatchGenerator.FileIO.IMemberImporter>();
-			Assert.True(importers.Any(importer => importer is MatchGenerator.FileIO.DefaultImporter));
-		}
 	}
 
 	public class MainViewModelInstanceUseMefTest : IDisposable
@@ -200,17 +187,13 @@ namespace MatchGeneratorTest.ViewModel
 			// Setup mocks
 			Mock<IMemberImporter> importerMock = new Mock<IMemberImporter>();
 			importerMock.Setup(importer => importer.Import("MemberData.csv")).Returns(members);
-			MefContainer.ComposeExportedValue(importerMock.Object);
-			MefContainer.SatisfyImportsOnce(Instance);
+			var bootstrapper = new Bootstrapper();
+			bootstrapper.ReserveComposing(importerMock.Object);
+			bootstrapper.Run();
 			// Expected data
-			CompositionContainer expectedMefContainerField = MefContainer;
-			IEnumerable<IMemberImporter> expectedMemberImportersField = MefContainer.GetExportedValues<IMemberImporter>();
 			IMemberListViewModel expectedAllMembersField = allMembers;
 			IMemberListViewModel expectedAttendanceMembersField = attendanceMembers;
 			IList<IList<IPerson>> expectedCreateMemberListViewModelParamsMemberData = new List<IList<IPerson>> { members, new List<IPerson>() };
-			// Mock of CreateMefContainer
-			Instance.SetPrivateField(MainViewModelMember.CreateMefContainer,
-				new Func<CompositionContainer>(() => MefContainer));
 			// Mock of DefaultMemberImporterType
 			Instance.SetPrivateField(MainViewModelMember.DefaultMemberImporterType,
 				importerMock.Object.GetType());
@@ -229,12 +212,6 @@ namespace MatchGeneratorTest.ViewModel
 			Instance.InvokePrivateMethod(MainViewModelMember.InitializeData);
 
 			// Assert
-			// MefContainer
-			CompositionContainer actualMefContainerField = (CompositionContainer)Instance.GetPrivateField(MainViewModelMember.MefContainer);
-			Assert.Same(expectedMefContainerField, actualMefContainerField);
-			// MemberImporters
-			IEnumerable<IMemberImporter> actualMemberImportersField = (IEnumerable<IMemberImporter>)Instance.GetPrivateField(MainViewModelMember.MemberImporters);
-			Assert.True(expectedMemberImportersField.SequenceEqual(actualMemberImportersField));
 			// AllMembers
 			IMemberListViewModel actualAllMembersField = (IMemberListViewModel)Instance.GetPrivateField(MainViewModelMember.AllMembers);
 			Assert.Same(expectedAllMembersField, actualAllMembersField);
